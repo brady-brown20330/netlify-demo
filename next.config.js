@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
+  reactStrictMode: true,
+  i18n: {
+    locales: ['en-us', 'fr-fr', 'nl-nl'],
+    defaultLocale: 'en-us',
+    localeDetection: false,
   },
 }
 
