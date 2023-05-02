@@ -1,19 +1,16 @@
 // import Image from 'next/image'
 // import { Inter } from 'next/font/google'
-import { getHomepageEntry } from '@/loaders/homeLoaders'
+import { getHomepageEntry } from '@/loaders'
 import _ from 'lodash'
 // import { inIframe } from '@/utils';
-import { SingleCol } from '@/layout';
 import RenderComponents from '@/RenderComponents';
+import { Generic, Page } from '@/types';
 
-import { Homepage } from '@/types/pages/homepage'
 
-
-export default function Home(entry:Homepage) {
+export default function Home(entry:Page.Homepage) {
 
   return (<>
-    Home Page
-    {JSON.stringify(entry)?.replace(',', '\n')}
+    <div style={{height:'100vh'}}>Home Page</div>
     {entry && Object.keys(entry).length ? (
       <RenderComponents
         pageComponents={entry?.content_blocks}
@@ -24,7 +21,7 @@ export default function Home(entry:Homepage) {
 
 }
 
-export const getServerSideProps = async(context:any)=> {
+export const getServerSideProps = async(context:Generic.serverSideProps)=> {
   try {
     let {locale, resolvedUrl, query} = context
     const entry = await getHomepageEntry(locale, resolvedUrl, query)

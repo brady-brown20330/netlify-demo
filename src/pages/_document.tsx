@@ -1,6 +1,6 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
-
-export default function MyDocument({locale}) {
+import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
+export default function MyDocument(props: { locale: string }) {
+  const {locale} = props
   return (
     <Html lang={locale}>
       <Head />
@@ -12,7 +12,7 @@ export default function MyDocument({locale}) {
   )
 }
 
-MyDocument.getInitialProps =async(ctx)=> {
+MyDocument.getInitialProps =async(ctx: DocumentContext)=> {
   const initialProps = await Document.getInitialProps(ctx)
   return {
      ...initialProps,

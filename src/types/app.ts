@@ -1,15 +1,14 @@
-export type Props = {
-    // page: Page;
-    entryUrl: string;
-    Component: Function;
-    // pageProps: PageProps;
-    // header: HeaderProps;
-    // footer: FooterProps;
-  }
+import type {  AppProps } from 'next/app'
 
-  export type Context = {
-    resolvedUrl: string;
-    setHeader: Function;
-    write: Function;
-    end: Function;
-  }
+export interface Props extends AppProps {
+  locale:string,
+  header: undefined; //needs to define
+  footer: undefined; //need to define
+}
+
+  // export type Context = {
+  //   resolvedUrl: string;
+  //   setHeader: Function;
+  //   write: Function;
+  //   end: Function;
+  // }

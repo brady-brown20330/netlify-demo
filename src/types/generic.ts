@@ -2,6 +2,16 @@ import { ReactNode } from "react"
 
 import { Asset, Entry } from './common';
 
+
+export interface serverSideProps  {
+  resolvedUrl: string,
+  query: {
+      live_preview?:string;
+      content_type_uid?:string;
+      entry_uid?:string;
+  }
+  locale: string
+}
 export interface StackProps {
   live_preview: {
     [key: string]: any

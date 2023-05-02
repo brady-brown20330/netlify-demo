@@ -1,15 +1,16 @@
-import App from 'next/app'
-import '@/styles/globals.css'
-import type {  AppProps } from 'next/app'
 // import * as _ from '@/config'
 
 import Head from 'next/head';
+
 import { SingleCol } from '@/layout';
-import '@contentstack/live-preview-utils/dist/main.css';
 import { SEO } from '@/components/Seo';
+import { App } from '@/types';
+
+import '@contentstack/live-preview-utils/dist/main.css';
+import '@/styles/globals.css'
 
 
-function MyApp(props: AppProps) {
+function MyApp(props: App.Props) {
   const {
     Component,
     pageProps,
@@ -42,13 +43,18 @@ function MyApp(props: AppProps) {
 MyApp.getInitialProps = async ({ Component, ctx, router }: any) => {
   let appProps = {}
   const { locale } = router; // Will return `fr` for `/fr/*` pages
-  const header = "await getHeaderRes()";
-  const footer = "await getFooterRes()";
+  // const header = "await getHeaderRes()";
+  // const footer = "await getFooterRes()";
 
   if (Component.getInitialProps) {
     appProps = await Component.getInitialProps(ctx)
   }
-  return { appProps, header, footer, locale }
+  return {
+    appProps,
+    // header,
+    // footer,
+    locale
+  }
 }
 
 export default MyApp;

@@ -2,7 +2,7 @@ import {CardCollection,Teaser, Image,Cta } from '../components';
 import { Entry, Asset } from '../common';
 
 export type Homepage = Entry & {
-  content_blocks: HomepageContentBlocks[]
+  content_blocks?: HomepageContentBlocks[]
 }
 
 export interface HomepageContentBlocks {
