@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { FallbackProps } from "react-error-boundary";
 
 import { Asset, Entry } from './common';
 
@@ -12,6 +13,11 @@ export interface serverSideProps  {
   }
   locale: string
 }
+
+export interface ErrorHandlerType extends FallbackProps {
+  componentStack?:ReactNode
+}
+
 export interface StackProps {
   live_preview: {
     [key: string]: any

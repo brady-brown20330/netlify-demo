@@ -1,16 +1,30 @@
 // import * as _ from '@/config'
 
 import Head from 'next/head';
+import { AppContext } from 'next/app';
+import { useState } from 'react';
 
 import { SingleCol } from '@/layout';
 import { SEO } from '@/components/Seo';
-import { App } from '@/types';
+import { App, Generic } from '@/types';
+import { ErrorBoundary } from 'react-error-boundary'
 
 import '@contentstack/live-preview-utils/dist/main.css';
 import '@/styles/globals.css'
 
 
+
+const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.ErrorHandlerType) => (
+  <div>
+    <h1>An error occurred</h1>
+    <pre>{error.message}</pre>
+    <pre>{componentStack}</pre>
+    <button onClick={resetErrorBoundary}>Try again</button>
+  </div>
+)
+
 function MyApp(props: App.Props) {
+
   const {
     Component,
     pageProps,
@@ -30,17 +44,21 @@ function MyApp(props: App.Props) {
           }}
         />}
       </Head>
-      <SingleCol
-      // header={header}
-      // footer={footer}
+      <ErrorBoundary
+        FallbackComponent={ErrorHandler}
       >
-        <Component {...pageProps} />
-      </SingleCol>
+        <SingleCol
+        // header={header}
+        // footer={footer}
+        >
+          <Component {...pageProps} />
+        </SingleCol>
+      </ErrorBoundary>
     </>
   );
 }
 
-MyApp.getInitialProps = async ({ Component, ctx, router }: any) => {
+MyApp.getInitialProps = async ({ Component, ctx, router }:AppContext) => {
   let appProps = {}
   const { locale } = router; // Will return `fr` for `/fr/*` pages
   // const header = "await getHeaderRes()";
