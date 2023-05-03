@@ -8,9 +8,17 @@ import { Generic, Page } from '@/types';
 
 
 export default function Home(entry:Page.Homepage) {
+// console.log("🚀 ~ file: index.tsx:11 ~ Home ~ entry:", entry)
 
   return (<>
-    <div style={{height:'100vh'}}>Home Page</div>
+    <div
+      style={{height:'50vh'}}
+      // {...entry?.$?.title}
+      {...entry?.$?.title}
+    >
+      <br/><br/>
+      {entry.title}
+    </div>
     {entry && Object.keys(entry).length ? (
       <RenderComponents
         pageComponents={entry?.content_blocks}

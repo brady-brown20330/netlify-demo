@@ -1,5 +1,13 @@
 import { AssetMetadata } from "./extensions"
 
+interface cslp {
+  'data-cslp': string
+}
+
+export type MappedPreview<T> = {
+  [K in keyof T]: { 'data-cslp': string }
+}
+
 export interface CommonSystemInfo {
   ACL?: {
     roles: [],
@@ -32,12 +40,12 @@ export interface CommonSystemInfo {
   updated_by?: string
 }
 export type PageEntry = Entry & {
-  $?: PageEntry
+  // $?: MappedPreview<PageEntry>
   url?: string
 }
 
 export type Entry = CommonSystemInfo & {
-  $?: Entry
+  $?: MappedPreview<Entry>
   locale: string
   _in_progress?: boolean
   _owner?: {
@@ -69,7 +77,7 @@ export type Entry = CommonSystemInfo & {
 }
 
 export type Asset = CommonSystemInfo & {
-  $?: Asset
+  $?: MappedPreview<Asset>
   content_type?: string
   dimension?: {
     height: number

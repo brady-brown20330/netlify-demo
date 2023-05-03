@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { Asset, PageEntry } from "./common"
+import { Asset, MappedPreview, PageEntry } from "./common"
 import { Market } from "./generic"
 
 // ######################### ENUMS #########################
@@ -47,7 +47,7 @@ export interface InternalLink {
   url: string
 }
 export interface Link {
-  $?: Link
+  $?: MappedPreview<Link>
   internal_link?: PageEntry[]
   url?: string
 }
@@ -136,7 +136,7 @@ export interface Teaser {
 // ######################### CardCollection  #########################
 
 export interface CardCollection {
-  $?: CardCollection
+  $?: MappedPreview<CardCollection>
   header?: Header[]
   cards?: ImageCardItem[] | []
   styles?: {
@@ -147,7 +147,7 @@ export interface CardCollection {
 export type ImageCardItem = ImageCardGraphics & ImageCardText
 
 export interface ImageCardGraphics {
-  $?: ImageCardGraphics
+  $?: MappedPreview<ImageCardGraphics>
   image: Asset
   textPosition?: TextPosition
   count?: number
