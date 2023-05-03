@@ -14,23 +14,23 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `app/index.tsx`. The page auto-updates as you edit the file.
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+## .env.local file required content
+```
+CONTENTSTACK_API_KEY=<<CONTENTSTACK_API_KEY>>
+CONTENTSTACK_DELIVERY_TOKEN=<<CONTENTSTACK_DELIVERY_TOKEN>>
+CONTENTSTACK_STACK_HOST=cdn.contentstack.io
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+CONTENTSTACK_API_HOST=api.contentstack.io
+CONTENTSTACK_MANAGEMENT_TOKEN=<<CONTENTSTACK_MANAGEMENT_TOKEN>>
+CONTENTSTACK_LIVE_PREVIEW=true
+CONTENTSTACK_LIVE_EDIT_TAGS=true
+# CONTENTSTACK_EXTENSION_ASSET_PRESET=
+DEFAULT_LOCALE=en-us
+CONTENTSTACK_REGION=NA
+CONTENTSTACK_ENVIRONMENT=<<CONTENTSTACK_ENVIRONMENT>>
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
