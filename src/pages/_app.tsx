@@ -38,10 +38,8 @@ function MyApp(props: App.Props) {
       <Head>
         {pageProps?.seo_and_search?.title ? <title>{pageProps?.seo_and_search?.title}</title> : <title>Universal Demo</title>}
         {pageProps?.seo_and_search && <SEO
-          contents={{
-            ...pageProps.seo_and_search,
-            locale: locale
-          }}
+          {...pageProps.seo_and_search}
+          locale={locale}
         />}
       </Head>
       <ErrorBoundary

@@ -1,27 +1,10 @@
+import { Page } from '@/types'
 import { useEffect } from 'react'
 
-type propsType = {
-  contents: {
-    title: string
-    description: string
-    canonical_url: string,
-    og_meta_tags: {
-      description: string
-      image: { url: string }
-      title: string
-    }
-    no_follow: string,
-    no_index: string
-    show_in_site_search: string
-    show_in_sitemap: string
-    locale: string | undefined
-  }
-}
 
+export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
 
-export const SEO: React.FC<propsType> = (props: propsType) => {
-
-  const { no_follow, no_index, show_in_site_search, show_in_sitemap, description, og_meta_tags, canonical_url, locale } = props.contents
+  const { no_follow, no_index, show_in_site_search, show_in_sitemap, description, og_meta_tags, canonical_url, locale } = props
 
   let robots
   if (no_follow && no_index) {
@@ -42,15 +25,6 @@ export const SEO: React.FC<propsType> = (props: propsType) => {
   } else if (show_in_sitemap) {
     siteRobots = 'showinsitemap'
   }
-
-  useEffect(() => {
-    const link = document.createElement('link')
-    link.type = 'image/x-icon'
-    link.rel = 'shortcut icon'
-    link.href = '/Icon-cs-1.png'
-    const head = document.head || document.getElementsByTagName('head')[0]
-    head.appendChild(link)
-  }, [])
 
   return (
     <>
