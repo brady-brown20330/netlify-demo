@@ -2,7 +2,6 @@
 
 import Head from 'next/head';
 import { AppContext } from 'next/app';
-import { useState } from 'react';
 
 import { SingleCol } from '@/layout';
 import { SEO } from '@/components/Seo';
@@ -11,7 +10,6 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import '@contentstack/live-preview-utils/dist/main.css';
 import '@/styles/globals.css'
-
 
 
 const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.ErrorHandlerType) => (

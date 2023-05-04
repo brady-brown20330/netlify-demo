@@ -15,8 +15,6 @@ const {
 export const initStack = () => {
     try {
         if (CONTENTSTACK_API_KEY && CONTENTSTACK_DELIVERY_TOKEN) {
-            console.log('=======stack init')
-
             const Stack = Contentstack.Stack({
                 api_key: CONTENTSTACK_API_KEY,
                 delivery_token: CONTENTSTACK_DELIVERY_TOKEN,
@@ -38,12 +36,12 @@ export const initStack = () => {
 }
 
 ContentstackLivePreview.init({
-    stackDetails: {
-        apiKey: CONTENTSTACK_API_KEY
-    },
-    enable: true,
-    ssr:true
-})
+	enable: true,
+	ssr: true,
+	stackDetails: {
+		apiKey: process.env.GLOBAL_STACK_API_KEY,
+	}
+});
 
 export const Stack = initStack()
 
