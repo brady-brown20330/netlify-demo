@@ -1,1 +1,1 @@
-export * from './ComponentValidator';
+export * from './ComponentValidator'
