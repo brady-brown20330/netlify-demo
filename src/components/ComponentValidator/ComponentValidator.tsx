@@ -1,30 +1,30 @@
-import _ from "lodash";
+import _ from 'lodash'
 import { useState } from 'react'
 
 import { Popover } from '@headlessui/react'
-import { usePopper } from 'react-popper';
+import { usePopper } from 'react-popper'
 import { ExclamationCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
-import { inIframe } from '@/utils';
+import { inIframe } from '@/utils'
 import { ComponentValidator as ComponentValidatorType, ValidityStatus } from '@/types/components'
 
 const ComponentValidator: React.FC<ComponentValidatorType> = (props: ComponentValidatorType) => {
-    const { status, validators, validationInfo, children } = props;
-    const [isVisible, setVisibility] = useState(false);
+    const { status, validators, validationInfo, children } = props
+    const [isVisible, setVisibility] = useState(false)
 
-    let [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
-    let [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
-    let { styles, attributes, } = usePopper(referenceElement, popperElement, {
-        placement: 'auto',
+    const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null)
+    const [popperElement, setPopperElement] = useState<HTMLElement | null>(null)
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+        placement: 'auto'
     })
 
-    var componentStatus;
+    let componentStatus
     if (status) {
         componentStatus = status
     } else if (validators) {
-        var valid = _.reduce(validators, function (res, val) {
-            return res && val;
-        });
+        const valid = _.reduce(validators, function (res, val) {
+            return res && val
+        })
         componentStatus = valid ? ValidityStatus.valid : ValidityStatus.invalid
     }
 
@@ -35,7 +35,7 @@ const ComponentValidator: React.FC<ComponentValidatorType> = (props: ComponentVa
                     <Popover.Button ref={setReferenceElement}
                         onMouseEnter={() => setVisibility(true)}
                         onMouseLeave={() => setVisibility(false)}>
-                        <ExclamationCircleIcon className="h-6 w-6 text-yellow-500" aria-hidden="true" />
+                        <ExclamationCircleIcon className='h-6 w-6 text-yellow-500' aria-hidden='true' />
                     </Popover.Button>
                     {isVisible && (
                         <Popover.Panel
@@ -43,15 +43,15 @@ const ComponentValidator: React.FC<ComponentValidatorType> = (props: ComponentVa
                             style={styles.popper}
                             {...attributes.popper}
                         >
-                            <div className="rounded-md bg-yellow-50 p-4">
-                                <div className="flex">
-                                    <div className="flex-shrink-0">
-                                        <ExclamationTriangleIcon className="h-5 w-5 text-yellow-500" aria-hidden="true" />
+                            <div className='rounded-md bg-yellow-50 p-4'>
+                                <div className='flex'>
+                                    <div className='flex-shrink-0'>
+                                        <ExclamationTriangleIcon className='h-5 w-5 text-yellow-500' aria-hidden='true' />
                                     </div>
-                                    <div className="ml-3">
-                                        <h3 className="text-sm font-medium text-yellow-800">Requirements:</h3>
-                                        <div className="mt-1 text-sm text-yellow-700">
-                                            <ul role="list" className="list-disc space-y-1 pl-5">
+                                    <div className='ml-3'>
+                                        <h3 className='text-sm font-medium text-yellow-800'>Requirements:</h3>
+                                        <div className='mt-1 text-sm text-yellow-700'>
+                                            <ul role='list' className='list-disc space-y-1 pl-5'>
                                                 {_.map(validationInfo, (msg) => <li>{msg}</li>)}
                                             </ul>
                                         </div>
@@ -69,7 +69,7 @@ const ComponentValidator: React.FC<ComponentValidatorType> = (props: ComponentVa
             {children}
         </>
     } else {
-        return null;
+        return null
     }
 }
 export { ComponentValidator }

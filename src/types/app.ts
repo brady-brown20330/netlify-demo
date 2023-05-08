@@ -6,9 +6,9 @@ export interface Props extends AppProps {
   footer: undefined; //need to define
 }
 
-  // export type Context = {
-  //   resolvedUrl: string;
-  //   setHeader: Function;
-  //   write: Function;
-  //   end: Function;
-  // }
+// export type Context = {
+//   resolvedUrl: string;
+//   setHeader: Function;
+//   write: Function;
+//   end: Function;
+// }

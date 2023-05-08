@@ -1,5 +1,5 @@
-import {CardCollection,Teaser, Image,Cta } from '../components';
-import { Entry, Asset } from '../common';
+import {CardCollection,Teaser, Image,Cta } from '../components'
+import { Entry, Asset } from '../common'
 
 export type LandingPage = Entry & {
   content_blocks: LandingPageContentBlocks[]

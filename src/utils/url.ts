@@ -1,43 +1,43 @@
-import _ from "lodash";
+import _ from 'lodash'
 
-import { PageEntry } from "../types/common";
+import { PageEntry } from '../types/common'
 
 export const buildLinkUrl = (internalLink?: PageEntry[], url?: string, locale?: string) => {
-  let result = "";
+    let result = ''
 
-  if (internalLink && internalLink.length) {
-    if (internalLink[0].url) {
-      result = internalLink[0].url;
-      if (url) {
-        if (url.startsWith("?")) {
-          result = result.concat(url);
+    if (internalLink && internalLink.length) {
+        if (internalLink[0].url) {
+            result = internalLink[0].url
+            if (url) {
+                if (url.startsWith('?')) {
+                    result = result.concat(url)
+                } else {
+                    if (!_.isEmpty(url)) {
+                        console.debug('URL field information not used - no valid Query Parameters found', url)
+                    }
+                }
+            }
         } else {
-          if (!_.isEmpty(url)) {
-            console.debug("URL field information not used - no valid Query Parameters found", url);
-          }
+            console.error('Internal link not resolved', internalLink)
         }
-      }
+        if (locale) {
+            result = `/${locale}${result}`
+        }
+    } else if (url && (url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/'))) {
+        result = url
+    } else if (url && url.startsWith('www.')) {
+        result = 'https://'.concat(url)
     } else {
-      console.error("Internal link not resolved", internalLink);
+        if (!_.isEmpty(url)) {
+            console.info('Static URL is not valid', url)
+        }
     }
-    if (locale) {
-      result = `/${locale}${result}`
-    }
-  } else if (url && (url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/'))) {
-    result = url;
-  } else if (url && url.startsWith('www.')) {
-    result = 'https://'.concat(url);
-  } else {
-    if (!_.isEmpty(url)) {
-      console.info("Static URL is not valid", url);
-    }
-  }
-  return result;
+    return result
 }
 export const getUnlocalizedRelativePath = (path: string, locale?: string): string => {
-  if (locale) {
-    return path.substring(path.lastIndexOf(locale) + locale.length);
-  } else {
-    return path;
-  }
+    if (locale) {
+        return path.substring(path.lastIndexOf(locale) + locale.length)
+    } else {
+        return path
+    }
 }

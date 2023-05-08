@@ -23,7 +23,7 @@ export interface AssetPreset {
             saturate: number
         }
     },
-    "query-params": string
+    'query-params': string
 }
 
 // {

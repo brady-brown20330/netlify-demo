@@ -1,6 +1,5 @@
-import {CardCollection,Teaser, Image,Cta } from '../components';
-import { Entry, Asset, MappedPreview } from '../common';
-import { SeoProps } from '.';
+import {CardCollection,Teaser, Image,Cta } from '../components'
+import { Entry } from '../common'
 
 export type Homepage = Entry & {
   content_blocks?: HomepageContentBlocks[]

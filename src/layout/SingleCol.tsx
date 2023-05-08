@@ -1,8 +1,8 @@
 
 import React from 'react'
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+function classNames (...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
 }
 
 interface SingleColProps {
@@ -14,18 +14,18 @@ interface SingleColProps {
 
 const SingleCol: React.FC<SingleColProps> = ({ Header, Footer, Hero, children }: React.PropsWithChildren<SingleColProps>) => {
   
-  return (
-    <div className="bg-white">
-      {/* Navigation */}
-      {/* Hero section */}
+    return (
+        <div className='bg-white'>
+            {/* Navigation */}
+            {/* Hero section */}
 
-      <main className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        {children}
-      </main>
+            <main className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
+                {children}
+            </main>
 
-      {/* footer  */}
-    </div>
-  )
+            {/* footer  */}
+        </div>
+    )
 }
 
 export { SingleCol }

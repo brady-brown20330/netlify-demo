@@ -1,1 +1,1 @@
-export {SingleCol} from './SingleCol';
+export {SingleCol} from './SingleCol'

@@ -1,7 +1,7 @@
-import { CtaCollection } from '../Cta';
+import { CtaCollection } from '../Cta'
 import parse from 'html-react-parser'
-import { classNames } from '@/utils';
-import { Teaser as TeaserProps } from '@/types/components';
+import { classNames } from '@/utils'
+import { Teaser as TeaserProps } from '@/types/components'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     const { $,pre_heading,heading, text, ctas, image, backgroundColor,removeMargin } = props
@@ -19,6 +19,7 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
             )}>
             {heading ? (
                 <h2 className='text-2xl lg:text-3xl font-extrabold sm:text-4xl'
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     {...$?.heading}>
                     <span>{heading}</span>
@@ -29,6 +30,7 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
             {text
                 && (
                     <div className='py-2 leading-6 text-lg'
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         {...$?.text}
                     >   

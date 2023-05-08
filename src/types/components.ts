@@ -1,6 +1,7 @@
-import { ReactNode } from "react"
-import { Asset, MappedPreview, PageEntry } from "./common"
-import { Market } from "./generic"
+/* eslint-disable no-shadow */
+import { ReactNode } from 'react'
+import { Asset, MappedPreview, PageEntry } from './common'
+import { Market } from './generic'
 
 // ######################### ENUMS #########################
 export enum TextPosition {
@@ -176,9 +177,9 @@ export interface ComponentValidator {
 
 
 // ######################### LinkComponent  #########################
-export type LinkComponent = Link & {
+export interface LinkComponent extends Link  {
   children?: ReactNode;
-  className?: string
+  className?: string;
 }
 // ######################### LinkComponent END #########################
 

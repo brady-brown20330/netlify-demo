@@ -1,5 +1,5 @@
-export * from './homepage';
-export * from './landingPage';
+export * from './homepage'
+export * from './landingPage'
 
 export type SeoProps = {
     title: string

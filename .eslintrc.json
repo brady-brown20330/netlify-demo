@@ -25,7 +25,7 @@
   "rules": {
     "indent": [
       "error",
-      2
+      4
     ],
     "linebreak-style": [
       "error",
@@ -45,7 +45,9 @@
         "allow": [
           "_content_type_uid",
           "_source",
-          "_esClient"
+          "_esClient",
+          "_version",
+          "_metadata"
         ]
       }
     ],
@@ -80,10 +82,10 @@
       "error",
       "before"
     ],
-    "func-names": [
-      "error",
-      "as-needed"
-    ],
+    // "func-names": [
+    //   "error",
+    //   "as-needed"
+    // ],
     "space-before-function-paren": [
       "error",
       "always"
@@ -92,12 +94,12 @@
     "consistent-return": "off",
     "class-methods-use-this": "off",
     "no-restricted-syntax": "off",
-    "object-curly-newline": [
-      "error",
-      {
-        "multiline": true
-      }
-    ],
+    // "object-curly-newline": [
+    //   "error",
+    //   {
+    //     "multiline": true
+    //   }
+    // ],
     //"import/no-extraneous-dependencies": ["error", { "devDependencies": false, "optionalDependencies": false, "peerDependencies": false ,"packageDir": "./"}],
     "jsx-quotes": [
       "error",

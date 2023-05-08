@@ -1,2 +1,2 @@
-export * from './FooterNavigation';
-export * from './FooterEnd';
+export * from './FooterNavigation'
+export * from './FooterEnd'

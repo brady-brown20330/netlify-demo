@@ -1,1 +1,1 @@
-export {default} from './JsonRte';
+export {default} from './JsonRte'

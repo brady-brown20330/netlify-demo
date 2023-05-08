@@ -1,2 +1,2 @@
-export * from './Cta';
-export * from './CtaCollection';
+export * from './Cta'
+export * from './CtaCollection'

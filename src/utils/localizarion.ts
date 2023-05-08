@@ -1,7 +1,7 @@
-import _ from "lodash";
+import _ from 'lodash'
 
-import { localeCookieName } from '../config';
-import { getCookie, setCookie } from "./browserStorage";
+import { localeCookieName } from '../config'
+import { getCookie, setCookie } from './browserStorage'
 
 export const setLocaleCookie = (locale: string) => {
     // sets a locale cookie valid for 30 days
@@ -14,22 +14,24 @@ export const getLocaleCookie = () => {
 
 export const getPreferedBrowserLang = () => {
     if (navigator.languages != undefined) {
-        return navigator.languages[0];
+        return navigator.languages[0]
     }
-    return navigator.language;
+    return navigator.language
 }
 
 export const getPreferedBrowserRegions = () => {
     if (navigator.languages != undefined) {
         const preferedRegions: string[] = _.reduce(navigator.languages, function (regions: string[], lang: string) {
             try {
-                const l = new Intl.Locale(lang);
+                const l = new Intl.Locale(lang)
                 if (l.region) {
-                    regions.push(l.region.toLocaleLowerCase());
+                    regions.push(l.region.toLocaleLowerCase())
                 }
-            } catch { }
-            return regions;
-        }, []);
-        return preferedRegions;
+            } catch(error) { 
+                console.error('Error:', error)
+            }
+            return regions
+        }, [])
+        return preferedRegions
     }
 }

@@ -1,3 +1,3 @@
-export * from './Card';
-export * from './CardTextBelowImage';
-export * from './CardTextOverImage';
+export * from './Card'
+export * from './CardTextBelowImage'
+export * from './CardTextOverImage'

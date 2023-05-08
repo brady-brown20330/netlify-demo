@@ -1,8 +1,4 @@
-import { AssetMetadata } from "./extensions"
-
-interface cslp {
-  'data-cslp': string
-}
+import { AssetMetadata } from './extensions'
 
 export type MappedPreview<T> = {
   [K in keyof T]: { 'data-cslp': string }
@@ -59,7 +55,7 @@ export type Entry = CommonSystemInfo & {
     first_name: string
     last_login_at: Date
     last_name: string
-    metadata: {}
+    // metadata: {}
     mobile_number: string
     org_uid: string[]
     profile_type: string

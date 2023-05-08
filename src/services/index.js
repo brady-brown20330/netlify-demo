@@ -1,14 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
-import { Stack, isEditButtonsEnabled } from '@/config';
+import { Stack, isEditButtonsEnabled } from '@/config'
 import { getLocaleCode } from '../utils'
-import { addEditableTags, jsonToHTML } from '@contentstack/utils';
+import { addEditableTags, jsonToHTML } from '@contentstack/utils'
 
 
 const renderOption = {
-  span: (node, next) => next(node.children),
-};
+    span: (node, next) => next(node.children)
+}
 
 /**
   *
@@ -20,41 +20,41 @@ const renderOption = {
   *
   */
 export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jsonRtePath, previewQuery) => {
-  try {
-    if (previewQuery) {
-      Stack.livePreviewQuery(previewQuery);
+    try {
+        if (previewQuery) {
+            Stack.livePreviewQuery(previewQuery)
+        }
+        const entryQuery = Stack.ContentType(contentTypeUid)
+            .Query()
+            .language(locale)
+        if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
+
+        //   if (localeConfig.allow_fallback) {
+        //     entryQuery
+        //       .includeFallback()
+        //   }
+        let result = await entryQuery
+            .includeFallback()
+            .toJSON()
+            .includeEmbeddedItems()
+            .addParam('include_metadata', 'true')
+            .find()
+
+        if (jsonRtePath) {
+            jsonToHTML({
+                entry: result,
+                paths: jsonRtePath,
+                renderOption: renderOption
+            })
+        }
+
+        isEditButtonsEnabled && addEditableTags(result[0], contentTypeUid, true, locale)
+        const data = result[0]
+        return data
     }
-    const entryQuery = Stack.ContentType(contentTypeUid)
-      .Query()
-      .language(locale)
-    if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath);
-
-    //   if (localeConfig.allow_fallback) {
-    //     entryQuery
-    //       .includeFallback()
-    //   }
-    let result = await entryQuery
-      .includeFallback()
-      .toJSON()
-      .includeEmbeddedItems()
-      .addParam('include_metadata', 'true')
-      .find()
-
-    if (jsonRtePath) {
-      jsonToHTML({
-        entry: result,
-        paths: jsonRtePath,
-        renderOption: renderOption,
-      });
+    catch (error) {
+        console.log('getEntries error', error)
     }
-
-    isEditButtonsEnabled && addEditableTags(result[0], contentTypeUid, true, locale);
-    const data = result[0]
-    return data
-  }
-  catch (error) {
-    console.log('getEntries error', error)
-  }
 }
 
 
@@ -70,38 +70,38 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
  *
  */
 export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceFieldPath, jsonRtePath, previewQuery) => {
-  try {
-    previewQuery ? Stack.livePreviewQuery(previewQuery) : Stack.livePreviewQuery({})
-    const entryQuery = Stack.ContentType(contentTypeUid)
-      .Query()
-      .language(locale)
-    if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath);
+    try {
+        previewQuery ? Stack.livePreviewQuery(previewQuery) : Stack.livePreviewQuery({})
+        const entryQuery = Stack.ContentType(contentTypeUid)
+            .Query()
+            .language(locale)
+        if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
 
-    // if (localeConfig.allow_fallback) {
-    //   entryQuery
-    //     .includeFallback()
-    // }
-    let result = await entryQuery
-      .includeFallback()
-      .where('url', `${entryUrl}`)
-      .toJSON()
-      .includeEmbeddedItems()
-      .addParam('include_metadata', 'true')
-      .find()
+        // if (localeConfig.allow_fallback) {
+        //   entryQuery
+        //     .includeFallback()
+        // }
+        let result = await entryQuery
+            .includeFallback()
+            .where('url', `${entryUrl}`)
+            .toJSON()
+            .includeEmbeddedItems()
+            .addParam('include_metadata', 'true')
+            .find()
 
-    if (jsonRtePath) {
-      jsonToHTML({
-        entry: result,
-        paths: jsonRtePath,
-        renderOption: renderOption,
-      });
+        if (jsonRtePath) {
+            jsonToHTML({
+                entry: result,
+                paths: jsonRtePath,
+                renderOption: renderOption
+            })
+        }
+
+        isEditButtonsEnabled && addEditableTags(result[0][0], contentTypeUid, true, locale)
+        const data = result[0][0]
+        return data
     }
-
-    isEditButtonsEnabled && addEditableTags(result[0][0], contentTypeUid, true, locale);
-    const data = result[0][0]
-    return data
-  }
-  catch (error) {
-    console.log('error>>', error)
-  }
+    catch (error) {
+        console.log('error>>', error)
+    }
 }
