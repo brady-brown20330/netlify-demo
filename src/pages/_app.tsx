@@ -27,8 +27,7 @@ function MyApp (props: App.Props) {
         pageProps,
         locale,
         header,
-        footer,
-        statusCode
+        footer
     } = props
 
     return (
@@ -47,7 +46,6 @@ function MyApp (props: App.Props) {
                     // header={header}
                     // footer={footer}
                 >
-                    <>{statusCode || '----'}</>
                     <Component {...pageProps} />
                 </SingleCol>
             </ErrorBoundary>
@@ -56,7 +54,6 @@ function MyApp (props: App.Props) {
 }
 
 MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
-    console.log('🚀 ~ file: _app.tsx:57 ~ MyApp.getInitialProps= ~ res:', ctx)
     let appProps = {}
     const { locale } = router // Will return `fr` for `/fr/*` pages
     // const header = "await getHeaderRes()";
