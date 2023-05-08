@@ -6,7 +6,8 @@ const {
     CONTENTSTACK_DELIVERY_TOKEN,
     CONTENTSTACK_MANAGEMENT_TOKEN,
     CONTENTSTACK_ENVIRONMENT,
-    CONTENTSTACK_REGION
+    CONTENTSTACK_REGION,
+    CONTENTSTACK_EXTENSION_ASSET_PRESET
 } = process.env;
 
 
@@ -48,6 +49,6 @@ export const isLivePreviewEnabled= process.env.isLivePreviewEnabled
 export const isEditButtonsEnabled= process.env.isEditButtonsEnabled
 
 
-// export const extensions = {
-//   assetPresetUid: CONTENTSTACK_EXTENSION_ASSET_PRESET ? CONTENTSTACK_EXTENSION_ASSET_PRESET : ''
-// }
+export const extensions = {
+  assetPresetUid: CONTENTSTACK_EXTENSION_ASSET_PRESET ? CONTENTSTACK_EXTENSION_ASSET_PRESET : ''
+}

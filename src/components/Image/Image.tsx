@@ -8,7 +8,6 @@ const Image: React.FC<ImageType> = (props: ImageType) => {
   const { image, image: { $, title, url }, render } = props
 
   return <picture className={render.className}
-    // @ts-expect-error
     {...$?.title}>
     {<source media="(max-width: 640px)" srcSet={buildImageRenderUrl(image, render, 'mobile').toString()} />}
     <source media="(min-width: 641px) and (max-width: 1024px)" srcSet={buildImageRenderUrl(image, render, 'tablet').toString()} />

@@ -5,4 +5,4 @@ export const localStorageConfig ={
         ttl: process.env.LOCALSTORAGE_WEBCONFIG_TTL
     }
 }
-console.log("🚀 ~ file: app.ts:8 ~ localStorageConfig:", localStorageConfig)
+// console.log("🚀 ~ file: app.ts:8 ~ localStorageConfig:", localStorageConfig)

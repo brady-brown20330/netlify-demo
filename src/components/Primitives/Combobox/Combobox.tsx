@@ -2,7 +2,7 @@ import { FunctionComponent, useState, useEffect, Fragment } from 'react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Combobox, Transition } from '@headlessui/react'
 
-import { Combobox as ComboboxProps, CbOption } from 'types/components'
+import { Combobox as ComboboxProps, CbOption } from '@/types/components'
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')

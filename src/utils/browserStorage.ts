@@ -6,6 +6,11 @@ import { addToDateNow } from '../utils';
 import { WebConfiguration, CompactWebConfiguration } from '../types/generic';
 
 export const setWebConfig = (webConfig: WebConfiguration) => {
+    if(!localStorageConfig?.webConfiguration?.key) {
+        console.error('TypeError: localStorageConfig.webConfiguration.key is undefined')
+        return undefined
+    }
+
     const compactWebConfig: CompactWebConfiguration = {
         markets: webConfig.markets,
         locale: webConfig.locale,
@@ -14,11 +19,15 @@ export const setWebConfig = (webConfig: WebConfiguration) => {
     };
 
     localStorage.setItem(localStorageConfig.webConfiguration.key, JSON.stringify(compactWebConfig))
+    
 }
 
 export const getWebConfig = (): CompactWebConfiguration | undefined => {
+    if(!localStorageConfig?.webConfiguration?.key) {
+        console.error('TypeError: localStorageConfig.webConfiguration.key is undefined')
+        return undefined
+    }
     const value = localStorage.getItem(localStorageConfig.webConfiguration.key);
-
     if (value) {
         return JSON.parse(value) as CompactWebConfiguration;
     }

@@ -13,7 +13,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 
-import { classNames } from 'utils';
+import { classNames } from '@/utils';
 const currencies = ['USD', 'CAD', 'AUD', 'EUR', 'GBP']
 const navigation = {
   categories: [

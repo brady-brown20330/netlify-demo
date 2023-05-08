@@ -13,13 +13,11 @@ const { $, internal_link, url, children, className } = props;
 
 
   const LinkWrapper = () => <a href={`${href}`} className={className}
-    // @ts-expect-error
     {...$?.url}>
     {children}
   </a>
 
-  const LinkPlaceholder = () => <span href={`${href}`} className={className}
-    // @ts-expect-error
+  const LinkPlaceholder = () => <span className={className}
     {...$?.url}>
     {children}
   </span>
