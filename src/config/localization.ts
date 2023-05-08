@@ -1,16 +1,11 @@
-import getConfig from "next/config";
 const fallbackLocaleName = 'en-us';
 const fallbackLocaleCookieName = "locale";
 
-const {
-    DEFAULT_LOCALE,
-    LOCALE_COOKIE_NAME
- } = getConfig().publicRuntimeConfig
 
 const configuredLocale = () => {
-    if (DEFAULT_LOCALE) {
+    if (process.env.DEFAULT_LOCALE) {
         try {
-            return new Intl.Locale(DEFAULT_LOCALE);
+            return new Intl.Locale(process.env.DEFAULT_LOCALE);
         } catch
         {
             console.warn("Error parsing configured locale, falling back to: ", fallbackLocaleName)
@@ -23,4 +18,4 @@ export const defaultLocale = configuredLocale();
 
 export const defaultLocaleName = configuredLocale().baseName.toLocaleLowerCase();
 
-export const localeCookieName = LOCALE_COOKIE_NAME ? LOCALE_COOKIE_NAME : fallbackLocaleCookieName;
+export const localeCookieName = process.env.LOCALE_COOKIE_NAME ? process.env.LOCALE_COOKIE_NAME : fallbackLocaleCookieName;

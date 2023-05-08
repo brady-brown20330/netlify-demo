@@ -1,13 +1,8 @@
-import getConfig from "next/config"
-
-const {
-    LOCALSTORAGE_WEBCONFIG_KEY,
-    LOCALSTORAGE_WEBCONFIG_TTL
-} = getConfig().publicRuntimeConfig
 
 export const localStorageConfig ={
     webConfiguration : {
-        key: LOCALSTORAGE_WEBCONFIG_KEY,
-        ttl: LOCALSTORAGE_WEBCONFIG_TTL
+        key: process.env.LOCALSTORAGE_WEBCONFIG_KEY,
+        ttl: process.env.LOCALSTORAGE_WEBCONFIG_TTL
     }
 }
+console.log("🚀 ~ file: app.ts:8 ~ localStorageConfig:", localStorageConfig)
