@@ -1,16 +1,18 @@
 import Contentstack from "contentstack";
 import ContentstackLivePreview from "@contentstack/live-preview-utils";
+import getConfig from "next/config";
 
 const {
     CONTENTSTACK_API_KEY,
     CONTENTSTACK_DELIVERY_TOKEN,
     CONTENTSTACK_MANAGEMENT_TOKEN,
-    CONTENTSTACK_STACK_HOST,
     CONTENTSTACK_ENVIRONMENT,
-    CONTENTSTACK_LIVE_PREVIEW,
-    CONTENTSTACK_LIVE_EDIT_TAGS,
-    CONTENTSTACK_REGION
-} = process.env
+    CONTENTSTACK_REGION,
+    CONTENTSTACK_CDN_HOST,
+    isLivePreviewEnabled,
+    isEditButtonsEnabled
+} = getConfig().publicRuntimeConfig;
+
 
 export const initStack = () => {
     try {
@@ -25,7 +27,7 @@ export const initStack = () => {
                     enable: true
                 }
             })
-            CONTENTSTACK_STACK_HOST ? Stack.setHost(CONTENTSTACK_STACK_HOST) : Stack.setHost('cdn.contentstack.io')
+            Stack.setHost(CONTENTSTACK_CDN_HOST)
             return Stack
 
         }
@@ -36,17 +38,21 @@ export const initStack = () => {
 }
 
 ContentstackLivePreview.init({
-	enable: true,
+	enable: isLivePreviewEnabled,
 	ssr: true,
 	stackDetails: {
-		apiKey: process.env.GLOBAL_STACK_API_KEY,
+		apiKey: CONTENTSTACK_API_KEY,
 	}
 });
 
-export const Stack = initStack()
+const Stack = initStack()
 
-export const isLivePreviewEnabled = CONTENTSTACK_LIVE_PREVIEW === 'true';
-export const isEditButtonsEnabled = CONTENTSTACK_LIVE_PREVIEW === 'true' && CONTENTSTACK_LIVE_EDIT_TAGS === 'true';
+export {
+    Stack,
+    isLivePreviewEnabled,
+    isEditButtonsEnabled
+}
+
 // export const extensions = {
 //   assetPresetUid: CONTENTSTACK_EXTENSION_ASSET_PRESET ? CONTENTSTACK_EXTENSION_ASSET_PRESET : ''
 // }
