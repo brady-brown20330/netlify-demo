@@ -47,7 +47,8 @@
           "_source",
           "_esClient",
           "_version",
-          "_metadata"
+          "_metadata",
+          "_"
         ]
       }
     ],

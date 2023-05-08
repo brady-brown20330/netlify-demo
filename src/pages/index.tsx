@@ -8,7 +8,6 @@ import { Generic, Page } from '@/types'
 
 
 export default function Home (entry:Page.Homepage) {
-// console.log("🚀 ~ file: index.tsx:11 ~ Home ~ entry:", entry)
 
     return (<>
         <div
@@ -30,11 +29,14 @@ export default function Home (entry:Page.Homepage) {
 }
 
 export const getServerSideProps = async (context:Generic.serverSideProps)=> {
+    // eslint-disable-next-line no-useless-catch
     try {
         const {locale, resolvedUrl, query} = context
         const entry = await getHomepageEntry(locale, resolvedUrl, query)
+        console.log('🚀 ~ file: index.tsx:36 ~ getServerSideProps ~ entry:', entry)
 
         if (!entry) {
+            console.log('🚀 ~ file: index.tsx:39 ~ getServerSideProps ~ null:', entry=== null)
             return {
                 notFound: true
             }
@@ -45,6 +47,7 @@ export const getServerSideProps = async (context:Generic.serverSideProps)=> {
             }
         }
     } catch (error) {
-        console.error('🚀 ~ file: index.tsx: ~ getServerSideProps ~ error:', error)
+        console.error('🚀 ==============:', error)
+        throw error
     }
 }

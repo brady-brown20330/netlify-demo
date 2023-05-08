@@ -1,6 +1,6 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 /* eslint-disable no-undef */
+import _ from 'lodash'
 import { Stack, isEditButtonsEnabled } from '@/config'
 import { getLocaleCode } from '../utils'
 import { addEditableTags, jsonToHTML } from '@contentstack/utils'
@@ -48,12 +48,20 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
             })
         }
 
+        if (result?.length > 0 && _.isEmpty(result[0]) ) {
+            throw new Error(`
+                Page entry for url: "${entryUrl}" not recived, check whether entry is published \n 
+                locale: ${locale} \n
+                environment: ${process?.env?.CONTENTSTACK_ENVIRONMENT}
+            `)
+        }
+
         isEditButtonsEnabled && addEditableTags(result[0], contentTypeUid, true, locale)
         const data = result[0]
         return data
     }
     catch (error) {
-        console.log('getEntries error', error)
+        throw new Error(error.message)
     }
 }
 
@@ -88,7 +96,7 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
             .includeEmbeddedItems()
             .addParam('include_metadata', 'true')
             .find()
-
+        
         if (jsonRtePath) {
             jsonToHTML({
                 entry: result,
@@ -97,11 +105,23 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
             })
         }
 
+        if (result?.length > 0 && _.isEmpty(result[0]) ) {
+            return null
+            // throw new Error(`
+            //     Page entry for url: "${entryUrl}" not recived, check whether entry is published \n 
+            //     locale: ${locale} \n
+            //     environment: ${process?.env?.CONTENTSTACK_ENVIRONMENT}
+            // `)
+        }
+
+
         isEditButtonsEnabled && addEditableTags(result[0][0], contentTypeUid, true, locale)
         const data = result[0][0]
         return data
     }
     catch (error) {
-        console.log('error>>', error)
+        // console.log('error>>', error)
+        throw new Error(error.message)
+
     }
 }

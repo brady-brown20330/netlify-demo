@@ -22,7 +22,6 @@ const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.Err
 )
 
 function MyApp (props: App.Props) {
-
     const {
         Component,
         pageProps,
