@@ -49,11 +49,7 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
         }
 
         if (result?.length > 0 && _.isEmpty(result[0]) ) {
-            throw new Error(`
-                Page entry for url: "${entryUrl}" not recived, check whether entry is published \n 
-                locale: ${locale} \n
-                environment: ${process?.env?.CONTENTSTACK_ENVIRONMENT}
-            `)
+            return null
         }
 
         isEditButtonsEnabled && addEditableTags(result[0], contentTypeUid, true, locale)
@@ -107,11 +103,6 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
 
         if (result?.length > 0 && _.isEmpty(result[0]) ) {
             return null
-            // throw new Error(`
-            //     Page entry for url: "${entryUrl}" not recived, check whether entry is published \n 
-            //     locale: ${locale} \n
-            //     environment: ${process?.env?.CONTENTSTACK_ENVIRONMENT}
-            // `)
         }
 
 
