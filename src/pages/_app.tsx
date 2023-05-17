@@ -10,8 +10,6 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import '@contentstack/live-preview-utils/dist/main.css'
 import '@/styles/globals.css'
-import withDynamicRendering from '@/HOC/withRouter'
-
 
 const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.ErrorHandlerType) => (
     <div>
