@@ -1,2 +1,2 @@
 export * from './MegaMenu'
-export * from './TopNavigation'
+export * from './Header'

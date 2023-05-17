@@ -1,4 +1,6 @@
 
+import {Footer} from '@/components/Footer'
+import { Header } from '@/components/Header'
 import React from 'react'
 
 function classNames (...classes: string[]) {
@@ -6,25 +8,27 @@ function classNames (...classes: string[]) {
 }
 
 interface SingleColProps {
-  Header?: React.FC
-  Footer?: React.FC
-  Hero?: React.FC
+  header?: any
+  footer?: any
   children: React.ReactNode
 }
 
-const SingleCol: React.FC<SingleColProps> = ({ Header, Footer, Hero, children }: React.PropsWithChildren<SingleColProps>) => {
+const SingleCol: React.FC<SingleColProps> = ({ header, footer, children }: React.PropsWithChildren<SingleColProps>) => {
   
     return (
-        <div className='bg-white'>
-            {/* Navigation */}
-            {/* Hero section */}
+        <>
+            {/* <Header /> */}
 
-            <main className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
+            {/* Navigation */}
+
+
+            <main className='mx-auto dark:text-white dark:bg-black' >
                 {children}
             </main>
 
             {/* footer  */}
-        </div>
+            {/* <Footer /> */}
+        </>
     )
 }
 
