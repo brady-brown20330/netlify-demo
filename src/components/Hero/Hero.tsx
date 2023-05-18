@@ -1,6 +1,6 @@
 const Hero = () => {
     return (<>
-        <div className='relative my-16  max-w-7xl mx-auto'>
+        <div className='relative my-16  max-w-7xl mx-auto p-8 xl:p-0 sm:p-0 lg:p-8 pb-0'>
             <div className='mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8'>
                 <div className='px-6 pb-6 pb-12 pt-4 sm:pb-16 lg:px-0 lg:pt-0 lg:pb-4 lg:col-span-7 xl:col-span-6'>
                     <div className='mx-auto max-w-2xl lg:mx-0'>
@@ -26,7 +26,7 @@ const Hero = () => {
                         </div>
                     </div>
                 </div>
-                <div className='relative lg:col-span-5 lg:-mr-8 xl:absolute xl:inset-0 xl:left-1/2 xl:mr-4'>
+                <div className='relative lg:col-span-5 xl:absolute xl:inset-0 xl:left-1/2'>
                     <img
                         className='xl:aspect-[3] aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full xl:pl-5'
                         src='https://images.unsplash.com/photo-1498758536662-35b82cd15e29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2102&q=80'
@@ -36,7 +36,7 @@ const Hero = () => {
             </div>
         </div>
 
-        <div className='relative my-16 max-w-7xl mx-auto'>
+        <div className='relative my-16 max-w-7xl mx-auto p-8 xl:p-0 sm:p-0 lg:p-8'>
             <div className='mx-auto max-w-7xl lg:grid lg:grid-cols-12'>
                 <div className='lg:col-span-5 xl:col-span-6'>
                     <img
