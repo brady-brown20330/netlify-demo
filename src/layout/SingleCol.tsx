@@ -22,9 +22,9 @@ const SingleCol: React.FC<SingleColProps> = ({ header, footer, children }: React
             {/* Navigation */}
 
 
-            <main className='mx-auto dark:text-white dark:bg-black' >
+            <div className='mx-auto' >
                 {children}
-            </main>
+            </div>
 
             {/* footer  */}
             {/* <Footer /> */}
