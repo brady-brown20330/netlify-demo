@@ -1,7 +1,7 @@
 const Hero = () => {
     return (<>
-        <div className='relative my-16  max-w-7xl sm:px-6 lg:px-8 sm:px-6 lg:px-8 mx-auto'>
-            <div className='mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8'>
+        <div className='relative my-16  max-w-7xl mx-auto'>
+            <div className='mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8'>
                 <div className='px-6 pb-6 pb-12 pt-4 sm:pb-16 lg:px-0 lg:pt-0 lg:pb-4 lg:col-span-7 xl:col-span-6'>
                     <div className='mx-auto max-w-2xl lg:mx-0'>
                         
@@ -36,7 +36,7 @@ const Hero = () => {
             </div>
         </div>
 
-        <div className='relative my-16 max-w-7xl sm:px-6 lg:px-8 mx-auto'>
+        <div className='relative my-16 max-w-7xl mx-auto'>
             <div className='mx-auto max-w-7xl lg:grid lg:grid-cols-12'>
                 <div className='lg:col-span-5 xl:col-span-6'>
                     <img
