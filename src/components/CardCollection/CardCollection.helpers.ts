@@ -31,11 +31,11 @@ export const defaultValues: CardCollection = {
         text: getMockShortParagraphs(1),
         ctas: [{
             text: 'See more',
-            internal_link: [{
-                url: '#',
-                title: getMockTitle(),
-                locale: ''
-            }],
+            // internal_link: [{
+            //     url: '#',
+            //     title: getMockTitle(),
+            //     locale: ''
+            // }],
             url: '?test=xyz',
             color: Color.primary,
             type: CtaType.link
