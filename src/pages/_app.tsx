@@ -41,7 +41,9 @@ function MyApp (props: App.Props) {
         <>
             <Head>
                 {pageProps?.seo?.title ? <title>{pageProps?.seo?.title}</title> : <title>Universal Demo</title>}
-                {pageProps?.seo_and_search && <SEO
+               { console.log('🚀 ~ file: seo.tsx:4 ~ props:', pageProps?.seo)}
+
+                {pageProps?.seo && <SEO
                     {...pageProps.seo}
                     locale={locale}
                 />}
