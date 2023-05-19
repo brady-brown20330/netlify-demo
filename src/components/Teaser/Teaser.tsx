@@ -1,7 +1,7 @@
-import { CtaCollection } from '../Cta'
 import parse from 'html-react-parser'
 import { classNames } from '@/utils'
 import { Teaser as TeaserProps } from '@/types/components'
+import { Link } from '../Link'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     const { $,pre_heading,heading, text, ctas, image, backgroundColor,removeMargin } = props
@@ -27,12 +27,18 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
           focus on quality and reduce our impact. We&apos;re doing our best to delay the inevitable heat-death of the
           universe.
                 </p>
-                <a
-                    href='#'
-                    className='mt-8 block w-full rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto'
+                <Link
+                    url='#'
+                    className='btnSecondary px-8 py-3 mt-8 sm:w-auto'
                 >
           Read our story
-                </a>
+                </Link>
+                <Link
+                    url='#'
+                    className='btnTertiary px-8 py-3 mt-8 sm:w-auto'
+                >
+          Read our story
+                </Link>
             </div>
         </div>
     )

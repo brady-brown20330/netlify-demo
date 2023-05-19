@@ -6,10 +6,10 @@ import { Component } from '@/types'
 export default function RenderComponents (props:any) {
     const { pageComponents } = props
     return (<>
-        {/* <Hero />
-        <ImageAndText />
-        <ImageAndText layout='Image-Text'/>
-        <Teaser /> */}
+        {/* <Hero /> */}
+        {/* <ImageAndText />
+        <ImageAndText layout='Image-Text'/> */}
+        {/* <Teaser /> */}
         {/* <CardCollection /> */}
         {pageComponents?.map((
             component: { 

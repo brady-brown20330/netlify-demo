@@ -1,4 +1,3 @@
-import { CtaCollection } from '../Cta'
 import JsonRte from '../Primitives/JsonRte'
 
 import { Header as HeaderProps } from '@/types/components'
@@ -22,7 +21,6 @@ const CardCollectionHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
           </div>
                 }
             </div>
-            <CtaCollection ctas={ctas} />
         </div>
     )
 }
