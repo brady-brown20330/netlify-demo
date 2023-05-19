@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/do
 export default function MyDocument (props: { locale: string }) {
     const {locale} = props
     return (
-        <Html lang={locale} className='light'>
+        <Html lang={locale}>
             <Head />
             <body className='dark:bg-black'>
                 <Main />

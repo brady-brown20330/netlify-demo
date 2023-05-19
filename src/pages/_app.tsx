@@ -2,15 +2,16 @@
 
 import Head from 'next/head'
 import { AppContext } from 'next/app'
+import { useEffect } from 'react'
 
 import { SingleCol } from '@/layout'
 import { SEO } from '@/components/Seo'
 import { App, Generic } from '@/types'
 import { ErrorBoundary } from 'react-error-boundary'
+import { getEntries } from '@/services'
 
 import '@contentstack/live-preview-utils/dist/main.css'
 import '@/styles/globals.css'
-import { getEntries } from '@/services'
 
 const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.ErrorHandlerType) => (
     <div>
@@ -29,6 +30,12 @@ function MyApp (props: App.Props) {
         header,
         footer
     } = props
+
+    useEffect(()=> {
+        if(document) {
+            document.querySelector('html')?.classList.add(pageProps?.theme?.toLowerCase() || 'light')
+        }
+    }, [pageProps.theme])
 
     return (
         <>
