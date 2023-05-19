@@ -21,9 +21,7 @@ const renderOption = {
   */
 export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jsonRtePath, previewQuery) => {
     try {
-        if (previewQuery) {
-            Stack.livePreviewQuery(previewQuery)
-        }
+        previewQuery ? Stack.livePreviewQuery(previewQuery) : Stack.livePreviewQuery({})
         const entryQuery = Stack.ContentType(contentTypeUid)
             .Query()
             .language(locale)
@@ -51,8 +49,9 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
         if (result?.length > 0 && _.isEmpty(result[0]) ) {
             return null
         }
-
-        isEditButtonsEnabled && addEditableTags(result[0], contentTypeUid, true, locale)
+        result?.[0]?.forEach((entry) => {
+            return addEditableTags(entry, contentTypeUid, true, locale)
+        })
         const data = result[0]
         return data
     }

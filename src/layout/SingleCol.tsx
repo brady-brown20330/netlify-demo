@@ -1,23 +1,22 @@
 
+import React from 'react'
+import * as _ from 'lodash'
 import {Footer} from '@/components/Footer'
 import { Header } from '@/components/Header'
-import React from 'react'
+import { App } from '@/types'
 
 function classNames (...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-interface SingleColProps {
-  header?: any
-  footer?: any
-  children: React.ReactNode
-}
 
-const SingleCol: React.FC<SingleColProps> = ({ header, footer, children }: React.PropsWithChildren<SingleColProps>) => {
-  
+
+const SingleCol: React.FC<App.SingleColLayout> = (
+    { header, footer, children }: React.PropsWithChildren<App.SingleColLayout>
+) => {  
     return (
         <>
-            {/* <Header /> */}
+            {!_.isEmpty(header) && <Header {...header}/>}
 
             {/* Navigation */}
 
@@ -26,8 +25,7 @@ const SingleCol: React.FC<SingleColProps> = ({ header, footer, children }: React
                 {children}
             </div>
 
-            {/* footer  */}
-            {/* <Footer /> */}
+            {!_.isEmpty(footer) && <Footer {...footer}/>}
         </>
     )
 }

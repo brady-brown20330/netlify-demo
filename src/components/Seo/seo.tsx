@@ -73,12 +73,7 @@ export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
             />
             <link
                 rel='icon'
-                href='/plane-logo.svg'
-            />
-            <link
-                type='image/x-icon'
-                rel='shortcut icon'
-                href='/plane-logo.svg'
+                href='/favicon.ico'
             />
         </>
     )

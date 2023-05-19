@@ -1,5 +1,5 @@
 export * from './Link'
-
+export * from './Hero'
 export * from './Image'
 export * from './Teaser'
 export * from './CardCollection'

@@ -10,6 +10,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import '@contentstack/live-preview-utils/dist/main.css'
 import '@/styles/globals.css'
+import { getEntries } from '@/services'
 
 const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.ErrorHandlerType) => (
     <div>
@@ -32,9 +33,9 @@ function MyApp (props: App.Props) {
     return (
         <>
             <Head>
-                {pageProps?.seo_and_search?.title ? <title>{pageProps?.seo_and_search?.title}</title> : <title>Universal Demo</title>}
+                {pageProps?.seo?.title ? <title>{pageProps?.seo?.title}</title> : <title>Universal Demo</title>}
                 {pageProps?.seo_and_search && <SEO
-                    {...pageProps.seo_and_search}
+                    {...pageProps.seo}
                     locale={locale}
                 />}
             </Head>
@@ -42,8 +43,8 @@ function MyApp (props: App.Props) {
                 FallbackComponent={ErrorHandler}
             >
                 <SingleCol
-                    // header={header}
-                    // footer={footer}
+                    header={header}
+                    footer={footer}
                 >
                     <Component {...pageProps} />
                 </SingleCol>
@@ -54,17 +55,17 @@ function MyApp (props: App.Props) {
 
 MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     let appProps = {}
-    const { locale } = router // Will return `fr` for `/fr/*` pages
-    // const header = "await getHeaderRes()";
-    // const footer = "await getFooterRes()";
+    const { locale, query } = router // Will return `fr` for `/fr/*` pages
+    const header = await getEntries('header',locale, [], [], query)
+    const footer = await getEntries('footer',locale, [], [], query)
 
     if (Component.getInitialProps) {
         appProps = await Component.getInitialProps(ctx)
     }
     return {
         appProps,
-        // header,
-        // footer,
+        header: header?.length > 0 ? header[0] : null,
+        footer: footer?.length > 0 ? footer[0] : null,
         locale
     }
 }

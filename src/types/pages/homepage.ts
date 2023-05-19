@@ -1,8 +1,8 @@
 import {CardCollection,Teaser, Image,Cta } from '../components'
-import { Entry } from '../common'
+import { Entry, MappedPreview } from '../common'
 
 export type Homepage = Entry & {
-  content_blocks?: HomepageContentBlocks[]
+  components?: HomepageContentBlocks[]
 }
 
 export interface HomepageContentBlocks {

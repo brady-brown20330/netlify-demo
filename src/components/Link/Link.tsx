@@ -4,12 +4,17 @@ import { buildLinkUrl } from '@/utils'
 import { LinkComponent} from '@/types/components'
 
 const Link: React.FC<LinkComponent> = (props: LinkComponent) => {
-    const { $, internal_link, url, children, className } = props
+    const { $, url, children, className } = props
+    
+    let internal_link, external_link
+    if ( typeof url !== 'string') {
+        internal_link = url
+    } else {
+        external_link = url
+    }
   
-    // const { currentlocaleName } = useLocalization();
 
-    // const href = buildLinkUrl(internal_link, url, currentlocaleName);
-    const href = buildLinkUrl(internal_link, url, 'en-us')
+    const href = buildLinkUrl(internal_link, external_link, 'en-us')
 
 
     const LinkWrapper = () => <a href={`${href}`} className={className}

@@ -1,23 +1,22 @@
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { App } from '@/types'
 
-const navigation = [
-    { name: 'Product', href: '#' },
-    { name: 'Features', href: '#' },
-    { name: 'Marketplace', href: '#' }
-]
 
-export default function Header () {
+export default function Header (props:App.Header) {
+    // console.log('🚀 ~ file: Header.tsx:9 ~ Header ~ props:', props)
+    const {logo, site_url,title} = props
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+
     return (
-        <header className='bg-white'>
-            <nav className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8' aria-label='Global'>
-                <a href='#' className='-m-1.5 p-1.5'>
-                    <span className='sr-only'>Your Company</span>
-                    <img className='h-8 w-auto' src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600' alt='' />
-                </a>
+        <header className='sticky top-0 z-50 bg-white dark:bg-black w-full'>
+            <nav className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 border-b border-gray-200' aria-label='Global'>
+                {logo?.url && <a href={site_url} className='-m-1.5 p-1.5' {...logo?.$?.url}>
+                    {title && <span className='sr-only'>{title}</span>}
+                    <img className='h-8 w-auto' src={logo.url} alt={title || ''} />
+                </a>}
                 <div className='flex lg:hidden'>
                     <button
                         type='button'
@@ -28,15 +27,15 @@ export default function Header () {
                         <Bars3Icon className='h-6 w-6' aria-hidden='true' />
                     </button>
                 </div>
-                <div className='hidden lg:flex lg:gap-x-12'>
+                {/* <div className='hidden lg:flex lg:gap-x-12'>
                     {navigation.map((item) => (
                         <a key={item.name} href={item.href} className='text-sm font-semibold leading-6 text-gray-900'>
                             {item.name}
                         </a>
                     ))}
-                </div>
+                </div> */}
             </nav>
-            <Dialog as='div' className='lg:hidden' open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+            {/* <Dialog as='div' className='lg:hidden' open={mobileMenuOpen} onClose={setMobileMenuOpen}>
                 <div className='fixed inset-0 z-10' />
                 <Dialog.Panel className='fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
                     <div className='flex items-center justify-between'>
@@ -74,7 +73,7 @@ export default function Header () {
                         </div>
                     </div>
                 </Dialog.Panel>
-            </Dialog>
+            </Dialog> */}
         </header>
     )
 }

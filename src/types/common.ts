@@ -41,7 +41,7 @@ export type PageEntry = Entry & {
 }
 
 export type Entry = CommonSystemInfo & {
-  $?: MappedPreview<Entry>
+  $?: MappedPreview<Entry & CommonSystemInfo>
   locale: string
   _in_progress?: boolean
   _owner?: {
@@ -73,7 +73,7 @@ export type Entry = CommonSystemInfo & {
 }
 
 export type Asset = CommonSystemInfo & {
-  $?: MappedPreview<Asset>
+  $?: MappedPreview<CommonSystemInfo & Asset>
   content_type?: string
   dimension?: {
     height: number

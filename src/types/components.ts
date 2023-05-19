@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { ReactNode } from 'react'
+import { Key, ReactNode } from 'react'
 import { Asset, MappedPreview, PageEntry } from './common'
 import { Market } from './generic'
 
@@ -41,22 +41,29 @@ export enum ValidityStatus {
   invalid = 'invalid'
 }
 
+export type Link = {
+  title?:string
+  href?:string
+  $?:MappedPreview<Link>
+} 
+
+
 export interface InternalLink {
-  $?: InternalLink
+  $?: MappedPreview<InternalLink>
   uid?: string
   _content_type_uid?: string
-  url: string
+  url?:string
 }
-export interface Link {
-  $?: MappedPreview<Link>
-  internal_link?: PageEntry[]
-  url?: string
+export interface pageLink {
+  $?: MappedPreview<pageLink>
+  // internal_link?: PageEntry[]
+  url?: string|InternalLink[]
 }
 
 export interface CtaCollection {
   ctas?: Cta[]
 }
-export type Cta = Link & {
+export type Cta = pageLink & {
   $?: Cta
   text: string
   type: CtaType
@@ -117,6 +124,21 @@ export interface Header {
 //   categories: Category[],
 // }
 
+
+export interface Hero {
+  key?:Key|null
+  heading?:string
+  image:Asset
+  image_alt_text:string
+  image_position?:string
+  paragraph:string
+  cta: {
+    title?:string
+    landing_page?:InternalLink[]
+  }
+  $?:MappedPreview<Hero>
+}
+
 // ######################### Teaser  #########################
 export interface Teaser {
   $?: Teaser
@@ -157,7 +179,7 @@ export interface ImageCardText {
   $?: ImageCardText
   title?: string
   description?: string
-  link?: Link
+  link?: pageLink
 }
 
 export type CardImage = Asset & {
@@ -177,7 +199,7 @@ export interface ComponentValidator {
 
 
 // ######################### LinkComponent  #########################
-export interface LinkComponent extends Link  {
+export interface LinkComponent extends pageLink  {
   children?: ReactNode;
   className?: string;
 }

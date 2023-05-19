@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
-import { PageEntry } from '../types/common'
+import { InternalLink } from '../types/components'
 
-export const buildLinkUrl = (internalLink?: PageEntry[], url?: string, locale?: string) => {
+export const buildLinkUrl = (internalLink?: InternalLink[], url?: string, locale?: string) => {
     let result = ''
 
     if (internalLink && internalLink.length) {

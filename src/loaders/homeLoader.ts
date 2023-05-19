@@ -5,7 +5,7 @@ import { imageCardsReferenceIncludes, imageCardsJsonRtePaths, teaserRtePaths, te
 import {  prefixReferenceIncludes } from '@/utils'
 import { getEntryByUrl } from '@/services'
 
-const newRefUids =prefixReferenceIncludes('content_blocks',
+const newRefUids =prefixReferenceIncludes('components',
     ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes),
     ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes)
 )

@@ -18,3 +18,10 @@ body {
   color: rgb(var(--foreground-rgb));
   background:rgb(var(--background-rgb));
 }
+
+@layer components {
+  .container {
+    @apply relative max-w-7xl mx-auto;
+  }
+}
+
