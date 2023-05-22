@@ -6,7 +6,7 @@ const Hero = (props:Component.Hero) => {
     const { heading, paragraph, image_position, cta, $ } = props
 
     const TextBlock = () => (
-        <div className={`mx-auto max-w-2xl ${image_position === 'left' ? 'lg:mx-0 ' : 'lg:ml-8' }`}>
+        <div className={`mx-auto max-w-2xl ${image_position === 'Left' ? 'lg:ml:0 ' : 'lg:ml-8' }`}>
                         
             {heading && <h1 className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 sm:text-6xl dark:text-white'>
                 {heading}
@@ -36,7 +36,7 @@ const Hero = (props:Component.Hero) => {
                 </div>
                 <div className='relative lg:col-span-5 xl:absolute xl:inset-0 xl:left-1/2'>
                     <img
-                        className='xl:aspect-[3] aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full xl:pl-5'
+                        className='xl:aspect-[3] aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full xl:pl-5 dark:bg-black'
                         src='https://images.unsplash.com/photo-1498758536662-35b82cd15e29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2102&q=80'
                         alt=''
                     />

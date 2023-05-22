@@ -81,49 +81,16 @@ export interface ImageRender {
   // noLazyLoad?: boolean
 }
 
-export interface Header {
-  $?: Header
-  title?: string
-  text?: string
-  ctas?: Cta[]
+export interface ImageAndText {
+  heading?:string
+  image: {
+    asset: Asset
+  }
+  image_alt_text:string
+  image_position?:string
+  paragraph?:string
+  $?:MappedPreview<ImageAndText>
 }
-
-// export interface TextAsset {
-//   title: string,
-//   video_url?: string,
-//   text_align: string,
-//   subtitle: string,
-//   paragraph: string,
-//   image_grid_column?: string,
-//   image?: Image
-// }
-
-// export interface TextMultiImage {
-//   title: string,
-//   theme?: string,
-//   paragraph: string,
-//   images: Image[],
-//   cta?: Cta
-// }
-
-// export interface TitleText {
-//   title: string,
-//   paragraph: string
-// }
-
-// export interface Category {
-//   title: string
-//   uid?: string,
-//   url: string
-//   category_thumbnail: any
-// }
-
-// export interface CategoryList {
-//   title: string,
-//   description: string,
-//   categories: Category[],
-// }
-
 
 export interface Hero {
   key?:Key|null
@@ -141,15 +108,19 @@ export interface Hero {
 
 // ######################### Teaser  #########################
 export interface Teaser {
-  $?: Teaser
-  pre_heading?: string
+  $?: MappedPreview<Teaser>
   heading?: string
-  text?: string
-  ctas?: Cta[]
-  image?: {
-    image: Asset
-    image_position: ImagePosition
+  paragraph?: string
+  cta?: {
+    title: string
+    landing_page: InternalLink[]
   }
+  image?: {
+    asset?: {
+      url:string
+    }
+  }
+    
   backgroundColor?: BackgroundColor
   removeMargin?: boolean
 }
@@ -160,7 +131,7 @@ export interface Teaser {
 
 export interface CardCollection {
   $?: MappedPreview<CardCollection>
-  header?: Header[]
+  header?: any[]
   cards?: ImageCardItem[] | []
   styles?: {
     text_position: TextPosition
@@ -229,8 +200,8 @@ export interface JsonRte {
 }
 
 export type Image = {
-  image: Asset
-  render: ImageRender
+  asset: Asset
+  metadata: ImageRender
 }
 
 // ######################### PRIMITIVES END #########################

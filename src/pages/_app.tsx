@@ -2,7 +2,7 @@
 
 import Head from 'next/head'
 import { AppContext } from 'next/app'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { SingleCol } from '@/layout'
 import { SEO } from '@/components/Seo'
@@ -33,16 +33,15 @@ function MyApp (props: App.Props) {
 
     useEffect(()=> {
         if(document) {
-            document.querySelector('html')?.classList.add(pageProps?.theme?.toLowerCase() || 'light')
+            pageProps?.theme && document.querySelector('html')?.classList.add(pageProps?.theme?.toLowerCase() || 'light')
         }
-    }, [pageProps.theme])
+    }, [pageProps?.theme])
 
     return (
         <>
             <Head>
                 {pageProps?.seo?.title ? <title>{pageProps?.seo?.title}</title> : <title>Universal Demo</title>}
-               { console.log('🚀 ~ file: seo.tsx:4 ~ props:', pageProps?.seo)}
-
+                
                 {pageProps?.seo && <SEO
                     {...pageProps.seo}
                     locale={locale}

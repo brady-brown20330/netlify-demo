@@ -5,23 +5,26 @@ import { Component } from '@/types'
 
 export default function RenderComponents (props:any) {
     const { pageComponents } = props
+    // console.log('🚀 ~ file: index.tsx:8 ~ RenderComponents ~ pageComponents:', pageComponents)
     return (<>
         {/* <Hero /> */}
-        {/* <ImageAndText />
-        <ImageAndText layout='Image-Text'/> */}
         {/* <Teaser /> */}
         {/* <CardCollection /> */}
         {pageComponents?.map((
             component: { 
-                teaser: JSX.IntrinsicAttributes; 
+                teaser: Component.Teaser; 
                 card_collection: JSX.IntrinsicAttributes; 
-                hero: Component.Hero
+                hero: Component.Hero;
+                image_and_text:Component.ImageAndText
         }, key: number) => {
             if (component.hero) {
                 return <Hero key={`component-${key}`} {...component.hero} />
             }
             if (component.teaser) {
                 return <Teaser key={`component-${key}`} {...component.teaser} />
+            }
+            if (component.image_and_text) {
+                return <ImageAndText key={`component-${key}`} {...component.image_and_text} />
             }
             if (component.card_collection) {
                 return <CardCollection key={`component-${key}`} {...component.card_collection} />

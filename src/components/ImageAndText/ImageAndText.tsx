@@ -1,26 +1,26 @@
-type ImageAndTextProps = {
-    layout?:string
-}
-export function ImageAndText ({layout}:ImageAndTextProps) {
+import { Component } from '@/types'
 
+export function ImageAndText ({$,heading, paragraph ,image, image_alt_text, image_position }:Component.ImageAndText) {
+    console.log('------------', image)
     return (
         <div className='relative py-16 px-8 mx-auto bg-[#F0F3F7] dark:bg-black'>
-            <div className={`flex container ${layout === 'Image-Text' ? 'flex-col-reverse' : 'flex-col'}`}>
+            <div 
+                className={`flex container ${image_position === 'Top' ? 'flex-col-reverse' : 'flex-col'}`}
+                {...$?.heading}
+            >
                 <div className='max-w-5xl lg:mx-0'>
-                    <h2 className='text-3xl font-bold tracking-tight dark:text-white sm:text-4xl'>Stay on top of customer support</h2>
-                    <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
-            Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-            accusamus quisquam.Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-            accusamus quisquam.
-                    </p>
+                    {heading && <h2 className='text-3xl font-bold tracking-tight dark:text-white sm:text-4xl'>{heading}</h2>}
+                    {paragraph && <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
+                        {paragraph}
+                    </p>}
                 </div>
-                <div className={`relative overflow-hidden ${layout === 'Image-Text' ? 'mb-8' : 'mt-8'}`}>
+                <div className={`relative overflow-hidden ${image_position === 'Top' ? 'mb-8' : 'mt-8'}`}>
                     <div className='mx-auto'>
-                        <img
-                            src='https://tailwindui.com/img/component-images/dark-project-app-screenshot.png'
+                        {image?.asset?.url && <img
+                            src={image.asset.url}
                             alt='App screenshot'
                             className='h-[200px] w-full bg-white/5 shadow-2xl ring-1 ring-white/10'
-                        />
+                        />}
                     </div>
                 </div>
             </div>

@@ -1,19 +1,14 @@
 import _ from 'lodash'
 // import { LoaderFunctionArgs, Params } from "react-router-dom";
 
-import { imageCardsReferenceIncludes, imageCardsJsonRtePaths, teaserRtePaths, teaserReferenceIncludes } from '@/components'
+// import {  teaserReferenceIncludes } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
 import { getEntryByUrl } from '@/services'
 
-const newRefUids =prefixReferenceIncludes('components',
-    ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes),
-    ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes)
-)
-
-const jsonRtePaths = prefixReferenceIncludes('content_blocks',
-    ...prefixReferenceIncludes('card_collection', ...imageCardsJsonRtePaths),
-    ...prefixReferenceIncludes('teaser', ...teaserRtePaths)
-)
+// const newRefUids =prefixReferenceIncludes('components',
+//     ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes),
+//     ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes)
+// )
 
 export const getHomepageEntry = (locale: string | undefined, cmsUrlPath: string | undefined, query: any) => {
     return getEntryByUrl('home_page',locale, '/', [], [], query)
