@@ -28,12 +28,6 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
                 >
                     {cta.title}
                 </Link>}
-                {/* <Link
-                    url='#'
-                    className='btnTertiary px-8 py-3 mt-8 sm:w-auto'
-                >
-          Read our story
-                </Link> */}
             </div>
         </div>
     )

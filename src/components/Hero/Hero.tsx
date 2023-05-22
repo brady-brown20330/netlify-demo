@@ -3,7 +3,7 @@ import { Component } from '@/types'
 import { Link } from '../Link'
 
 const Hero = (props:Component.Hero) => {
-    const { heading, paragraph, image_position, cta, $ } = props
+    const { heading, paragraph, image_position, cta, $, image_alt_text } = props
 
     const TextBlock = () => (
         <div className={`mx-auto max-w-2xl ${image_position === 'Left' ? 'lg:ml:0 ' : 'lg:ml-8' }`}>
@@ -38,7 +38,7 @@ const Hero = (props:Component.Hero) => {
                     <img
                         className='xl:aspect-[3] aspect-[3/2] w-full bg-gray-50 object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full xl:pl-5 dark:bg-black'
                         src='https://images.unsplash.com/photo-1498758536662-35b82cd15e29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2102&q=80'
-                        alt=''
+                        alt={image_alt_text || ''}
                     />
                 </div>
             </div>
@@ -52,7 +52,7 @@ const Hero = (props:Component.Hero) => {
                         <img
                             className='xl:aspect-[3] aspect-[3/2] w-full bg-gray-50 object-cover lg:inset-0 lg:aspect-auto lg:h-full'
                             src='https://images.unsplash.com/photo-1498758536662-35b82cd15e29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2102&q=80'
-                            alt=''
+                            alt={image_alt_text || ''}
                         />
                     </div>
                     <div className='relative lg:col-span-7 xl:col-span-6 px-6 pb-6 pb-12 pt-4 sm:pt-16 lg:px-0 lg:pt-0 lg:pb-8'>
