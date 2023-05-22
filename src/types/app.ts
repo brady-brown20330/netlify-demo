@@ -1,30 +1,45 @@
-import type {  AppProps } from 'next/app'
+import type { AppProps } from 'next/app'
 import { Asset, Entry, MappedPreview } from './common'
 import { Link } from './components'
 
 export interface Header extends Entry {
-  logo?:Asset
-  site_url?:string
-  $?:MappedPreview<Header>
+  logo?: Asset;
+  site_url?: string;
+  navigation?: Navigation|null;
+  $?: MappedPreview<Header>;
+}
+export interface Navigation extends Entry {
+  main_menu: {
+    main_link?: Link;
+    sub_menu?: {
+      sub_link?: Link;
+      child_menu?: {
+        child_link?: Link;
+      }[];
+    }[];
+  }[];
+  $?: MappedPreview<Header>;
 }
 export interface Footer extends Entry {
   main_menu: {
-    main_link?: Link
+    main_link?: Link;
     sub_menu?: {
-      link?: Link
-    }[]
-  }[]
-  $?:MappedPreview<Footer>
+      link?: Link;
+    }[];
+  }[];
+  $?: MappedPreview<Footer>;
 }
 
 export type SingleColLayout = {
-  header?:Header|null
-  footer?: Footer
-  children: React.ReactNode
-}
+  header?: Header | null;
+  navigation?: Navigation | null;
+  footer?: Footer;
+  children: React.ReactNode;
+};
 
 export interface Props extends AppProps {
-  locale:string,
+  locale: string;
   header: Header;
+  navigation: Navigation;
   footer: Footer; //need to define
 }
