@@ -11,9 +11,9 @@ const CardTextOverImage: React.FC<ImageCardItem> = (props: ImageCardItem) => {
   
     return (<Link {...link}>
         <div className='group aspect-w-2 aspect-h-1 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2'>
-            {image
+            {/* {image
         && <Image image={image} render={{ className: '', ariaHidden: 'true', width: count? 1152/count: 1152 ,  crop: '4:4,smart' }} />
-            }
+            } */}
             <div aria-hidden='true' className='bg-gradient-to-b from-transparent to-black opacity-50' />
             <div className='flex items-end p-6'>
                 <div>
