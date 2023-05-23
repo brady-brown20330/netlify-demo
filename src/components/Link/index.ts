@@ -1,1 +1,1 @@
-export * from './Link'
+export {LinkComponent as Link} from './Link'

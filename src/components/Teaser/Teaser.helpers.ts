@@ -7,7 +7,7 @@ export const isTextValid = (obj: Teaser): boolean => {
 }
 
 export const teaserReferenceIncludes = [
-    'cta.landing_page'
+    'cta.link'
 ]
 
 

@@ -1,21 +1,60 @@
 import _ from 'lodash'
 
-import { buildImageRenderUrl } from '@/utils'
+import { resolvePresetByPresetName  } from '@/utils'
 
-import { Image as ImageType } from '@/types/components'
+import { ImageComponent } from '@/types/components'
+import { useEffect, useState } from 'react'
 
-const Image: React.FC<ImageType> = (props: ImageType) => {
-    const { asset, metadata} = props
+
+const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
+    const { image, image_alt_text, className} = props
+    const [device, setDevice] = useState<string>('')
+
+    const renderImage = (deviceT:string) => {
+        if(image?.asset && image?.metadata?.extension_uid) {
+            const { asset, metadata } = image
+            const resolvedImg = resolvePresetByPresetName({
+                asset,
+                presetName: deviceT,
+                extension_uid: metadata.extension_uid
+            })
+            if(resolvedImg && resolvedImg?.url) {
+                return resolvedImg.url
+            } else {
+                return asset?.url
+            }
+        } else {
+            console.debug ('Asset could not be resolved')
+        }
+        
+    }
+
+    const setBreakPoint = () => {
+        if (window?.innerWidth < 640) {
+            setDevice('mobile')
+        } else if (window?.innerWidth > 641 && window?.innerWidth < 1024) {
+            setDevice('tablet')
+        } else {
+            setDevice('desktop')
+        }
+    }
+
+    useEffect(() => {
+        setBreakPoint()
+        window?.addEventListener('resize', setBreakPoint)
+    }, [])
+   
 
     return <>
-
+        {/* {<source media='(max-width: 640px)' srcSet={renderImage('mobile')} />}
+        <source media='(min-width: 641px) and (max-width: 856px)' srcSet={renderImage('tablet')} /> */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img 
+            src={renderImage(device)}
+            alt={image_alt_text || ''}
+            className={className || ''}
+        />
     </>
-    // return <picture className={render.className}
-    //     {...$?.title}>
-    //     {<source media='(max-width: 640px)' srcSet={buildImageRenderUrl(image, render, 'mobile').toString()} />}
-    //     <source media='(min-width: 641px) and (max-width: 1024px)' srcSet={buildImageRenderUrl(image, render, 'tablet').toString()} />
-    //     <img src={buildImageRenderUrl(image, render, 'desktop').toString()} alt={title} />
-    // </picture>
 }
 
 export { Image }

@@ -2,21 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-rgb: 0, 0, 0;
-  }
-}
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background:rgb(var(--background-rgb));
+  @apply bg-white dark:bg-black
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6, span, p  {
+      @apply text-black dark:text-white
+  }
 }
 
 @layer components {
@@ -27,10 +21,10 @@ body {
     @apply rounded-md bg-indigo-600 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600
   }
   .btnSecondary {
-    @apply block w-full rounded-md border border-transparent bg-white text-base font-medium text-gray-900 hover:bg-gray-100
+    @apply block w-full rounded-md border border-transparent bg-white !text-black text-base font-medium text-gray-900 hover:bg-gray-100
   }
   .btnTertiary{
-    @apply block w-full rounded-md border border-transparent bg-black text-base font-medium text-gray-100 hover:opacity-80
+    @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-medium text-gray-100 hover:opacity-80
   }
 }
 

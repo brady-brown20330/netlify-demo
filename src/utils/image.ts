@@ -1,73 +1,283 @@
-import _ from 'lodash'
+import { Asset } from '@/types/common'
 
-import { extensions } from '../config/contentstack'
-
-import { Asset } from '../types/common'
-import { ImageRender } from '../types/components'
-import { AssetMetadata } from '../types/extensions'
-
-export const buildImageRenderUrl = (asset: Asset, render: ImageRender, presetName?: string) => {
-
-    const assetUrl = new URL(asset.url)
-    const preset = getImagePreset(asset, presetName)
-
-    if (render.disableUpscale === undefined || render.disableUpscale) {
-        assetUrl.searchParams.append('disable', 'upscale')
-    }
-    //only applies this property to reduce the image size
-    if (render.width && asset.dimension && asset.dimension?.width > render.width) {
-        assetUrl.searchParams.append('width', render.width.toString())
-    }
-
-    //Only applyed if there is no preset or thre is a preset but no width - to prevent overriding the preset settings but still reducing the total image size
-    if (render.height && asset?.dimension?.height && asset.dimension.height > render.height && (!preset || render.width)) {
-        assetUrl.searchParams.append('height', render.height.toString())
-    }
-
-    // Don't apply if there is a preset
-    if ((render.auto === undefined || render.auto) && !preset) {
-        assetUrl.searchParams.append('auto', 'webp')
-    }
-    if (render.crop && !preset) {
-        assetUrl.searchParams.append('crop', render.crop)
-    }
-    if (render.dpr) {
-        assetUrl.searchParams.append('dpr', render.dpr.toString())
-    }
-
-    //Apply the preset parameters
-    if (preset) {
-        const params = preset['query-params'].split('&')
-        _.forEach(params, (val) => {
-            const keyVal = val.split('=')
-
-            //TODO: workaround - check on ticket https://contentstack.atlassian.net/browse/MKT-1557
-            if (!_.isEqual(keyVal[0], 'width') && !_.isEqual(keyVal[0], 'height')) {
-                assetUrl.searchParams.append(keyVal[0], keyVal[1])
-            }
-        })
-    }
-    return assetUrl
+const filterBGColor = (color:string) => {
+    return color[0] === '#' ? color.slice(1) :color
 }
-
-export const getAssetMetadata = (asset: Asset, extensionId: string) => {
-    const { _metadata } = asset
-    if (_.has(_metadata?.extensions, extensionId)) {
-        return _metadata?.extensions[extensionId][0] as AssetMetadata
-    }
-
-    return undefined
+const alignColumn:any = {
+    start: 'left',
+    end: 'right',
+    center: 'center'
 }
-
-export const getImagePreset = (asset: Asset, presetName?: string) => {
-    if (presetName && extensions?.assetPresetUid) {
-        const assetMeta = getAssetMetadata(asset, extensions.assetPresetUid)
-        if (assetMeta?.presets) {
-            if (assetMeta.presets && assetMeta.presets.length) {
-                return _.find(assetMeta.presets, ['name', presetName])
-            }
+const alignRow:any = {
+    start: 'top',
+    end: 'bottom',
+    center: 'center'
+}
+const getImageURL = (src:any, options:any) => {
+    let newsrc = src
+    let queryParams = ''
+    if (options.transform) {
+        queryParams += getTranformParams(options.transform)
+    }
+    if (options['image-type']) {
+        queryParams += `&format=${options['image-type']}`
+    }
+    if (options.quality) {
+        queryParams += `&quality=${options.quality}`
+    }
+    if (options.effects) {
+        queryParams += getEffectsParams(options.effects)
+    }
+    if (options.overlay) {
+        if(options.overlay.overlay){
+            const pathName = new URL(options.overlay.overlay).pathname
+            queryParams+= `&overlay=${pathName}`
+        }
+        if(options.overlay?.['overlay-align']){
+            const alignPosition:any = options.overlay?.['overlay-align'].split(',')
+            const align = `${alignColumn[alignPosition[0]]},${alignRow[alignPosition[1]]}`
+            queryParams+= `&overlay-align=${align}`
+        }
+        if(options.overlay?.['overlay-repeat'] && options.overlay?.['overlay-repeat'] !== 'none'){
+            queryParams+= `&overlay-repeat=${options.overlay?.['overlay-repeat']}`
+        }
+        if(options.overlay?.['overlay-height']){
+            queryParams+= `&overlay-height=${options.overlay?.['overlay-height']}`
+        }
+        if(options.overlay?.['overlay-width']){
+            queryParams+= `&overlay-width=${options.overlay?.['overlay-width']}`
         }
     }
+    if(options.crop){
+        queryParams+= `&crop=${options.crop.width},${options.crop.height},x${options.crop.x},y${options.crop.y}`
+    }
+    if(options.frame){
+        let padQuery = ''
+        if(options?.frame?.padding){
+            if(typeof options?.frame?.padding === 'string'){
+                padQuery = `&pad=${options?.frame?.padding}`
+            }else{
+                padQuery = `&pad=${options?.frame?.padding?.top},${options?.frame?.padding?.right},${options?.frame?.padding?.bottom},${options?.frame?.padding?.left}`
+            }
+        }
+        if(options?.frame?.colorCode){
+            padQuery += `&bg-color=${filterBGColor(options?.frame?.colorCode)}`
+        }
+        queryParams+= padQuery
+    }
+    if (queryParams) {
+        if (newsrc.indexOf('?') > -1) {
+            newsrc = newsrc + queryParams
+        } else {
+            newsrc = `${src}?${queryParams.slice(1)}`
+        }
+    }
+    return newsrc
+}
+const getImageStyles = (options:any) => {
+    const styles :any = {}
+    if (options?.transform?.rotate) {
+        styles.transform = `scale(${1 + (Math.abs(Math.ceil((options?.transform?.rotate || 0) / 10))) / 10}) rotate(${options?.transform?.rotate || 0}deg)`
+    }
+    return styles
+}
+const getEffectsParams = (effects:any) => {
+    let params = ''
+    if (!(effects && (typeof effects === 'object') && Object.keys(effects).length > 0)) {
+        return params
+    }
+    if (effects.brightness) {
+        params += `&brightness=${effects.brightness}`
+    }
+    if (effects.contrast) {
+        params += `&contrast=${effects.contrast}`
+    }
+    if (effects.saturate) {
+        params += `&saturation=${effects.saturate}`
+    }
+    if (effects.blur) {
+        params += `&blur=${effects.blur}`
+    }
+    if (effects.sharpen) {
+        params += `&sharpen=a${effects.sharpen?.amount || 0},r${effects.sharpen?.radius || 1},t${effects.sharpen?.threshold || 0}`
+    }
+    return params
+}
 
+const getTranformParams = (transformVal:any) => {
+    let params = ''
+    if (transformVal.height) {
+        params += `&height=${transformVal.height}`
+    }
+    if (transformVal.width) {
+        params += `&width=${transformVal.width}`
+    }
+    if (transformVal['flip-mode']) {
+        if (transformVal['flip-mode'] === 'both') {
+            params += `&orient=${3}`
+        }
+        if (transformVal['flip-mode'] === 'horiz') {
+            params += `&orient=${2}`
+        }
+        if (transformVal['flip-mode'] === 'verti') {
+            params += `&orient=${4}`
+        }
+    }
+    return params
+}
+
+type resolvePresetParams = {
+    asset:Asset,
+    presetName?:string
+    extension_uid:string
+    presetUID?:string
+}
+/**
+ * @param {object} asset
+ * @param {string} presetName
+ * @param {string} extension_uid
+ * @returns {object}
+ * @description This function will resolve the preset for the asset and update url
+ *  @example const newAsset = resolvePresetByPresetName({asset:asset, presetName:"Blog Preset", extension_uid:"*****************"})
+ * 
+ */
+export const resolvePresetByPresetName = ({ asset, presetName, extension_uid }:resolvePresetParams) => {
+    const preset = fetchPresetByPresetName({
+        asset,
+        presetName,
+        extension_uid
+    })
+
+    if (preset && preset.options) {
+        asset.url = getImageURL(asset.url, preset.options)
+        return asset
+    }
     return undefined
+}
+
+/**
+ * @param {object} asset
+ * @param {string} presetName
+ * @param {string} extension_uid
+ * @returns {object}
+ * @description This function find and return the preset for the asset
+ *  @example const preset = fetchPresetByPresetName({asset:asset, presetName:"Blog Preset", extension_uid:"*****************"})
+ */
+export const fetchPresetByPresetName = ({ asset, extension_uid, presetName }:resolvePresetParams) => {
+    let allPresets:any = []
+    if (!presetName) {
+        return {}
+    }
+    if (!extension_uid) {
+        return {}
+    }
+    if (asset && asset._metadata && asset._metadata.extensions && asset._metadata.extensions[extension_uid]) {
+        const metadatas = asset._metadata.extensions[extension_uid]
+        const local_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'local') || {}
+        if (local_metadata.presets) {
+            allPresets = [...allPresets, ...local_metadata.presets]
+        }
+        const global_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'content_type') || {}
+        if (global_metadata.presets) {
+            allPresets = [...allPresets, ...global_metadata.presets]
+        }
+    }
+    const preset = allPresets.find((elem:any) => elem.name === presetName)
+    return preset
+}
+
+/**
+ * @param {object} asset
+ * @param {string} presetName
+ * @param {string} extension_uid
+ * @returns {object}
+ * @description This function will resolve the preset for the asset and return styles 
+ * 
+ *  @example const imgStyles = resolvePresetStylesByPresetName({asset:asset, presetName:"Blog Preset", extension_uid:"*****************"})
+ */
+export const resolvePresetStylesByPresetName = ({ asset, presetName, extension_uid }:resolvePresetParams) => {
+    let options = {}
+    const preset = fetchPresetByPresetName({
+        asset,
+        presetName,
+        extension_uid
+    })
+    if (preset.options) {
+        options = getImageStyles(preset.options)
+    }
+    return options
+}
+
+/**
+ * @param {object} asset
+ * @param {string} presetUID
+ * @param {string} extension_uid
+ * @returns {object}
+ * @description This function will resolve the preset for the asset and update url
+ *  @example const newAsset = resolvePresetByPresetUID({asset:asset, presetUID:"*****************", extension_uid:"*****************"})
+ */
+export const resolvePresetByPresetUID = ({ asset, presetUID, extension_uid }:resolvePresetParams) => {
+    const preset = fetchPresetByPresetUID({
+        asset,
+        presetUID,
+        extension_uid
+    })
+    if (preset && preset.options) {
+        asset.url = getImageURL(asset.url, preset.options)
+    }
+    return asset
+}
+
+/**
+ * @param {object} asset
+ * @param {string} presetUID
+ * @param {string} extension_uid
+ * @returns {object}
+ * @description This function find and return the preset for the asset
+ *  @example const presets = fetchPresetByPresetUID({asset:asset, presetUID:"*****************", extension_uid:"*****************"})
+ */
+export const fetchPresetByPresetUID = ({ asset, extension_uid, presetUID }:resolvePresetParams) => {
+    let allPresets:any = []
+    if (!presetUID) {
+        return {}
+    }
+    if (!extension_uid) {
+        return {}
+    }
+    if (asset && asset._metadata && asset._metadata.extensions && asset._metadata.extensions[extension_uid]) {
+        const metadatas = asset._metadata.extensions[extension_uid]
+        const local_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'local') || {}
+        if (local_metadata.presets) {
+            allPresets = [...allPresets, ...local_metadata.presets]
+        }
+        const global_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'content_type') || {}
+        if (global_metadata.presets) {
+            allPresets = [...allPresets, ...global_metadata.presets]
+        }
+    }
+    const preset = allPresets.find((elem:any) => elem.uid === presetUID)
+    return preset
+}
+
+
+/**
+ * @param {object} asset
+ * @param {string} presetName
+ * @param {string} extension_uid
+ * @returns {object}
+ * @description This function will resolve the preset for the asset and return styles 
+ * 
+ *  @example const imgStyles = resolvePresetStylesByPresetUID({asset:asset, presetUID:"*****************", extension_uid:"*****************"})
+ */
+export const resolvePresetStylesByPresetUID = ({ asset, presetUID, extension_uid }:resolvePresetParams) => {
+    let options = {}
+    const preset = fetchPresetByPresetUID({
+        asset,
+        presetUID,
+        extension_uid
+    })
+    if (preset.options) {
+        options = getImageStyles(preset.options)
+    }
+    return options
 }
