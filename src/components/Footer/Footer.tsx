@@ -1,5 +1,6 @@
 import { App } from '@/types'
 import React from 'react'
+import { Link } from '../Link'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const { main_menu , $} = props
@@ -19,11 +20,14 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                     key={`navItem-${index}`}
                                     className={`mb-16 ${main_menu?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
                                 > 
-                                    {/*  */}
                                     {navItem?.main_link?.title && <h3 
                                         className='text-md font-medium text-gray-900 dark:text-white'
                                     >
-                                        {navItem.main_link.title}
+                                        <Link
+                                            url={navItem?.main_link?.href}
+                                        >
+                                            {navItem.main_link.title}
+                                        </Link>
                                     </h3>}
                                     <ul 
                                         role='list' 
@@ -33,11 +37,12 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                             item?.link?.title && <li
                                                 key={`submenu-${index}-${i}`}
                                                 className='text-sm'>
-                                                <a 
-                                                    href={item.link.href}
-                                                    className='text-gray-500 hover:text-gray-600 dark:text-white'>
+                                                <Link
+                                                    url={item?.link?.href}
+                                                    className='text-gray-500 hover:text-gray-600 dark:text-white'
+                                                >
                                                     {item.link.title}
-                                                </a>
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>
