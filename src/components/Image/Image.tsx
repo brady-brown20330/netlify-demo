@@ -1,21 +1,19 @@
 import _ from 'lodash'
 
-import { resolvePresetByPresetName  } from '@/utils'
+import { resolveAssetPreset  } from '@/utils'
 
 import { ImageComponent } from '@/types/components'
-import { useEffect, useState } from 'react'
 
 
 const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
     const { image, image_alt_text, className} = props
-    const [device, setDevice] = useState<string>('')
 
-    const renderImage = (deviceT:string) => {
+    const renderImage = () => {
         if(image?.asset && image?.metadata?.extension_uid) {
             const { asset, metadata } = image
-            const resolvedImg = resolvePresetByPresetName({
+
+            const resolvedImg = resolveAssetPreset({
                 asset,
-                presetName: deviceT,
                 extension_uid: metadata.extension_uid
             })
             if(resolvedImg && resolvedImg?.url) {
@@ -28,21 +26,6 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
         }
         
     }
-
-    const setBreakPoint = () => {
-        if (window?.innerWidth < 640) {
-            setDevice('mobile')
-        } else if (window?.innerWidth > 641 && window?.innerWidth < 1024) {
-            setDevice('tablet')
-        } else {
-            setDevice('desktop')
-        }
-    }
-
-    useEffect(() => {
-        setBreakPoint()
-        window?.addEventListener('resize', setBreakPoint)
-    }, [])
    
 
     return <>
@@ -50,7 +33,7 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
         <source media='(min-width: 641px) and (max-width: 856px)' srcSet={renderImage('tablet')} /> */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
-            src={renderImage(device)}
+            src={renderImage()}
             alt={image_alt_text || ''}
             className={className || ''}
         />

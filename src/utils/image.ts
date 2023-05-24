@@ -1,4 +1,4 @@
-import { Asset } from '@/types/common'
+import { resolvePresetParams } from '@/types/extensions'
 
 const filterBGColor = (color:string) => {
     return color[0] === '#' ? color.slice(1) :color
@@ -126,12 +126,11 @@ const getTranformParams = (transformVal:any) => {
     return params
 }
 
-type resolvePresetParams = {
-    asset:Asset,
-    presetName?:string
-    extension_uid:string
-    presetUID?:string
+const resolvePresetName = ({asset , extension_uid}:resolvePresetParams) => {
+    const presetName = asset?._metadata?.extensions?.[extension_uid]?.[0]?.presets?.[0]?.name
+    return presetName ? presetName : ''
 }
+
 /**
  * @param {object} asset
  * @param {string} presetName
@@ -141,12 +140,13 @@ type resolvePresetParams = {
  *  @example const newAsset = resolvePresetByPresetName({asset:asset, presetName:"Blog Preset", extension_uid:"*****************"})
  * 
  */
-export const resolvePresetByPresetName = ({ asset, presetName, extension_uid }:resolvePresetParams) => {
+export const resolveAssetPreset = ({ asset, extension_uid }:resolvePresetParams) => {
     const preset = fetchPresetByPresetName({
         asset,
-        presetName,
+        presetName: resolvePresetName({asset, extension_uid}),
         extension_uid
     })
+    resolvePresetName({asset, extension_uid})
 
     if (preset && preset.options) {
         asset.url = getImageURL(asset.url, preset.options)

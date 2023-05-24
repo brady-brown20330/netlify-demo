@@ -85,7 +85,7 @@ export type Asset = CommonSystemInfo & {
   url: string
   _metadata?: {
     extensions: {
-      [key: string]: AssetMetadata[] | unknown[];
+      [key: string]: AssetMetadata[] | any[];
     }
   }
   _version?: number

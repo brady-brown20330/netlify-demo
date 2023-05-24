@@ -94,9 +94,9 @@ export interface Hero {
 
 export interface presetImage {
   asset?: Asset
-    metadata?: {
-      extension_uid:string
-    }
+  metadata?: {
+    extension_uid:string
+  }
 }
 export interface image {
   image?: presetImage
@@ -124,7 +124,6 @@ export interface Teaser {
   content?: string
   cta?: Cta[];
   image?:image[];
-  text_color?:string;
 }
 
 // ######################### Teaser END  #########################

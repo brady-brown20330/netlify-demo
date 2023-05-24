@@ -3,12 +3,11 @@ import { Link } from '../Link'
 import { Image } from '../Image'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
-    const { $,heading, content, cta, image, text_color } = props
-    const textColor = text_color === 'Black' ? '!text-black' : '!text-white'
+    const { $,heading, content, cta, image } = props
     
     return (
         <div
-            className={'relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16'}
+            className={'relative mt-16 bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16'}
             {...$?.heading}
 
         >
@@ -17,18 +16,18 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
                     // eslint-disable-next-line jsx-a11y/alt-text
                     && <Image 
                         {...image[0]}
-                        className='h-full w-full object-cover object-center'
+                        className='h-full w-full object-cover object-center opacity-60'
                     />
                 }
             </div>
             <div className='relative mx-auto flex max-w-3xl flex-col items-center text-center'>
-                {heading && <h2 className={`text-3xl font-bold tracking-tight sm:text-4xl ${textColor}`}>{heading}</h2>}
-                {content && <p className={`mt-3 text-xl ${textColor}`}>
+                {heading && <h2 className={'text-3xl font-bold tracking-tight sm:text-4xl !text-white'}>{heading}</h2>}
+                {content && <p className={'mt-3 text-xl !text-white'}>
                     {content}
                 </p>}
                 {cta?.[0]?.title && <Link
                     url={cta?.[0]?.link}
-                    className={`${text_color === 'Black' ? 'btnTertiary': 'btnSecondary'} px-8 py-3 mt-8 sm:w-auto`}
+                    className={'btnSecondary px-8 py-3 mt-8 sm:w-auto'}
                 >
                     {cta[0].title}
                 </Link>}
