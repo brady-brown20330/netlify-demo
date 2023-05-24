@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
+import { Link } from '../Link'
 
 
 export default function Header (props:App.Header) {
@@ -13,10 +14,15 @@ export default function Header (props:App.Header) {
     return (
         <header className='sticky top-0 z-50 bg-white dark:bg-black w-full'>
             <nav className='mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 border-b border-gray-200' aria-label='Global'>
-                {logo?.url && <a href={site_url} className='-m-1.5 p-1.5' {...logo?.$?.url}>
-                    {title && <span className='sr-only'>{title}</span>}
+                {logo?.url && <Link
+                    url={site_url}
+                    className='-m-1.5 p-1.5' {...logo?.$?.url}
+                >
+                    {title && <span className='sr-only'>
+                        {title}
+                    </span>}
                     <img className='h-8 w-auto' src={logo.url} alt={title || ''} />
-                </a>}
+                </Link>}
                 <div className='flex lg:hidden'>
                     <button
                         type='button'

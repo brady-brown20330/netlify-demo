@@ -130,27 +130,29 @@ export interface Teaser {
 
 // ######################### CardCollection  #########################
 
-export interface CardCollection {
+export interface CardCollectionHeader {
+  heading?: string
+  sub_heading?:string
+}
+export interface CardCollection extends CardCollectionHeader {
   $?: MappedPreview<CardCollection>
-  header?: any[]
-  cards?: ImageCardItem[] | []
+  card?: ImageCardItem[] | []
   styles?: {
     text_position: TextPosition
   }
 }
 
-export type ImageCardItem = ImageCardGraphics & ImageCardText
+export type ImageCardItem = ImageCardGraphics & ImageCardText & {
+    $: MappedPreview<ImageCardGraphics & ImageCardText>
+}
 
 export interface ImageCardGraphics {
-  $?: MappedPreview<ImageCardGraphics>
   image: Asset
-  textPosition?: TextPosition
   count?: number
 }
 export interface ImageCardText {
-  $?: ImageCardText
   title?: string
-  description?: string
+  content?: string
   link?: pageLink
 }
 
