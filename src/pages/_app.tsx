@@ -28,6 +28,7 @@ function MyApp (props: App.Props) {
         pageProps,
         locale,
         header,
+        navigation,
         footer
     } = props
 
@@ -52,6 +53,7 @@ function MyApp (props: App.Props) {
             >
                 <SingleCol
                     header={header}
+                    navigation={navigation}
                     footer={footer}
                 >
                     <Component {...pageProps} />
@@ -65,6 +67,7 @@ MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     let appProps = {}
     const { locale, query } = router // Will return `fr` for `/fr/*` pages
     const header = await getEntries('header',locale, [], [], query)
+    const navigation = await getEntries('navigation',locale, [], [], query)
     const footer = await getEntries('footer',locale, [], [], query)
 
     if (Component.getInitialProps) {
@@ -73,6 +76,7 @@ MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     return {
         appProps,
         header: header?.length > 0 ? header[0] : null,
+        navigation: navigation?.length > 0 ? navigation[0] : null,
         footer: footer?.length > 0 ? footer[0] : null,
         locale
     }
