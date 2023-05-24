@@ -4,7 +4,7 @@ export default function MyDocument (props: { locale: string }) {
     return (
         <Html lang={locale}>
             <Head />
-            <body className='dark:bg-black'>
+            <body>
                 <Main />
                 <NextScript />
             </body>

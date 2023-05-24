@@ -111,6 +111,6 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
     }
     catch (error) {
         throw new Error(error.message)
-
+        
     }
 }

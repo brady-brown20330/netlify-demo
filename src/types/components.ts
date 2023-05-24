@@ -63,11 +63,9 @@ export interface pageLink {
 export interface CtaCollection {
   ctas?: Cta[]
 }
-export type Cta = pageLink & {
-  $?: Cta
-  text: string
-  type: CtaType
-  color?: Color
+export type Cta = {
+  title?:string
+  link?:InternalLink[]
 }
 export interface ImageRender {
   className?: string
@@ -81,48 +79,52 @@ export interface ImageRender {
   // noLazyLoad?: boolean
 }
 
-export interface ImageAndText {
-  heading?:string
-  image: {
-    asset: Asset
-  }
-  image_alt_text:string
-  image_position?:string
-  paragraph?:string
-  $?:MappedPreview<ImageAndText>
-}
+
 
 export interface Hero {
   key?:Key|null
   heading?:string
-  image:Asset
+  image:presetImage
   image_alt_text:string
   image_position?:string
-  paragraph:string
-  cta: {
-    title?:string
-    landing_page?:InternalLink[]
-  }
+  content:string
+  cta: Cta
   $?:MappedPreview<Hero>
 }
 
+export interface presetImage {
+  asset?: Asset
+    metadata?: {
+      extension_uid:string
+    }
+}
+export interface image {
+  image?: presetImage
+  image_alt_text?: string
+  image_position?:string
+}
+export interface ImageComponent extends image {
+  className?:string
+}
+
 // ######################### Teaser  #########################
+
+export interface ImageAndText {
+  heading?:string
+  image: presetImage;
+  image_alt_text:string
+  image_position?:string
+  image_height?:string
+  content?:string
+  $?:MappedPreview<ImageAndText>
+}
 export interface Teaser {
   $?: MappedPreview<Teaser>
   heading?: string
-  paragraph?: string
-  cta?: {
-    title: string
-    landing_page: InternalLink[]
-  }
-  image?: {
-    asset?: {
-      url:string
-    }
-  }
-    
-  backgroundColor?: BackgroundColor
-  removeMargin?: boolean
+  content?: string
+  cta?: Cta[];
+  image?:image[];
+  text_color?:string;
 }
 
 // ######################### Teaser END  #########################

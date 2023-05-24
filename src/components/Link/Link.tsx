@@ -1,9 +1,9 @@
 import { buildLinkUrl } from '@/utils'
-// import { useLocalization } from "@/hooks";
+import Link from 'next/link'
 
 import { LinkComponent} from '@/types/components'
 
-const Link: React.FC<LinkComponent> = (props: LinkComponent) => {
+const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
     const { url, children, className } = props
 
     let internal_link, external_link
@@ -14,12 +14,12 @@ const Link: React.FC<LinkComponent> = (props: LinkComponent) => {
     }
   
 
-    const href = buildLinkUrl(internal_link, external_link, 'en-us')
+    const href = buildLinkUrl(internal_link, external_link)
 
 
-    const LinkWrapper = () => <a href={`${href}`} className={className}>
+    const LinkWrapper = () => <Link href={`${href}`} className={className}>
         {children}
-    </a>
+    </Link>
 
     const LinkPlaceholder = () => <span className={className}>
         {children}
@@ -27,4 +27,4 @@ const Link: React.FC<LinkComponent> = (props: LinkComponent) => {
 
     return (<>{href ? <LinkWrapper /> : <LinkPlaceholder />}</>)
 }
-export { Link }
+export { LinkComponent }
