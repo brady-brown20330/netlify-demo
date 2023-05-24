@@ -1,11 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react'
-// import { Dialog } from '@headlessui/react'
-// import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-// import { MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
-import { Navigation } from '../Navigation'
+// import { Navigation } from '../Navigation'
 
 export default function Header (props: App.Header) {
     // console.log('🚀 ~ file: Header.tsx:9 ~ Header ~ props:', props.navigation)
@@ -17,16 +15,16 @@ export default function Header (props: App.Header) {
     }
 
     return (
-        <header className='relative sticky top-0 z-50'>
-            <nav aria-label='Top' className='mx-auto max-w-7xl sm:px-6 lg:px-8'>
-                <div className='flex border-b border-gray-200 px-4 pb-14 sm:px-0 sm:pb-0'>
-                    <div className='flex h-16 items-center justify-center'>
+        <header className='relative sticky border-b border-gray-200 top-0 z-50'>
+            <nav aria-label='Top' className='max-w-7xl sm:px-6 lg:px-8 w-full'>
+                <div className='flex px-4 pb-14 sm:px-0 sm:pb-0 w-full'>
+                    <div className='flex h-16 items-center w-full justify-between'>
                         {/* Logo */}
                         <div className='flex flex-1'>
                             {logo && <a href={site_url}>
                                 {title && <span className='sr-only'>{title}</span>}
                                 <img
-                                    className='h-8 w-auto'
+                                    className='h-8 w-auto mx-2'
                                     src={logo?.url}
                                     alt={logo?.title}
                                 />
@@ -40,13 +38,13 @@ export default function Header (props: App.Header) {
                                     <Popover key={item?.main_link?.title} className='flex'>
                                         {({ open }) => (
                                             <>
-                                                <div className='relative flex w-24 ml-24'>
+                                                <div className='relative flex w-24 mx-2'>
                                                     <Popover.Button
                                                         className={classNames(
                                                             open
                                                                 ? 'border-indigo-600 text-indigo-600'
                                                                 : 'border-transparent text-gray-700 hover:text-gray-800',
-                                                            'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
+                                                            'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out outline-0'
                                                         )}
                                                     >
                                                         {item?.main_link?.title}
@@ -63,44 +61,16 @@ export default function Header (props: App.Header) {
                                                     leaveTo='opacity-0'
                                                 >
                                                     <Popover.Panel className='absolute inset-x-0 top-full text-gray-500 sm:text-sm'>
-                                                        <Navigation main_menu={item} />
+                                                        {/* <>Sub Navigation to be added in Sprint2</> */}
+                                                        {/* <Navigation main_menu={item} /> */}
                                                     </Popover.Panel>
                                                 </Transition>
                                             </>
                                         )}
                                     </Popover>
                                 ))}
-
-                                {/* {navigation.other.map((item) => (
-                                    <a
-                                        key={item.name}
-                                        href={item.href}
-                                        className='flex items-center text-sm font-medium text-gray-700 hover:text-gray-800'
-                                    >
-                                        {item.name}
-                                    </a>
-                                ))} */}
                             </div>
                         </Popover.Group>
-
-                        {/* <div className='flex flex-1 items-center justify-end'>
-                            <a href='#' className='p-2 text-gray-400 hover:text-gray-500'>
-                                <span className='sr-only'>Search</span>
-                                <MagnifyingGlassIcon className='h-6 w-6' aria-hidden='true' />
-                            </a>
-
-                            <div className='ml-4 flow-root lg:ml-8'>
-                                <a href='#' className='group -m-2 flex items-center p-2'>
-                                    <ShoppingBagIcon
-                                        className='h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-                                        aria-hidden='true'
-                                    />
-                                    <span className='ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800'>
-                                    </span>
-                                    <span className='sr-only'>items in cart, view bag</span>
-                                </a>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </nav>
