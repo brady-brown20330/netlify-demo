@@ -12,6 +12,7 @@ function classNames (...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
+
 function Header (props: App.Header) {
     const { logo, site_url, title, navigation } = props
     const [open, setOpen] = useState(false)
@@ -43,7 +44,7 @@ function Header (props: App.Header) {
                             leaveFrom='translate-x-0'
                             leaveTo='-translate-x-full'
                         >
-                            <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl'>
+                            <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-black pb-12 shadow-xl'>
                                 <div className='flex px-4 pb-2 pt-5'>
                                     <button
                                         type='button'
@@ -57,14 +58,14 @@ function Header (props: App.Header) {
 
                                 {/* Links */}
                                 <Tab.Group as='div' className='mt-2'>
-                                    <div className='border-b border-gray-200'>
+                                    <div className='border-b border-gray-200' {...navigation?.$?.uid}>
                                         <Tab.List className='-mb-px flex flex-col items-start px-4'>
                                             {navigation?.main_menu.map((category) => (
                                                 <Tab
                                                     key={category?.main_link?.title}
                                                     className={({ selected }) =>
                                                         classNames(
-                                                            selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 outline-0',
+                                                            selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 dark:!text-white outline-0',
                                                             'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium outline-0'
                                                         )
                                                     }
@@ -107,12 +108,12 @@ function Header (props: App.Header) {
             <header className='relative'>
                 <nav aria-label='Top'>
                     {/* Top navigation */}
-                    <div className='dark:bg-black'>
+                    <div className='bg-white dark:bg-black'>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
                             <div className='border-b border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center'>
+                                    <div className='hidden lg:flex lg:flex-1 lg:items-center' {...logo?.$?.url}>
                                         <Link url={site_url}>
                                             <span className='sr-only'>{title}</span>
                                             <img
@@ -123,7 +124,7 @@ function Header (props: App.Header) {
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full lg:flex'>
+                                    <div className='hidden h-full lg:flex'  {...navigation?.$?.uid}>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex h-full justify-center space-x-8'>
@@ -155,7 +156,7 @@ function Header (props: App.Header) {
                                                                 >
                                                                     <Popover.Panel className='absolute inset-x-0 top-full text-sm text-gray-500'>
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                                                                        <div className='absolute inset-0 top-1/2 bg-white shadow' aria-hidden='true' />
+                                                                        <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
                                                                         <div className='relative bg-white dark:bg-black'>
                                                                             <div className='mx-auto max-w-7xl px-8'>
