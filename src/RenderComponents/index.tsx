@@ -1,18 +1,12 @@
 import { CardCollection, Teaser, Hero,ImageAndText, Rte} from '@/components'
-import { Component } from '@/types'
+import { Page } from '@/types'
 
 
-export default function RenderComponents (props:any) {
-    const { pageComponents } = props
+export default function RenderComponents ({components}: Page.pageRenderProps) {
+    // const { components } = props
     return (<>
-        {pageComponents?.map((
-            component: { 
-                teaser: Component.Teaser; 
-                card_collection: JSX.IntrinsicAttributes; 
-                hero: Component.Hero;
-                image_and_text:Component.ImageAndText
-                rte: Component.Rte
-        }, key: number) => {
+        {components?.map((
+            component, key: number) => {
             if (component.hero) {
                 return <Hero key={`component-${key}`} {...component.hero} />
             }

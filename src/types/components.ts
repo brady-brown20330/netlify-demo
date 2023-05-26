@@ -3,45 +3,44 @@ import { Key, ReactNode } from 'react'
 import { Asset, MappedPreview } from './common'
 import { Market } from './generic'
 import { AssetPreset } from './extensions'
-import exp from 'constants'
 
 // ######################### ENUMS #########################
-export enum TextPosition {
-  over = 'over',
-  below = 'below',
-}
+// export enum TextPosition {
+//   over = 'over',
+//   below = 'below',
+// }
 
-export enum ImagePosition {
-  left = 'left',
-  right = 'right',
-  center_over = 'center_over',
-  center_under = 'center_under',
-  background_center = 'background_center',
-  background_stretch = 'background_stretch',
-}
+// export enum ImagePosition {
+//   left = 'left',
+//   right = 'right',
+//   center_over = 'center_over',
+//   center_under = 'center_under',
+//   background_center = 'background_center',
+//   background_stretch = 'background_stretch',
+// }
 
-export enum Color {
-  primary = 'primary',
-  secondary = 'secondary',
-  tertiary = 'tertiary',
-}
+// export enum Color {
+//   primary = 'primary',
+//   secondary = 'secondary',
+//   tertiary = 'tertiary',
+// }
 
-export enum BackgroundColor {
-  none = 'none',
-  primary = 'primary',
-  secondary = 'secondary',
-  tertiary = 'tertiary',
-}
+// export enum BackgroundColor {
+//   none = 'none',
+//   primary = 'primary',
+//   secondary = 'secondary',
+//   tertiary = 'tertiary',
+// }
 
-export enum CtaType {
-  button = 'button',
-  link = 'link',
-}
+// export enum CtaType {
+//   button = 'button',
+//   link = 'link',
+// }
 
-export enum ValidityStatus {
-  valid = 'valid',
-  invalid = 'invalid',
-}
+// export enum ValidityStatus {
+//   valid = 'valid',
+//   invalid = 'invalid',
+// }
 
 export type Link = {
   title?: string;
@@ -61,6 +60,12 @@ export interface pageLink {
   url?: string | InternalLink[];
 }
 
+// ######################### COMPONENTS #########################
+export interface LinkComponent extends pageLink {
+  children?: ReactNode;
+  className?: string;
+}
+
 export interface CtaCollection {
   ctas?: Cta[];
 }
@@ -68,17 +73,6 @@ export type Cta = {
   title?: string;
   link?: InternalLink[];
 };
-export interface ImageRender {
-  className?: string;
-  ariaHidden?: string;
-  auto?: boolean;
-  disableUpscale?: boolean;
-  width?: number;
-  height?: number;
-  crop?: string;
-  dpr?: number;
-  // noLazyLoad?: boolean
-}
 
 export interface Hero {
   key?: Key | null;
@@ -91,12 +85,12 @@ export interface Hero {
   $?: MappedPreview<Hero>;
 }
 
-export interface image {
+export interface Image {
   image?: AssetPreset;
   image_alt_text?: string;
   image_position?: string;
 }
-export interface ImageComponent extends image {
+export interface ImageComponent extends Image {
   className?: string;
 }
 
@@ -104,8 +98,6 @@ export interface Rte {
   content?: string;
   $? : MappedPreview<Rte>;
 }
-
-// ######################### Teaser  #########################
 
 export interface ImageAndText {
   heading?: string;
@@ -121,12 +113,8 @@ export interface Teaser {
   heading?: string;
   content?: string;
   cta?: Cta[];
-  image?: image[];
+  image?: Image[];
 }
-
-// ######################### Teaser END  #########################
-
-// ######################### CardCollection  #########################
 
 export interface CardCollectionHeader {
   $?: MappedPreview<CardCollectionHeader>;
@@ -136,9 +124,6 @@ export interface CardCollectionHeader {
 export interface CardCollection extends CardCollectionHeader {
   $?: MappedPreview<CardCollection>;
   card?: ImageCardItem[] | [];
-  styles?: {
-    text_position: TextPosition;
-  };
 }
 
 export type ImageCardItem = ImageCardGraphics &
@@ -160,50 +145,20 @@ export interface ImageCardText {
 export type CardImage = Asset & {
   count?: number;
 };
-// ######################### CardCollection END #########################
+
+// ######################### COMPONENTS END #########################
+
 
 // ######################### StatusIndicator  #########################
-export interface ComponentValidator {
-  status?: ValidityStatus;
-  validators: boolean[];
-  validationInfo: string[];
-  children?: ReactNode;
-}
+// export interface ComponentValidator {
+//   status?: ValidityStatus;
+//   validators: boolean[];
+//   validationInfo: string[];
+//   children?: ReactNode;
+// }
 // ######################### StatusIndicator END #########################
-
-// ######################### LinkComponent  #########################
-export interface LinkComponent extends pageLink {
-  children?: ReactNode;
-  className?: string;
-}
-// ######################### LinkComponent END #########################
-
-// ######################### COMPONENTS #########################
 
 export interface HeroLanguageSelector {
   markets: Market[];
   backgroundImage?: Asset;
 }
-
-// ######################### START PRIMITIVES #########################
-export interface CbOption {
-  value: string;
-  text: string;
-  imageUrl?: string;
-  emojiUnicode?: string;
-}
-export interface Combobox {
-  items: CbOption[];
-  defaultItem: CbOption | null;
-  onValueChange?: (item: CbOption) => void;
-}
-// export interface RteData {
-//   body?: string;
-// }
-
-export type Image = {
-  asset: Asset;
-  metadata: ImageRender;
-};
-
-// ######################### PRIMITIVES END #########################
