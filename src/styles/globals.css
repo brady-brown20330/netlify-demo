@@ -26,5 +26,23 @@ body {
   .btnTertiary{
     @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-medium text-gray-100 hover:opacity-80
   }
+  .rte h2{
+    @apply text-[44px] font-bold dark:text-white py-3
+  }
+  .rte h3 {
+    @apply font-bold text-2xl leading-[26px] text-[#253143] dark:text-white py-2
+  }
+  .rte h5 {
+    @apply font-bold text-purple text-lg leading-7
+  }  
+  .rte h6{
+    @apply text-lg text-[#5B6B86] font-normal leading-7 dark:text-white py-2
+  }
+  .rte ul { @apply list-disc py-1 px-6 }
+  .rte li{
+    @apply text-lg text-[#5B6B86] font-normal leading-7 dark:text-white py-2
+  }
+  .rte p { @apply py-1}
+
 }
 
