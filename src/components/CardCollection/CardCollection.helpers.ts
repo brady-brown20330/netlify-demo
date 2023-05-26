@@ -13,11 +13,5 @@ export const isCardsValid = (obj: CardCollection): boolean => {
 }
 
 export const imageCardsReferenceIncludes = [
-    'header.ctas.internal_link',
-    'cards.link.internal_link'
-]
-
-export const imageCardsJsonRtePaths = [
-    'header.text',
-    'cards.description'
+    'card.link'
 ]
