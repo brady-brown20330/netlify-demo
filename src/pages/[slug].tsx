@@ -6,9 +6,9 @@ import { Generic, Page } from '@/types'
 
 export default function LandingPage (entry:Page.LandingPage) { 
     return (<>
-        {entry && Object.keys(entry).length ? (
+        {entry?.components && Object.keys(entry.components)?.length ? (
             <RenderComponents
-                pageComponents={entry?.components}
+                components={entry?.components}
             />
         ) : <></>}
     </>
