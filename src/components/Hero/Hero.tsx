@@ -27,7 +27,7 @@ const Hero = (props:Component.Hero) => {
 
 
     return (<>
-        {image_position === 'Left' ? <div className='container mb-16 mt-8 p-8 xl:p-0 xl:mt-16 sm:p-0 lg:p-8 pb-0'>
+        {image_position === 'Left' ? <div className='container my-16 p-8 xl:p-0 xl:mt-16 sm:p-0 lg:p-8 pb-0'>
             <div 
                 className='mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8' 
                 {...$?.heading}
@@ -45,7 +45,7 @@ const Hero = (props:Component.Hero) => {
                 </div>
             </div>
         </div>
-            : <div className='container my-16 p-8 xl:p-0 sm:p-0 lg:p-8'>
+            : <div className='container mt-16 mb-8 p-8 xl:p-0 sm:p-0 lg:p-8'>
                 <div
                     className='mx-auto max-w-7xl lg:grid lg:grid-cols-12'
                     {...$?.heading}

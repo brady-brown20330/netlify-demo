@@ -1,7 +1,8 @@
 /* eslint-disable no-shadow */
 import { Key, ReactNode } from 'react'
-import { Asset, MappedPreview, PageEntry } from './common'
+import { Asset, MappedPreview } from './common'
 import { Market } from './generic'
+import { AssetPreset } from './extensions'
 
 // ######################### ENUMS #########################
 export enum TextPosition {
@@ -84,7 +85,7 @@ export interface ImageRender {
 export interface Hero {
   key?:Key|null
   heading?:string
-  image:presetImage
+  image:AssetPreset
   image_alt_text:string
   image_position?:string
   content:string
@@ -92,14 +93,8 @@ export interface Hero {
   $?:MappedPreview<Hero>
 }
 
-export interface presetImage {
-  asset?: Asset
-  metadata?: {
-    extension_uid:string
-  }
-}
 export interface image {
-  image?: presetImage
+  image?: AssetPreset
   image_alt_text?: string
   image_position?:string
 }
@@ -111,7 +106,7 @@ export interface ImageComponent extends image {
 
 export interface ImageAndText {
   heading?:string
-  image: presetImage;
+  image: AssetPreset;
   image_alt_text:string
   image_position?:string
   image_height?:string
@@ -130,28 +125,32 @@ export interface Teaser {
 
 // ######################### CardCollection  #########################
 
-export interface CardCollection {
+export interface CardCollectionHeader {
+  $?: MappedPreview<CardCollectionHeader>
+  heading?: string
+  sub_heading?:string
+}
+export interface CardCollection extends CardCollectionHeader {
   $?: MappedPreview<CardCollection>
-  header?: any[]
-  cards?: ImageCardItem[] | []
+  card?: ImageCardItem[] | []
   styles?: {
     text_position: TextPosition
   }
 }
 
-export type ImageCardItem = ImageCardGraphics & ImageCardText
+export type ImageCardItem = ImageCardGraphics & ImageCardText & {
+    $: MappedPreview<ImageCardGraphics & ImageCardText>
+}
 
 export interface ImageCardGraphics {
-  $?: MappedPreview<ImageCardGraphics>
-  image: Asset
-  textPosition?: TextPosition
+  image: AssetPreset
+  image_alt_text:string
   count?: number
 }
 export interface ImageCardText {
-  $?: ImageCardText
   title?: string
-  description?: string
-  link?: pageLink
+  content?: string
+  link?: InternalLink[]
 }
 
 export type CardImage = Asset & {

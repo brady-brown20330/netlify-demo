@@ -22,9 +22,9 @@ export default function RenderComponents (props:any) {
             if (component.image_and_text) {
                 return <ImageAndText key={`component-${key}`} {...component.image_and_text} />
             }
-            // if (component.card_collection) {
-            //     return <CardCollection key={`component-${key}`} {...component.card_collection} />
-            // }
+            if (component.card_collection) {
+                return <CardCollection key={`component-${key}`} {...component.card_collection} />
+            }
         })}</>
     )
 }
