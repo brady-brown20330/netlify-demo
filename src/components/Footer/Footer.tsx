@@ -6,12 +6,12 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const { main_menu , $} = props
     
     return (
-        <footer className='dark:bg-balck' aria-labelledby='footer-heading'>
+        <footer className='dark:bg-black' aria-labelledby='footer-heading'>
             <h2 id='footer-heading' className='sr-only'>
           Footer
             </h2>
-            <div className='container'>
-                <div className='border-t border-gray-200 px-4 sm:px-6 lg:px-8'>
+            <div className='container border-t border-gray-200'>
+                <div className='px-4 sm:px-6 lg:px-8'>
                         
                     <div className='mx-auto mt-16 max-w-5xl' {...$?.uid}>
                         <div className='flex justify-start flex-wrap md:justify-between'>
