@@ -102,6 +102,7 @@ export interface ImageComponent extends image {
 
 export interface Rte {
   content?: string;
+  $? : MappedPreview<Rte>;
 }
 
 // ######################### Teaser  #########################
