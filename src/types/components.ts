@@ -150,7 +150,7 @@ export interface ImageCardGraphics {
 export interface ImageCardText {
   title?: string
   content?: string
-  link?: InternalLink[]
+  cta?: Cta
 }
 
 export type CardImage = Asset & {
