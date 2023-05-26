@@ -1,7 +1,9 @@
 import { CardCollection, Teaser } from '@/components'
 import {Hero} from '@/components/Hero'
 import { ImageAndText } from '@/components/ImageAndText'
+import Rte from '@/components/Primitives/Rte/Rte'
 import { Component } from '@/types'
+
 
 export default function RenderComponents (props:any) {
     const { pageComponents } = props
@@ -12,6 +14,7 @@ export default function RenderComponents (props:any) {
                 card_collection: JSX.IntrinsicAttributes; 
                 hero: Component.Hero;
                 image_and_text:Component.ImageAndText
+                rte: Component.Rte
         }, key: number) => {
             if (component.hero) {
                 return <Hero key={`component-${key}`} {...component.hero} />
@@ -24,6 +27,9 @@ export default function RenderComponents (props:any) {
             }
             if (component.card_collection) {
                 return <CardCollection key={`component-${key}`} {...component.card_collection} />
+            }
+            if (component.rte) {
+                return <Rte key={`component-${key}`} {...component.rte} />
             }
         })}</>
     )

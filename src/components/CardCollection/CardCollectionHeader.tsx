@@ -1,5 +1,5 @@
 import { CardCollectionHeader } from '@/types/components'
-import JsonRte from '../Primitives/JsonRte'
+import JsonRte from '../Primitives/Rte'
 
 // import { Header as HeaderProps } from '@/types/components'
 

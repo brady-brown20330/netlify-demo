@@ -7,7 +7,7 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     
     return (
         <div
-            className={'relative mt-16 bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16'}
+            className={'relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16'}
             {...$?.heading}
 
         >
