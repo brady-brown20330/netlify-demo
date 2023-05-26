@@ -43,7 +43,7 @@ const ComboBox: FunctionComponent<ComboboxProps> = ({ items, onValueChange, defa
             as='div' >
             <div className='relative'>
                 <Combobox.Input
-                    className='input w-full z-1 rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+                    className='input w-full z-1 rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-purple focus:outline-none focus:ring-1 focus:ring-purple sm:text-sm'
                     displayValue={(item: CbOption) => item?.text}
                     onChange={(event) => setQuery(event.target.value)}
                 >
@@ -69,7 +69,7 @@ const ComboBox: FunctionComponent<ComboboxProps> = ({ items, onValueChange, defa
                                     className={({ active }) =>
                                         classNames(
                                             'relative cursor-default select-none py-2 pl-3 pr-9',
-                                            active ? 'bg-indigo-600 text-white' : 'text-gray-900'
+                                            active ? 'bg-purple text-white' : 'text-gray-900'
                                         )
                                     }
                                 >
@@ -84,7 +84,7 @@ const ComboBox: FunctionComponent<ComboboxProps> = ({ items, onValueChange, defa
                                                 <span
                                                     className={classNames(
                                                         'absolute inset-y-0 right-0 flex items-center pr-4',
-                                                        active ? 'text-white' : 'text-indigo-600'
+                                                        active ? 'text-white' : 'text-purple'
                                                     )}
                                                 >
                                                     <CheckIcon className='h-5 w-5' aria-hidden='true' />
