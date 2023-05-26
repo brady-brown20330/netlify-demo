@@ -7,7 +7,7 @@ const Hero = (props:Component.Hero) => {
     const { heading, content, image_position,image, cta, $, image_alt_text } = props
 
     const TextBlock = () => (
-        <div className={`mx-auto max-w-2xl ${image_position === 'Left' ? 'lg:ml:0 ' : 'lg:ml-8' }`}>
+        <div className={`mx-auto max-w-2xl ${image_position === 'Left' ? 'lg:ml:0 pr-6 lg:pr-4' : 'lg:ml-8' }`}>
                         
             {heading && <h1 className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 sm:text-6xl dark:text-white'>
                 {heading}
