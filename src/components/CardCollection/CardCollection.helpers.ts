@@ -13,5 +13,5 @@ export const isCardsValid = (obj: CardCollection): boolean => {
 }
 
 export const imageCardsReferenceIncludes = [
-    'card.link'
+    'card.cta.link'
 ]
