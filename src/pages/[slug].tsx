@@ -1,4 +1,4 @@
-import { getLandingPageEntry } from '@/loaders'
+import { getLandingPage } from '@/loaders'
 
 import RenderComponents from '@/RenderComponents'
 import { Generic, Page } from '@/types'
@@ -20,13 +20,9 @@ export const getServerSideProps = async (context:Generic.serverSideProps)=> {
     // eslint-disable-next-line no-useless-catch
     try {
         const {locale, resolvedUrl, query} = context
-        const entry = await getLandingPageEntry(locale, resolvedUrl, query)
+        const entry = await getLandingPage(locale, resolvedUrl, query)
         
-        if (!entry) {
-            return {
-                notFound: true
-            }
-        }
+        if (!entry) return { notFound: true }
         return {
             props: {
                 ...entry

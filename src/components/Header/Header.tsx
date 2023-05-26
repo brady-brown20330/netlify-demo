@@ -5,7 +5,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
-import { Link } from '../Link'
+import { Link } from '@/components'
 // import { Navigation } from '../Navigation'
 
 function classNames (...classes: string[]) {

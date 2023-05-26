@@ -1,26 +1,20 @@
 import _ from 'lodash'
 import React, { } from 'react'
 
-import { Card } from '../Cards'
+import { Card } from '@/components'
 import { CardCollectionHeader } from './CardCollectionHeader'
-import { ComponentValidator } from '../ComponentValidator'
 
 import { classNames } from '@/utils'
-import { isHeaderValid, isCardsValid, validationInfo } from './CardCollection.helpers'
+// import { isHeaderValid, isCardsValid, validationInfo } from './CardCollection.helpers'
 
 import { CardCollection as CardCollectionProps, TextPosition } from '@/types/components'
 
 const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
     const {$, heading, sub_heading, card: cards} =props
-    const isComponentValid: boolean = isCardsValid(props)
+    // const isComponentValid: boolean = isCardsValid(props)
 
     // const { heading } = isHeaderValid(props) || isComponentValid ? props : {header: null}
     // const { cards } = isCardsValid(props) ? props : {cards: null}
-    const { styles } = props
-
-    const getTextPosition = () => {
-        return _.isEmpty(styles?.text_position) ? TextPosition.below : styles?.text_position
-    }
 
     return (
         // <ComponentValidator validators={[isCardsValid(props)]} validationInfo={validationInfo}>
@@ -48,7 +42,6 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
                             key={idx}
                             {...card}
                             count={cards.length}
-                        // textPosition={getTextPosition()}
                         />
                         )
                     })

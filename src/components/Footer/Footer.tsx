@@ -1,6 +1,6 @@
 import { App } from '@/types'
 import React from 'react'
-import { Link } from '../Link'
+import { Link } from '@/components'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const { main_menu , $} = props
