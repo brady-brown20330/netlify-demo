@@ -4,11 +4,11 @@ import parse from 'html-react-parser'
 import { Rte as RteProps } from '@/types/components'
 
 const Rte: FunctionComponent<RteProps> = (props: RteProps) => {
-    const { content } = props
+    const { $ , content } = props
 
     return (
         <div className={'py-16 px-8 sm:pb-12 bg-[#F0F3F7] dark:bg-transparent'}>
-            <div className='rte max-w-7xl mx-auto'>{content && parse(content)}</div>
+            <div className='rte max-w-7xl mx-auto' {...$?.content}>{content && parse(content)}</div>
         </div>
     )
 }
