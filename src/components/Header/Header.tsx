@@ -5,6 +5,7 @@ import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
+import { Link } from '../Link'
 // import { Navigation } from '../Navigation'
 
 function classNames (...classes: string[]) {
@@ -16,7 +17,7 @@ function Header (props: App.Header) {
     const [open, setOpen] = useState(false)
 
     return (
-        <div className='dark:bg-black'>
+        <div className='sticky z-50 top-0 bg-white dark:bg-black'>
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as='div' className='relative z-40 lg:hidden' onClose={setOpen}>
@@ -63,7 +64,7 @@ function Header (props: App.Header) {
                                                     key={category?.main_link?.title}
                                                     className={({ selected }) =>
                                                         classNames(
-                                                            selected ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-900 outline-0',
+                                                            selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 outline-0',
                                                             'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium outline-0'
                                                         )
                                                     }
@@ -107,19 +108,19 @@ function Header (props: App.Header) {
                 <nav aria-label='Top'>
                     {/* Top navigation */}
                     <div className='dark:bg-black'>
-                        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-                            <div className='border-b border-gray-200'>
+                        <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
+                            <div className='border-b border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
                                     {/* Logo (lg+) */}
                                     <div className='hidden lg:flex lg:flex-1 lg:items-center'>
-                                        <a href={site_url}>
+                                        <Link url={site_url}>
                                             <span className='sr-only'>{title}</span>
                                             <img
-                                                className='h-8 w-auto'
+                                                className='h-8 w-auto m-2 ml-4'
                                                 src={logo?.url}
                                                 alt={title}
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
 
                                     <div className='hidden h-full lg:flex'>
@@ -134,7 +135,7 @@ function Header (props: App.Header) {
                                                                     <Popover.Button
                                                                         className={classNames(
                                                                             open
-                                                                                ? 'border-indigo-600 text-indigo-600'
+                                                                                ? 'border-purple text-purple'
                                                                                 : 'border-transparent text-gray-700 dark:text-white hover:text-gray-800 outline-0',
                                                                             'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out outline-0'
                                                                         )}
@@ -156,10 +157,11 @@ function Header (props: App.Header) {
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white shadow' aria-hidden='true' />
 
-                                                                        <div className='relative dark:bg-black'>
+                                                                        <div className='relative bg-white dark:bg-black'>
                                                                             <div className='mx-auto max-w-7xl px-8'>
                                                                                 <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                                                                     {/* Secondary navigation tobe added in sprint 2*/}
+                                                                                    &lt;&lt;&lt; Secondary Nav &gt;&gt;&gt;
                                                                                     {/* {category.featured.map((item) => (
                                                                                         <div key={item.name} className='group relative'>
                                                                                             <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
@@ -196,7 +198,7 @@ function Header (props: App.Header) {
                                     <div className='flex flex-1 items-center lg:hidden'>
                                         <button
                                             type='button'
-                                            className='-ml-2 rounded-md bg-white p-2 text-gray-400'
+                                            className='rounded-md bg-white dark:bg-black p-2 text-gray-400 dark:text-white'
                                             onClick={() => setOpen(true)}
                                         >
                                             <span className='sr-only'>Open menu</span>

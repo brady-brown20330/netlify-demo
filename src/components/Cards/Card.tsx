@@ -31,10 +31,10 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 {content}
             </p>
             }
-            {cta?.title && <span className='text-sm !text-indigo-500'>
+            {cta?.title && <span className='text-sm !text-purple'>
                 <Link 
                     url={cta?.link}
-                    className='hover:border-b-2 hover:border-indigo-500'
+                    className='hover:border-b-2 hover:border-purple'
                 >
                     {cta.title}
                 </Link> &rarr;
