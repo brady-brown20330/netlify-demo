@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import React, { } from 'react'
 
 import { Card } from '@/components'
@@ -7,7 +6,7 @@ import { CardCollectionHeader } from './CardCollectionHeader'
 import { classNames } from '@/utils'
 // import { isHeaderValid, isCardsValid, validationInfo } from './CardCollection.helpers'
 
-import { CardCollection as CardCollectionProps, TextPosition } from '@/types/components'
+import { CardCollection as CardCollectionProps } from '@/types/components'
 
 const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
     const {$, heading, sub_heading, card: cards} =props
