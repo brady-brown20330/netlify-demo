@@ -1,5 +1,5 @@
 import { Component } from '@/types'
-import { Image } from '../Image/Image'
+import { Image } from '@/components'
 
 export function ImageAndText ({$,heading, content ,image, image_alt_text, image_position, image_height }:Component.ImageAndText) {
     return (

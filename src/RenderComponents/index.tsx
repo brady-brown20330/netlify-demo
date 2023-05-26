@@ -1,7 +1,4 @@
-import { CardCollection, Teaser } from '@/components'
-import {Hero} from '@/components/Hero'
-import { ImageAndText } from '@/components/ImageAndText'
-import Rte from '@/components/Primitives/Rte/Rte'
+import { CardCollection, Teaser, Hero,ImageAndText, Rte} from '@/components'
 import { Component } from '@/types'
 
 

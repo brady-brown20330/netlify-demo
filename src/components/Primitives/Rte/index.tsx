@@ -1,1 +1,1 @@
-export {default} from './Rte'
+export * from './Rte'

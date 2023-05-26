@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Component } from '@/types'
-import { Link } from '../Link'
-import { Image } from '../Image'
+import { Image, Link } from '@/components'
 
 const Hero = (props:Component.Hero) => {
     const { heading, content, image_position,image, cta, $, image_alt_text } = props
