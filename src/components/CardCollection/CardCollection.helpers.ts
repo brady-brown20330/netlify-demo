@@ -1,8 +1,8 @@
 import _ from 'lodash'
 
-import { CardCollection, TextPosition, Color, CtaType } from '../../types/components'
+import { CardCollection } from '@/types/components'
 
-export const validationInfo = ['Include at least 1 Image card']
+// export const validationInfo = ['Include at least 1 Image card']
 
 export const isHeaderValid = (obj: CardCollection): boolean => {
     return !_.isEmpty(obj?.heading)
