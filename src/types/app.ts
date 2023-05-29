@@ -1,16 +1,21 @@
 import type { AppProps } from 'next/app'
 import { Asset, Entry, MappedPreview } from './common'
-import { Link } from './components'
+import { Link, InternalLink } from './components'
 
 export interface Header extends Entry {
   logo?: Asset;
   site_url?: string;
-  navigation?: Navigation|null;
+  navigation?: Navigation | null;
   $?: MappedPreview<Header>;
 }
 export interface Navigation extends Entry {
   main_menu: {
-    main_link?: Link;
+    main_link?: {
+      link_title?: string | null;
+      is_external_link?: boolean;
+      external_link? : string;
+      internal_link?: InternalLink;
+    };
     sub_menu?: {
       sub_link?: Link;
       child_menu?: {

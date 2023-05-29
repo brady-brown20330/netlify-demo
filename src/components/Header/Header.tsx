@@ -12,7 +12,6 @@ function classNames (...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-
 function Header (props: App.Header) {
     const { logo, site_url, title, navigation } = props
     const [open, setOpen] = useState(false)
@@ -62,7 +61,7 @@ function Header (props: App.Header) {
                                         <Tab.List className='-mb-px flex flex-col items-start px-4'>
                                             {navigation?.main_menu?.map((category) => (
                                                 <Tab
-                                                    key={category?.main_link?.title}
+                                                    key={category?.main_link?.link_title}
                                                     className={({ selected }) =>
                                                         classNames(
                                                             selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 dark:!text-white outline-0',
@@ -70,7 +69,19 @@ function Header (props: App.Header) {
                                                         )
                                                     }
                                                 >
-                                                    {category?.main_link?.title}
+                                                    {category?.main_link?.is_external_link 
+                                                        ? <Link
+                                                            url={category?.main_link?.external_link}
+                                                            className='hover:border-purple hover:text-purple'
+                                                        >
+                                                            {category?.main_link?.link_title}
+                                                        </Link>
+                                                        : <Link
+                                                            url={category?.main_link?.internal_link?.url}
+                                                            className='hover:border-purple hover:text-purple'
+                                                        >
+                                                            {category?.main_link?.link_title}
+                                                        </Link>}
                                                 </Tab>
                                             ))}
                                         </Tab.List>
@@ -130,7 +141,7 @@ function Header (props: App.Header) {
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex h-full justify-center space-x-8'>
                                                 {navigation?.main_menu?.map((category) => (
-                                                    <Popover key={category?.main_link?.title} className='flex'>
+                                                    <Popover key={category?.main_link?.link_title} className='flex'>
                                                         {({ open }: any) => (
                                                             <>
                                                                 <div className='relative flex'>
@@ -142,7 +153,19 @@ function Header (props: App.Header) {
                                                                             'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out outline-0'
                                                                         )}
                                                                     >
-                                                                        {category?.main_link?.title}
+                                                                        {category?.main_link?.is_external_link 
+                                                                            ? <Link
+                                                                                url={category?.main_link?.external_link}
+                                                                                className='hover:border-purple hover:text-purple'
+                                                                            >
+                                                                                {category?.main_link?.link_title}
+                                                                            </Link>
+                                                                            : <Link
+                                                                                url={category?.main_link?.internal_link?.url}
+                                                                                className='hover:border-purple hover:text-purple'
+                                                                            >
+                                                                                {category?.main_link?.link_title}
+                                                                            </Link>}
                                                                     </Popover.Button>
                                                                 </div>
 
