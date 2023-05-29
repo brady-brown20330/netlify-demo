@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-shadow */
 /* eslint-disable max-len */
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Link } from '@/components'
+import { getEntries } from '@/services'
+import { onEntryChange } from '@/config'
 // import { Navigation } from '../Navigation'
 
 function classNames (...classes: string[]) {
@@ -13,8 +15,28 @@ function classNames (...classes: string[]) {
 }
 
 function Header (props: App.Header) {
-    const { logo, site_url, title, navigation } = props
+    const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
+    const { logo, site_url, title, navigation } = data
+
+    useEffect(() => {
+        async function fetchData () {
+            try {
+                const entryRes = {
+                    header: await getEntries('header','en-us', [], []),
+                    navigation: await getEntries('navigation','en-us', [], [])
+                }
+                const dt = entryRes?.header?.[0] ? entryRes?.header?.[0] : null
+                setData({
+                    ...dt,
+                    navigation: entryRes?.navigation?.[0] || null
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        onEntryChange(fetchData)
+    }, [])
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>

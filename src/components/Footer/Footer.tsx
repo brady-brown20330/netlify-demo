@@ -1,11 +1,25 @@
 import { App } from '@/types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from '@/components'
+import { getEntries } from '@/services'
+import { onEntryChange } from '@/config'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
-    const { main_menu , $} = props
+    const [data, setData] =useState(props)
+    const { main_menu , $} = data
 
-    const resolveLink = (link: { is_external_link?: boolean; external_link?: string; internal_link?: { url: string } }) => {
+    useEffect(() => {
+        async function fetchData () {
+            try {
+                const entryRes = await getEntries('footer','en-us', [], [])
+                setData(entryRes?.[0] || null)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        onEntryChange(fetchData)
+    }, [])
+    const resolveLink = (link:App.menuLink) => {
         return link?.is_external_link ? link?.external_link : link?.internal_link?.url
     }
     

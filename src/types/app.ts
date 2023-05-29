@@ -3,12 +3,10 @@ import { Asset, Entry, MappedPreview } from './common'
 import { Link, InternalLink } from './components'
 
 export type menuLink = {
-  link_title?:string
-  external_link?:string
-  is_external_link?:boolean
-  internal_link?:{
-    url:string
-  }
+  link_title?: string | null;
+  is_external_link?: boolean;
+  external_link? : string;
+  internal_link?: InternalLink;
 }
 export interface Header extends Entry {
   logo?: Asset;
@@ -18,12 +16,7 @@ export interface Header extends Entry {
 }
 export interface Navigation extends Entry {
   main_menu: {
-    main_link?: {
-      link_title?: string | null;
-      is_external_link?: boolean;
-      external_link? : string;
-      internal_link?: InternalLink;
-    };
+    main_link?: menuLink
     sub_menu?: {
       sub_link?: Link;
       child_menu?: {
