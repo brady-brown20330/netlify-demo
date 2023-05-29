@@ -7,7 +7,7 @@ const Rte: FunctionComponent<RteProps> = (props: RteProps) => {
     const { $ , content } = props
 
     return (
-        <div className={'mb-16 mt-8 py-8 px-8 bg-[#F0F3F7] dark:bg-transparent'}>
+        <div className={'py-16 px-8 bg-[#F0F3F7] dark:bg-transparent'}>
             <div className='rte max-w-7xl mx-auto' {...$?.content}>{content && parse(content)}</div>
         </div>
     )

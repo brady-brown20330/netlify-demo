@@ -1,11 +1,9 @@
-// import * as _ from '@/config'
-
 import Head from 'next/head'
 import { AppContext } from 'next/app'
 import { useEffect } from 'react'
 
 import { SingleCol } from '@/layout'
-import { SEO } from '@/components/Seo'
+import { SEO } from '@/components'
 import { App, Generic } from '@/types'
 import { ErrorBoundary } from 'react-error-boundary'
 import { getEntries } from '@/services'
@@ -32,13 +30,10 @@ function MyApp (props: App.Props) {
         footer
     } = props
 
+
     useEffect(()=> {
         if(!navigator.onLine) throw new Error('===== Network connection failed ====== ')
-
-        if(document) {
-            pageProps?.entry?.theme && document.querySelector('html')?.classList.add(pageProps?.entry?.theme?.toLowerCase() || 'light')
-        }
-    }, [pageProps?.entry?.theme])
+    }, [])
 
     return (
         <>
@@ -85,4 +80,3 @@ MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
 }
 
 export default MyApp
-
