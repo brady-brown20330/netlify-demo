@@ -110,7 +110,7 @@ function Header (props: App.Header) {
                     {/* Top navigation */}
                     <div className='bg-white dark:bg-black'>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
-                            <div className='border-b border-gray-600'>
+                            <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
                                     {/* Logo (lg+) */}
                                     <div className='hidden lg:flex lg:flex-1 lg:items-center' {...logo?.$?.url}>

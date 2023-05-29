@@ -26,7 +26,7 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
 
     return <>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        {image?.asset?.$?.url && <img 
+        {image?.asset?.url && <img 
             src={renderImage()}
             alt={image_alt_text || ''}
             className={className || ''}
