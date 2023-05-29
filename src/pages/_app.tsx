@@ -3,7 +3,7 @@ import { AppContext } from 'next/app'
 import { useEffect } from 'react'
 
 import { SingleCol } from '@/layout'
-import { SEO } from '@/components/Seo'
+import { SEO } from '@/components'
 import { App, Generic } from '@/types'
 import { ErrorBoundary } from 'react-error-boundary'
 import { getEntries } from '@/services'
