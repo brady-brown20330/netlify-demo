@@ -4,44 +4,6 @@ import { Asset, MappedPreview } from './common'
 import { Market } from './generic'
 import { AssetPreset } from './extensions'
 
-// ######################### ENUMS #########################
-// export enum TextPosition {
-//   over = 'over',
-//   below = 'below',
-// }
-
-// export enum ImagePosition {
-//   left = 'left',
-//   right = 'right',
-//   center_over = 'center_over',
-//   center_under = 'center_under',
-//   background_center = 'background_center',
-//   background_stretch = 'background_stretch',
-// }
-
-// export enum Color {
-//   primary = 'primary',
-//   secondary = 'secondary',
-//   tertiary = 'tertiary',
-// }
-
-// export enum BackgroundColor {
-//   none = 'none',
-//   primary = 'primary',
-//   secondary = 'secondary',
-//   tertiary = 'tertiary',
-// }
-
-// export enum CtaType {
-//   button = 'button',
-//   link = 'link',
-// }
-
-// export enum ValidityStatus {
-//   valid = 'valid',
-//   invalid = 'invalid',
-// }
-
 export type Link = {
   title?: string;
   href?: string;
@@ -56,7 +18,6 @@ export interface InternalLink {
 }
 export interface pageLink {
   $?: MappedPreview<pageLink>;
-  // internal_link?: PageEntry[]
   url?: string | InternalLink[];
 }
 
