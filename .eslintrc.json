@@ -131,7 +131,7 @@
     "react/no-danger": "off",
     "react/destructuring-assignment": 0,
     "no-useless-escape": "off",
-    "no-console": 1,
+    "no-console": ["error", { "allow": ["warn", "error", "debug"] }],
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     // allow jsx syntax in js files (for next.js project)

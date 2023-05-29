@@ -38,7 +38,7 @@ function MyApp (props: App.Props) {
         if(document) {
             pageProps?.entry?.theme && document.querySelector('html')?.classList.add(pageProps?.entry?.theme?.toLowerCase() || 'light')
         }
-    }, [pageProps?.theme])
+    }, [pageProps?.entry?.theme])
 
     return (
         <>

@@ -29,7 +29,7 @@ export const buildLinkUrl = (internalLink?: InternalLink[], url?: string, locale
         result = 'https://'.concat(url)
     } else {
         if (!_.isEmpty(url)) {
-            console.info('Static URL is not valid', url)
+            console.debug('Static URL is not valid', url)
         }
     }
     return result
