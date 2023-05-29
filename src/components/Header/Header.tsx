@@ -77,6 +77,7 @@ function Header (props: App.Header) {
                                     </div>
                                     <Tab.Panels as={Fragment}>
                                         {/* Secondary navigation for mobile tobe added in sprint 2*/}
+                                        <></>
                                         {/* {navigation1.categories.map((category) => (
                                             <Tab.Panel key={category.name} className='space-y-12 px-4 py-6'>
                                                 <div className='grid grid-cols-2 gap-x-4 gap-y-10'>
@@ -158,11 +159,12 @@ function Header (props: App.Header) {
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
-                                                                        <div className='relative bg-white dark:bg-black'>
+                                                                        <div className='relative bg-white dark:bg-black h-1'>
+                                                                            {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
                                                                             <div className='mx-auto max-w-7xl px-8'>
                                                                                 <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                                                                     {/* Secondary navigation tobe added in sprint 2*/}
-                                                                                    &lt;&lt;&lt; Secondary Nav &gt;&gt;&gt;
+                                                                                    <></>
                                                                                     {/* {category.featured.map((item) => (
                                                                                         <div key={item.name} className='group relative'>
                                                                                             <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
