@@ -1,10 +1,6 @@
-/* eslint-disable max-len */
-/* eslint-disable no-undef */
 import _ from 'lodash'
 import { Stack, isEditButtonsEnabled } from '@/config'
-import { getLocaleCode } from '../utils'
 import { addEditableTags, jsonToHTML } from '@contentstack/utils'
-
 
 const renderOption = {
     span: (node, next) => next(node.children)
@@ -19,41 +15,47 @@ const renderOption = {
   * @param {* Json RTE path} jsonRtePath
   *
   */
-export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jsonRtePath, previewQuery) => {
-    try {
-        previewQuery ? Stack.livePreviewQuery(previewQuery) : Stack.livePreviewQuery({})
+export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jsonRtePath) => {
+    try {    
+        let result    
+        if(!Stack) {
+            throw new Error('===== No stack initialization found====== \n check environment variables: \
+            CONTENTSTACK_API_KEY, CONTENTSTACK_DELIVERY_TOKEN, CONTENTSTACK_MANAGEMENT_TOKEN, CONTENTSTACK_REGION, CONTENTSTACK_ENVIRONMENT')
+        }
         const entryQuery = Stack.ContentType(contentTypeUid)
             .Query()
             .language(locale)
-        if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
 
         //   if (localeConfig.allow_fallback) {
         //     entryQuery
         //       .includeFallback()
         //   }
-        let result = await entryQuery
-            .includeFallback()
-            .toJSON()
-            .includeEmbeddedItems()
-            .addParam('include_metadata', 'true')
-            .find()
+        if (entryQuery) {
+            if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
 
-        if (jsonRtePath) {
-            jsonToHTML({
-                entry: result,
-                paths: jsonRtePath,
-                renderOption: renderOption
+            result = await entryQuery
+                .includeFallback()
+                .toJSON()
+                .includeEmbeddedItems()
+                .addParam('include_metadata', 'true')
+                .find()
+            if (jsonRtePath) {
+                jsonToHTML({
+                    entry: result,
+                    paths: jsonRtePath,
+                    renderOption: renderOption
+                })
+            }
+        
+            if (result?.length > 0 && _.isEmpty(result[0]) ) {
+                return null
+            }
+            isEditButtonsEnabled && result?.[0]?.forEach((entry) => {
+                return addEditableTags(entry, contentTypeUid, true, locale)
             })
+            const data = result[0]
+            return data
         }
-
-        if (result?.length > 0 && _.isEmpty(result[0]) ) {
-            return null
-        }
-        result?.[0]?.forEach((entry) => {
-            return addEditableTags(entry, contentTypeUid, true, locale)
-        })
-        const data = result[0]
-        return data
     }
     catch (error) {
         throw new Error(error.message)
@@ -72,45 +74,46 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
  * @param {* Json RTE path} jsonRtePath
  *
  */
-export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceFieldPath, jsonRtePath, previewQuery) => {
+export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceFieldPath, jsonRtePath) => {
     try {
-        previewQuery ? Stack.livePreviewQuery(previewQuery) : Stack.livePreviewQuery({})
+        let result
+        if(!Stack) {
+            throw new Error('===== No stack initialization found====== \n check environment variables: \
+            CONTENTSTACK_API_KEY, CONTENTSTACK_DELIVERY_TOKEN, CONTENTSTACK_MANAGEMENT_TOKEN, CONTENTSTACK_REGION, CONTENTSTACK_ENVIRONMENT, CONTENTSTACK_LIVE_PREVIEW, CONTENTSTACK_LIVE_EDIT_TAGS')
+        }
         const entryQuery = Stack.ContentType(contentTypeUid)
             .Query()
             .language(locale)
-        if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
-
-        // if (localeConfig.allow_fallback) {
-        //   entryQuery
-        //     .includeFallback()
-        // }
-        let result = await entryQuery
-            .includeFallback()
-            .where('url', `${entryUrl}`)
-            .toJSON()
-            .includeEmbeddedItems()
-            .addParam('include_metadata', 'true')
-            .find()
+            
+        if(entryQuery) {
+            if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
+            result = await entryQuery
+                .includeFallback()
+                .where('url', `${entryUrl}`)
+                .toJSON()
+                .includeEmbeddedItems()
+                .addParam('include_metadata', 'true')
+                .find()
+            if (jsonRtePath) {
+                jsonToHTML({
+                    entry: result,
+                    paths: jsonRtePath,
+                    renderOption: renderOption
+                })
+            }
         
-        if (jsonRtePath) {
-            jsonToHTML({
-                entry: result,
-                paths: jsonRtePath,
-                renderOption: renderOption
-            })
+            if (result?.length > 0 && _.isEmpty(result[0]) ) {
+                return null
+            }
+        
+            isEditButtonsEnabled && addEditableTags(result[0][0], contentTypeUid, true, locale)
+            const data = result[0][0]
+            return data
         }
-
-        if (result?.length > 0 && _.isEmpty(result[0]) ) {
-            return null
-        }
-
-
-        isEditButtonsEnabled && addEditableTags(result[0][0], contentTypeUid, true, locale)
-        const data = result[0][0]
-        return data
+        
+        
     }
     catch (error) {
         throw new Error(error.message)
-        
     }
 }

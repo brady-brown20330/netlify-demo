@@ -2,7 +2,7 @@ import { App } from '@/types'
 
 export function Navigation (props: App.Navigation) {
     // const { sub_menu } = props?.main_menu
-    console.log('Navigation Prop', props.main_menu)
+    // console.log('Navigation Prop', props.main_menu)
 
     return (
         <>

@@ -10,7 +10,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
             <h2 id='footer-heading' className='sr-only'>
           Footer
             </h2>
-            <div className='container border-t border-gray-600'>
+            <div className='container border-t border-gray-400 dark:border-gray-600'>
                 <div className='px-4 sm:px-6 lg:px-8'>
                         
                     <div className='mx-auto mt-16 max-w-5xl' {...$?.uid}>

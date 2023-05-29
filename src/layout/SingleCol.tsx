@@ -6,9 +6,9 @@ import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { App } from '@/types'
 
-function classNames (...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
+// function classNames (...classes: string[]) {
+//     return classes.filter(Boolean).join(' ')
+// }
 
 const SingleCol: React.FC<App.SingleColLayout> = (
     { header, navigation, footer, children }: React.PropsWithChildren<App.SingleColLayout>

@@ -2,7 +2,7 @@
 
 import Head from 'next/head'
 import { AppContext } from 'next/app'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { SingleCol } from '@/layout'
 import { SEO } from '@/components/Seo'
@@ -33,18 +33,20 @@ function MyApp (props: App.Props) {
     } = props
 
     useEffect(()=> {
+        if(!navigator.onLine) throw new Error('===== Network connection failed ====== ')
+
         if(document) {
-            pageProps?.theme && document.querySelector('html')?.classList.add(pageProps?.theme?.toLowerCase() || 'light')
+            pageProps?.entry?.theme && document.querySelector('html')?.classList.add(pageProps?.entry?.theme?.toLowerCase() || 'light')
         }
-    }, [pageProps?.theme])
+    }, [pageProps?.entry?.theme])
 
     return (
         <>
             <Head>
-                {pageProps?.seo?.title ? <title>{pageProps?.seo?.title}</title> : <title>Universal Demo</title>}
+                {pageProps?.entry?.seo?.title ? <title>{pageProps?.entry?.seo?.title}</title> : <title>Universal Demo</title>}
                 
-                {pageProps?.seo && <SEO
-                    {...pageProps.seo}
+                {pageProps?.entry?.seo && <SEO
+                    {...pageProps.entry.seo}
                     locale={locale}
                 />}
             </Head>
@@ -65,10 +67,10 @@ function MyApp (props: App.Props) {
 
 MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     let appProps = {}
-    const { locale, query } = router // Will return `fr` for `/fr/*` pages
-    const header = await getEntries('header',locale, [], [], query)
-    const navigation = await getEntries('navigation',locale, [], [], query)
-    const footer = await getEntries('footer',locale, [], [], query)
+    const { locale } = router // Will return `fr` for `/fr/*` pages
+    const header = await getEntries('header',locale, [], []) || null
+    const navigation = await getEntries('navigation',locale, [], []) || null
+    const footer = await getEntries('footer',locale, [], []) || null
 
     if (Component.getInitialProps) {
         appProps = await Component.getInitialProps(ctx)
