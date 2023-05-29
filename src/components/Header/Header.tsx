@@ -60,7 +60,7 @@ function Header (props: App.Header) {
                                 <Tab.Group as='div' className='mt-2'>
                                     <div className='border-b border-gray-200' {...navigation?.$?.uid}>
                                         <Tab.List className='-mb-px flex flex-col items-start px-4'>
-                                            {navigation?.main_menu.map((category) => (
+                                            {navigation?.main_menu?.map((category) => (
                                                 <Tab
                                                     key={category?.main_link?.title}
                                                     className={({ selected }) =>
@@ -129,7 +129,7 @@ function Header (props: App.Header) {
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex h-full justify-center space-x-8'>
-                                                {navigation?.main_menu.map((category) => (
+                                                {navigation?.main_menu?.map((category) => (
                                                     <Popover key={category?.main_link?.title} className='flex'>
                                                         {({ open }: any) => (
                                                             <>
