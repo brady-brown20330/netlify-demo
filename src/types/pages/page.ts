@@ -6,6 +6,9 @@ export type Homepage = {
 }
 
 export type LandingPage = {
-    entry: PageEntry & pageRenderProps
+    entry: PageEntry &
+      pageRenderProps & {
+        theme?:string
+      }
     locale?:string
 }
