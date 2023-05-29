@@ -2,6 +2,14 @@ import type { AppProps } from 'next/app'
 import { Asset, Entry, MappedPreview } from './common'
 import { Link } from './components'
 
+export type menuLink = {
+  link_title?:string
+  external_link?:string
+  is_external_link?:boolean
+  internal_link?:{
+    url:string
+  }
+}
 export interface Header extends Entry {
   logo?: Asset;
   site_url?: string;
@@ -22,9 +30,9 @@ export interface Navigation extends Entry {
 }
 export interface Footer extends Entry {
   main_menu: {
-    main_link?: Link;
+    main_link?: menuLink
     sub_menu?: {
-      link?: Link;
+      sub_link?: menuLink
     }[];
   }[];
   $?: MappedPreview<Footer>;

@@ -4,6 +4,10 @@ import { Link } from '@/components'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const { main_menu , $} = props
+
+    const resolveLink = (link: { is_external_link?: boolean; external_link?: string; internal_link?: { url: string } }) => {
+        return link?.is_external_link ? link?.external_link : link?.internal_link?.url
+    }
     
     return (
         <footer className='dark:bg-black' aria-labelledby='footer-heading'>
@@ -20,13 +24,13 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                     key={`navItem-${index}`}
                                     className={`mb-16 ${main_menu?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
                                 > 
-                                    {navItem?.main_link?.title && <h3 
+                                    {navItem?.main_link?.link_title && <h3 
                                         className='text-md font-medium text-gray-900 dark:text-white'
                                     >
                                         <Link
-                                            url={navItem?.main_link?.href}
+                                            url={resolveLink(navItem?.main_link)}
                                         >
-                                            {navItem.main_link.title}
+                                            {navItem.main_link.link_title}
                                         </Link>
                                     </h3>}
                                     <ul 
@@ -34,14 +38,14 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                         className='mt-6 space-y-6'
                                     >
                                         {navItem?.sub_menu?.map((item, i:number) => (
-                                            item?.link?.title && <li
+                                            item?.sub_link?.link_title && <li
                                                 key={`submenu-${index}-${i}`}
                                                 className='text-sm'>
                                                 <Link
-                                                    url={item?.link?.href}
+                                                    url={resolveLink(item?.sub_link)}
                                                     className='text-gray-500 hover:text-gray-600 dark:text-white'
                                                 >
-                                                    {item.link.title}
+                                                    {item.sub_link.link_title}
                                                 </Link>
                                             </li>
                                         ))}
