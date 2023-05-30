@@ -1,6 +1,6 @@
 import { teaserReferenceIncludes, heroReferenceIncludes, imageCardsReferenceIncludes } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
-import { getEntryByUrl } from '@/services'
+import { getEntries, getEntryByUrl } from '@/services'
 
 export const getHomePage = ( cmsUrlPath: string | undefined, locale: string | undefined) => {
     return getEntryByUrl('home_page',locale, '/', [], [])
@@ -13,4 +13,23 @@ export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | 
         ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes)
     ) 
     return getEntryByUrl('landing_page',locale, `${cmsUrlPath}`, newRefUids, [])  
+}
+
+// export const getPaths = async (contentType:string, locale:string) => {
+//     const entries = await getEntries(contentType, locale, [], [])
+//     const paths: { params: { slug: string[] } }[] = []
+//     entries.forEach((entry : {url:string}) => {
+//         paths.push({ params: { slug: [entry.url.toString()] } })
+//     })
+//     return paths
+// }
+
+export const getHeader = (locale: string | undefined) => {
+    return getEntries('header', locale, [], []) 
+}
+export const getNavigation = (locale: string | undefined) => {
+    return getEntries('navigation', locale, [], []) 
+}
+export const getFooter = (locale: string | undefined) => {
+    return getEntries('footer', locale, [], []) 
 }

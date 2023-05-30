@@ -1,12 +1,12 @@
 import Head from 'next/head'
 import { AppContext } from 'next/app'
 import { useEffect } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 
+import { getFooter, getHeader, getNavigation } from '@/loaders'
 import { SingleCol } from '@/layout'
 import { SEO } from '@/components'
 import { App, Generic } from '@/types'
-import { ErrorBoundary } from 'react-error-boundary'
-import { getEntries } from '@/services'
 
 import '@contentstack/live-preview-utils/dist/main.css'
 import '@/styles/globals.css'
@@ -63,9 +63,9 @@ function MyApp (props: App.Props) {
 MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     let appProps = {}
     const { locale } = router // Will return `fr` for `/fr/*` pages
-    const header = await getEntries('header',locale, [], []) || null
-    const navigation = await getEntries('navigation',locale, [], []) || null
-    const footer = await getEntries('footer',locale, [], []) || null
+    const header = await getHeader(locale) || null
+    const navigation = await getNavigation(locale) || null
+    const footer = await getFooter(locale) || null
 
     if (Component.getInitialProps) {
         appProps = await Component.getInitialProps(ctx)
