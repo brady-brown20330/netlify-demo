@@ -2,8 +2,7 @@ import { getLandingPage, getPaths } from '@/loaders'
 
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
-import { getEntries } from '@/services'
-import { Common, Page } from '@/types'
+import {  Page } from '@/types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
 
