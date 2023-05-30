@@ -1,5 +1,4 @@
 export * from './misc'
-export * from './loremIpsum'
 export * from './styles'
 export * from './jsonRte'
 export * from './image'

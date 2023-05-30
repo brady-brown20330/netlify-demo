@@ -1,37 +1,31 @@
-import _ from 'lodash'
 import React, { } from 'react'
 
-import { Card } from '../Cards'
+import { Card } from '@/components'
 import { CardCollectionHeader } from './CardCollectionHeader'
-import { ComponentValidator } from '../ComponentValidator'
 
 import { classNames } from '@/utils'
-import { isHeaderValid, isCardsValid, defaultValues, validationInfo } from './CardCollection.helpers'
+// import { isHeaderValid, isCardsValid, validationInfo } from './CardCollection.helpers'
 
-import { CardCollection as CardCollectionProps, TextPosition } from '@/types/components'
+import { CardCollection as CardCollectionProps } from '@/types/components'
 
 const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
-    const isComponentValid: boolean = isCardsValid(props)
+    const {$, heading, sub_heading, card: cards} =props
+    // const isComponentValid: boolean = isCardsValid(props)
 
-    const { header } = isHeaderValid(props) || isComponentValid ? props : defaultValues
-    const { cards } = isCardsValid(props) ? props : defaultValues
-    const { styles } = props
-
-    const getTextPosition = () => {
-        return _.isEmpty(styles?.text_position) ? TextPosition.below : styles?.text_position
-    }
+    // const { heading } = isHeaderValid(props) || isComponentValid ? props : {header: null}
+    // const { cards } = isCardsValid(props) ? props : {cards: null}
 
     return (
-        <ComponentValidator validators={[isCardsValid(props)]} validationInfo={validationInfo}>
-            <div className={'md:px-3 px-4 mx-auto max-w-7xl py-8 sm:py-12 sm:px-6 lg:px-8'}>
-                {header && header.map((h, idx) => {
-                    return (
-                        <CardCollectionHeader
-                            key={idx}
-                            {...h} />
-                    )
-                })
-                }
+        // <ComponentValidator validators={[isCardsValid(props)]} validationInfo={validationInfo}>
+        <div className={'pb-8 px-8 pb-8 sm:pb-12'}>
+            <div className='max-w-7xl mx-auto '>
+            
+                <CardCollectionHeader
+                    heading={heading}
+                    sub_heading={sub_heading}
+                    $={$}
+                />
+           
                 <div
                     className={classNames(
                         cards?.length === 1 ? 'sm:grid-cols-1 lg:grid-cols-1'
@@ -47,14 +41,14 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
                             key={idx}
                             {...card}
                             count={cards.length}
-                            textPosition={getTextPosition()}
                         />
                         )
                     })
                     }
                 </div>
             </div>
-        </ComponentValidator>
+        </div>
+        // </ComponentValidator>
     )
 }
 

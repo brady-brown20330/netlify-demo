@@ -37,7 +37,7 @@ export interface CommonSystemInfo {
 }
 export type PageEntry = Entry & {
   // $?: MappedPreview<PageEntry>
-  url?: string
+  url: string
 }
 
 export type Entry = CommonSystemInfo & {

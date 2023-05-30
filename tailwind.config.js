@@ -30,6 +30,7 @@ module.exports = {
             violet: colors.violet,
             yellow: colors.yellow,
             red: colors.red,
+            purple: '#7C4DFF',
             primary: {
                 normal: '#6c5ce7',
                 focus: '#5C51C1',

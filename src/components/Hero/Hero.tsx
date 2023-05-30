@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Component } from '@/types'
-import { Link } from '../Link'
-import { Image } from '../Image'
+import { Image, Link } from '@/components'
 
 const Hero = (props:Component.Hero) => {
     const { heading, content, image_position,image, cta, $, image_alt_text } = props
 
     const TextBlock = () => (
-        <div className={`mx-auto max-w-2xl ${image_position === 'Left' ? 'lg:ml:0 ' : 'lg:ml-8' }`}>
+        <div className={`mx-auto max-w-2xl ${image_position === 'Left' ? 'lg:ml:0 pr-6 lg:pr-4' : 'lg:ml-8' }`}>
                         
             {heading && <h1 className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 sm:text-6xl dark:text-white'>
                 {heading}
@@ -27,7 +26,7 @@ const Hero = (props:Component.Hero) => {
 
 
     return (<>
-        {image_position === 'Left' ? <div className='container mb-16 mt-8 p-8 xl:p-0 xl:mt-16 sm:p-0 lg:p-8 pb-0'>
+        {image_position === 'Left' ? <div className='container my-16 p-8 xl:p-0 xl:mt-16 sm:p-0 lg:p-8 pb-0'>
             <div 
                 className='mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8' 
                 {...$?.heading}
@@ -45,7 +44,7 @@ const Hero = (props:Component.Hero) => {
                 </div>
             </div>
         </div>
-            : <div className='container my-16 p-8 xl:p-0 sm:p-0 lg:p-8'>
+            : <div className='container mt-16 mb-8 p-8 xl:p-0 sm:p-0 lg:p-8'>
                 <div
                     className='mx-auto max-w-7xl lg:grid lg:grid-cols-12'
                     {...$?.heading}

@@ -78,15 +78,3 @@ export interface Localization {
   currentLocale: Intl.Locale
   currentlocaleName: string
 }
-
-// export interface HomepageContentBlocks {
-//     image_cards?: CardCollection
-//     teaser?: Teaser,
-// }
-
-// export type HomepageRenderProps = {
-//     // contentTypeUid: string;
-//     // entryUid: string;
-//     // locale: string;
-//     pageComponents:HomepageContentBlocks[];
-//   }

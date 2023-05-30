@@ -1,4 +1,4 @@
-import { resolvePresetParams } from '@/types/extensions'
+import { AssetPreset, AssetPresetMetadata, presetOptionEffects, presetOptions, resolvePresetParams, resolvedStyles } from '@/types/extensions'
 
 const filterBGColor = (color:string) => {
     return color[0] === '#' ? color.slice(1) :color
@@ -13,7 +13,7 @@ const alignRow:any = {
     end: 'bottom',
     center: 'center'
 }
-const getImageURL = (src:any, options:any) => {
+const getImageURL = (src:string, options:presetOptions) => {
     let newsrc = src
     let queryParams = ''
     if (options.transform) {
@@ -34,7 +34,7 @@ const getImageURL = (src:any, options:any) => {
             queryParams+= `&overlay=${pathName}`
         }
         if(options.overlay?.['overlay-align']){
-            const alignPosition:any = options.overlay?.['overlay-align'].split(',')
+            const alignPosition:string[] = options.overlay?.['overlay-align'].split(',')
             const align = `${alignColumn[alignPosition[0]]},${alignRow[alignPosition[1]]}`
             queryParams+= `&overlay-align=${align}`
         }
@@ -74,14 +74,14 @@ const getImageURL = (src:any, options:any) => {
     }
     return newsrc
 }
-const getImageStyles = (options:any) => {
-    const styles :any = {}
+const getImageStyles = (options:presetOptions) => {
+    const styles:resolvedStyles = {}
     if (options?.transform?.rotate) {
         styles.transform = `scale(${1 + (Math.abs(Math.ceil((options?.transform?.rotate || 0) / 10))) / 10}) rotate(${options?.transform?.rotate || 0}deg)`
     }
     return styles
 }
-const getEffectsParams = (effects:any) => {
+const getEffectsParams = (effects:presetOptionEffects) => {
     let params = ''
     if (!(effects && (typeof effects === 'object') && Object.keys(effects).length > 0)) {
         return params
@@ -104,7 +104,7 @@ const getEffectsParams = (effects:any) => {
     return params
 }
 
-const getTranformParams = (transformVal:any) => {
+const getTranformParams = (transformVal:resolvedStyles) => {
     let params = ''
     if (transformVal.height) {
         params += `&height=${transformVal.height}`
@@ -126,9 +126,8 @@ const getTranformParams = (transformVal:any) => {
     return params
 }
 
-const resolvePresetName = ({asset , extension_uid}:resolvePresetParams) => {
-    const presetName = asset?._metadata?.extensions?.[extension_uid]?.[0]?.presets?.[0]?.name
-    return presetName ? presetName : ''
+const resolvePresetName = ( metadata: AssetPresetMetadata) => {
+    return metadata?.preset?.name || ''
 }
 
 /**
@@ -140,13 +139,13 @@ const resolvePresetName = ({asset , extension_uid}:resolvePresetParams) => {
  *  @example const newAsset = resolvePresetByPresetName({asset:asset, presetName:"Blog Preset", extension_uid:"*****************"})
  * 
  */
-export const resolveAssetPreset = ({ asset, extension_uid }:resolvePresetParams) => {
+export const resolveAssetPreset = ({ asset, metadata }:AssetPreset) => {
+    const {extension_uid} = metadata
     const preset = fetchPresetByPresetName({
         asset,
-        presetName: resolvePresetName({asset, extension_uid}),
+        presetName: resolvePresetName( metadata ),
         extension_uid
     })
-    resolvePresetName({asset, extension_uid})
 
     if (preset && preset.options) {
         asset.url = getImageURL(asset.url, preset.options)
@@ -164,7 +163,7 @@ export const resolveAssetPreset = ({ asset, extension_uid }:resolvePresetParams)
  *  @example const preset = fetchPresetByPresetName({asset:asset, presetName:"Blog Preset", extension_uid:"*****************"})
  */
 export const fetchPresetByPresetName = ({ asset, extension_uid, presetName }:resolvePresetParams) => {
-    let allPresets:any = []
+    let allPresets: any[] = []
     if (!presetName) {
         return {}
     }
@@ -173,16 +172,16 @@ export const fetchPresetByPresetName = ({ asset, extension_uid, presetName }:res
     }
     if (asset && asset._metadata && asset._metadata.extensions && asset._metadata.extensions[extension_uid]) {
         const metadatas = asset._metadata.extensions[extension_uid]
-        const local_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'local') || {}
+        const local_metadata = metadatas.find((metadata) => metadata.scope === 'local') || {}
         if (local_metadata.presets) {
             allPresets = [...allPresets, ...local_metadata.presets]
         }
-        const global_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'content_type') || {}
+        const global_metadata = metadatas.find((metadata) => metadata.scope === 'content_type') || {}
         if (global_metadata.presets) {
             allPresets = [...allPresets, ...global_metadata.presets]
         }
     }
-    const preset = allPresets.find((elem:any) => elem.name === presetName)
+    const preset = allPresets.find((elem: {name:string}) => elem.name === presetName)
     return preset
 }
 
@@ -237,7 +236,7 @@ export const resolvePresetByPresetUID = ({ asset, presetUID, extension_uid }:res
  *  @example const presets = fetchPresetByPresetUID({asset:asset, presetUID:"*****************", extension_uid:"*****************"})
  */
 export const fetchPresetByPresetUID = ({ asset, extension_uid, presetUID }:resolvePresetParams) => {
-    let allPresets:any = []
+    let allPresets:any[] = []
     if (!presetUID) {
         return {}
     }
@@ -246,16 +245,16 @@ export const fetchPresetByPresetUID = ({ asset, extension_uid, presetUID }:resol
     }
     if (asset && asset._metadata && asset._metadata.extensions && asset._metadata.extensions[extension_uid]) {
         const metadatas = asset._metadata.extensions[extension_uid]
-        const local_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'local') || {}
+        const local_metadata = metadatas.find((metadata:any) => metadata.scope === 'local') || {}
         if (local_metadata.presets) {
             allPresets = [...allPresets, ...local_metadata.presets]
         }
-        const global_metadata:any = metadatas.find((metadata:any) => metadata.scope === 'content_type') || {}
+        const global_metadata = metadatas.find((metadata:any) => metadata.scope === 'content_type') || {}
         if (global_metadata.presets) {
             allPresets = [...allPresets, ...global_metadata.presets]
         }
     }
-    const preset = allPresets.find((elem:any) => elem.uid === presetUID)
+    const preset = allPresets.find((elem:{uid:string}) => elem.uid === presetUID)
     return preset
 }
 

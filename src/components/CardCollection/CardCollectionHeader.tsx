@@ -1,20 +1,22 @@
-import JsonRte from '../Primitives/JsonRte'
-
+import { CardCollectionHeader } from '@/types/components'
 // import { Header as HeaderProps } from '@/types/components'
 
-const CardCollectionHeader: React.FC<any> = (props: any) => {
-    const { $, title, text, ctas } = props
+const CardCollectionHeader: React.FC<CardCollectionHeader> = (props: CardCollectionHeader) => {
+    const { $, heading, sub_heading } = props
     return (
-        <div className='flex flex-wrap flex-col md:flex-row justify-between lg:items-center mb-4'>
-            <div className='sm:w-3/4' >
-                <h5>
-                    {title}</h5>
-                {text
-          && <div>
-              <JsonRte body={text} />
-          </div>
-                }
-            </div>
+        <div className='relative mx-auto flex max-w-4xl flex-col items-center text-center py-16'>
+            {heading && <h2
+                className={'text-3xl font-bold tracking-tight sm:text-4xl '}
+                {...$?.heading}
+            >
+                {heading}
+            </h2>}
+            {sub_heading && <p
+                className={'mt-3 text-xl '}
+                {...$?.sub_heading}
+            >
+                {sub_heading}
+            </p>}
         </div>
     )
 }

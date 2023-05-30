@@ -1,7 +1,4 @@
-import _ from 'lodash'
-
 import { resolveAssetPreset  } from '@/utils'
-
 import { ImageComponent } from '@/types/components'
 
 
@@ -10,11 +7,10 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
 
     const renderImage = () => {
         if(image?.asset && image?.metadata?.extension_uid) {
-            const { asset, metadata } = image
+            const { asset } = image
 
             const resolvedImg = resolveAssetPreset({
-                asset,
-                extension_uid: metadata.extension_uid
+                ...image
             })
             if(resolvedImg && resolvedImg?.url) {
                 return resolvedImg.url
@@ -29,14 +25,12 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
    
 
     return <>
-        {/* {<source media='(max-width: 640px)' srcSet={renderImage('mobile')} />}
-        <source media='(min-width: 641px) and (max-width: 856px)' srcSet={renderImage('tablet')} /> */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
+        {image?.asset?.url && <img 
             src={renderImage()}
             alt={image_alt_text || ''}
             className={className || ''}
-        />
+        />}
     </>
 }
 

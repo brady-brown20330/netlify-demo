@@ -1,14 +1,12 @@
-// import * as _ from '@/config'
-
 import Head from 'next/head'
 import { AppContext } from 'next/app'
-import { useEffect, useState } from 'react'
-
-import { SingleCol } from '@/layout'
-import { SEO } from '@/components/Seo'
-import { App, Generic } from '@/types'
+import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { getEntries } from '@/services'
+
+import { getFooter, getHeader, getNavigation } from '@/loaders'
+import { SingleCol } from '@/layout'
+import { SEO } from '@/components'
+import { App, Generic } from '@/types'
 
 import '@contentstack/live-preview-utils/dist/main.css'
 import '@/styles/globals.css'
@@ -32,19 +30,18 @@ function MyApp (props: App.Props) {
         footer
     } = props
 
+
     useEffect(()=> {
-        if(document) {
-            pageProps?.theme && document.querySelector('html')?.classList.add(pageProps?.theme?.toLowerCase() || 'light')
-        }
-    }, [pageProps?.theme])
+        if(!navigator.onLine) throw new Error('===== Network connection failed ====== ')
+    }, [])
 
     return (
         <>
             <Head>
-                {pageProps?.seo?.title ? <title>{pageProps?.seo?.title}</title> : <title>Universal Demo</title>}
+                {pageProps?.entry?.seo?.title ? <title>{pageProps?.entry?.seo?.title}</title> : <title>Universal Demo</title>}
                 
-                {pageProps?.seo && <SEO
-                    {...pageProps.seo}
+                {pageProps?.entry?.seo && <SEO
+                    {...pageProps.entry.seo}
                     locale={locale}
                 />}
             </Head>
@@ -65,10 +62,10 @@ function MyApp (props: App.Props) {
 
 MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     let appProps = {}
-    const { locale, query } = router // Will return `fr` for `/fr/*` pages
-    const header = await getEntries('header',locale, [], [], query)
-    const navigation = await getEntries('navigation',locale, [], [], query)
-    const footer = await getEntries('footer',locale, [], [], query)
+    const { locale } = router // Will return `fr` for `/fr/*` pages
+    const header = await getHeader(locale) || null
+    const navigation = await getNavigation(locale) || null
+    const footer = await getFooter(locale) || null
 
     if (Component.getInitialProps) {
         appProps = await Component.getInitialProps(ctx)
@@ -83,4 +80,3 @@ MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
 }
 
 export default MyApp
-

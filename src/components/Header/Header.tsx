@@ -1,10 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-shadow */
 /* eslint-disable max-len */
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
+import { Link } from '@/components'
+import { onEntryChange } from '@/config'
+import { getHeader, getNavigation } from '@/loaders'
 // import { Navigation } from '../Navigation'
 
 function classNames (...classes: string[]) {
@@ -12,11 +15,31 @@ function classNames (...classes: string[]) {
 }
 
 function Header (props: App.Header) {
-    const { logo, site_url, title, navigation } = props
+    const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
+    const { logo, site_url, title, navigation } = data
+
+    useEffect(() => {
+        async function fetchData () {
+            try {
+                const entryRes = {
+                    header: await getHeader('en-us'),
+                    navigation: await getNavigation('en-us')
+                }
+                const dt = entryRes?.header?.[0] ? entryRes?.header?.[0] : null
+                setData({
+                    ...dt,
+                    navigation: entryRes?.navigation?.[0] || null
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        onEntryChange(fetchData)
+    }, [])
 
     return (
-        <div className='dark:bg-black'>
+        <div className='sticky z-50 top-0 bg-white dark:bg-black'>
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as='div' className='relative z-40 lg:hidden' onClose={setOpen}>
@@ -42,7 +65,7 @@ function Header (props: App.Header) {
                             leaveFrom='translate-x-0'
                             leaveTo='-translate-x-full'
                         >
-                            <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl'>
+                            <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-black pb-12 shadow-xl'>
                                 <div className='flex px-4 pb-2 pt-5'>
                                     <button
                                         type='button'
@@ -56,25 +79,38 @@ function Header (props: App.Header) {
 
                                 {/* Links */}
                                 <Tab.Group as='div' className='mt-2'>
-                                    <div className='border-b border-gray-200'>
+                                    <div className='border-b border-gray-200' {...navigation?.$?.uid}>
                                         <Tab.List className='-mb-px flex flex-col items-start px-4'>
-                                            {navigation?.main_menu.map((category) => (
+                                            {navigation?.main_menu?.map((category) => (
                                                 <Tab
-                                                    key={category?.main_link?.title}
+                                                    key={category?.main_link?.link_title}
                                                     className={({ selected }) =>
                                                         classNames(
-                                                            selected ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-900 outline-0',
+                                                            selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 dark:!text-white outline-0',
                                                             'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium outline-0'
                                                         )
                                                     }
                                                 >
-                                                    {category?.main_link?.title}
+                                                    {category?.main_link?.is_external_link 
+                                                        ? <Link
+                                                            url={category?.main_link?.external_link}
+                                                            className='hover:border-purple hover:text-purple'
+                                                        >
+                                                            {category?.main_link?.link_title}
+                                                        </Link>
+                                                        : <Link
+                                                            url={category?.main_link?.internal_link?.url}
+                                                            className='hover:border-purple hover:text-purple'
+                                                        >
+                                                            {category?.main_link?.link_title}
+                                                        </Link>}
                                                 </Tab>
                                             ))}
                                         </Tab.List>
                                     </div>
                                     <Tab.Panels as={Fragment}>
                                         {/* Secondary navigation for mobile tobe added in sprint 2*/}
+                                        <></>
                                         {/* {navigation1.categories.map((category) => (
                                             <Tab.Panel key={category.name} className='space-y-12 px-4 py-6'>
                                                 <div className='grid grid-cols-2 gap-x-4 gap-y-10'>
@@ -106,40 +142,52 @@ function Header (props: App.Header) {
             <header className='relative'>
                 <nav aria-label='Top'>
                     {/* Top navigation */}
-                    <div className='dark:bg-black'>
-                        <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-                            <div className='border-b border-gray-200'>
+                    <div className='bg-white dark:bg-black'>
+                        <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
+                            <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center'>
-                                        <a href={site_url}>
+                                    <div className='hidden lg:flex lg:flex-1 lg:items-center' {...logo?.$?.url}>
+                                        <Link url={site_url}>
                                             <span className='sr-only'>{title}</span>
                                             <img
-                                                className='h-8 w-auto'
+                                                className='h-8 w-auto m-2 ml-4'
                                                 src={logo?.url}
                                                 alt={title}
                                             />
-                                        </a>
+                                        </Link>
                                     </div>
 
-                                    <div className='hidden h-full lg:flex'>
+                                    <div className='hidden h-full lg:flex'  {...navigation?.$?.uid}>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex h-full justify-center space-x-8'>
-                                                {navigation?.main_menu.map((category) => (
-                                                    <Popover key={category?.main_link?.title} className='flex'>
+                                                {navigation?.main_menu?.map((category) => (
+                                                    <Popover key={category?.main_link?.link_title} className='flex'>
                                                         {({ open }: any) => (
                                                             <>
                                                                 <div className='relative flex'>
                                                                     <Popover.Button
                                                                         className={classNames(
                                                                             open
-                                                                                ? 'border-indigo-600 text-indigo-600'
+                                                                                ? 'border-purple text-purple'
                                                                                 : 'border-transparent text-gray-700 dark:text-white hover:text-gray-800 outline-0',
                                                                             'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out outline-0'
                                                                         )}
                                                                     >
-                                                                        {category?.main_link?.title}
+                                                                        {category?.main_link?.is_external_link 
+                                                                            ? <Link
+                                                                                url={category?.main_link?.external_link}
+                                                                                className='hover:border-purple hover:text-purple'
+                                                                            >
+                                                                                {category?.main_link?.link_title}
+                                                                            </Link>
+                                                                            : <Link
+                                                                                url={category?.main_link?.internal_link?.url}
+                                                                                className='hover:border-purple hover:text-purple'
+                                                                            >
+                                                                                {category?.main_link?.link_title}
+                                                                            </Link>}
                                                                     </Popover.Button>
                                                                 </div>
 
@@ -154,12 +202,14 @@ function Header (props: App.Header) {
                                                                 >
                                                                     <Popover.Panel className='absolute inset-x-0 top-full text-sm text-gray-500'>
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                                                                        <div className='absolute inset-0 top-1/2 bg-white shadow' aria-hidden='true' />
+                                                                        <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
-                                                                        <div className='relative dark:bg-black'>
+                                                                        <div className='relative bg-white dark:bg-black h-1'>
+                                                                            {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
                                                                             <div className='mx-auto max-w-7xl px-8'>
                                                                                 <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                                                                     {/* Secondary navigation tobe added in sprint 2*/}
+                                                                                    <></>
                                                                                     {/* {category.featured.map((item) => (
                                                                                         <div key={item.name} className='group relative'>
                                                                                             <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
@@ -196,7 +246,7 @@ function Header (props: App.Header) {
                                     <div className='flex flex-1 items-center lg:hidden'>
                                         <button
                                             type='button'
-                                            className='-ml-2 rounded-md bg-white p-2 text-gray-400'
+                                            className='rounded-md bg-white dark:bg-black p-2 text-gray-400 dark:text-white'
                                             onClick={() => setOpen(true)}
                                         >
                                             <span className='sr-only'>Open menu</span>
