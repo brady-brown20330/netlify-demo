@@ -34,7 +34,7 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
             {cta?.title && <span className='text-sm !text-purple'>
                 <Link 
                     url={cta?.link}
-                    className='hover:border-b-2 hover:border-purple'
+                    className='!text-purple hover:border-b-2 hover:border-purple'
                 >
                     {cta.title}
                 </Link> &rarr;
