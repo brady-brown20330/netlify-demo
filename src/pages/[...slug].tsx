@@ -1,9 +1,8 @@
-import { getLandingPage } from '@/loaders'
+import { getLandingPage, getPaths } from '@/loaders'
 
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
-import { getEntries } from '@/services'
-import { Common, Page } from '@/types'
+import {  Page } from '@/types'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
 
@@ -43,12 +42,7 @@ export default function LandingPage ({entry, locale}:Page.LandingPage) {
 export const getStaticPaths: GetStaticPaths = async () => {
     // eslint-disable-next-line no-useless-catch
     try {
-        const entryPaths: Common.PageEntry[] = await getEntries('landing_page', 'en-us', [], [])
-        const paths: { params: { slug: any } }[] = []
-        entryPaths.forEach((entry) => {
-            paths.push({ params: { slug: [entry.url.toString()] } })
-        })
-  
+        const paths = await getPaths('landing_page', 'en-us')
         return {
             paths,
             fallback: 'blocking'
