@@ -15,15 +15,16 @@ export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | 
     return getEntryByUrl('landing_page',locale, `${cmsUrlPath}`, newRefUids, [])  
 }
 
-// export const getPaths = async (contentType:string, locale:string) => {
-//     const entries = await getEntries(contentType, locale, [], [])
-//     const paths: { params: { slug: string[] } }[] = []
-//     entries.forEach((entry : {url:string}) => {
-//         paths.push({ params: { slug: [entry.url.toString()] } })
-//     })
-//     return paths
-// }
+export const getPaths = async (contentType:string, locale:string) => {
+    const entries = await getEntries(contentType, locale, [], [])
+    const paths: { params: { slug:string[] } }[] = []
+    entries.forEach((entry : {url:string}) => {
+        paths.push({ params: { slug: [entry.url.toString()] } })
+    })
+    return paths
+}
 
+// (string | { params: ParsedUrlQuery; locale?: string | undefined; })[]
 export const getHeader = (locale: string | undefined) => {
     return getEntries('header', locale, [], []) 
 }
