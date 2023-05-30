@@ -6,8 +6,8 @@ import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Link } from '@/components'
-import { getEntries } from '@/services'
 import { onEntryChange } from '@/config'
+import { getHeader, getNavigation } from '@/loaders'
 // import { Navigation } from '../Navigation'
 
 function classNames (...classes: string[]) {
@@ -23,8 +23,8 @@ function Header (props: App.Header) {
         async function fetchData () {
             try {
                 const entryRes = {
-                    header: await getEntries('header','en-us', [], []),
-                    navigation: await getEntries('navigation','en-us', [], [])
+                    header: await getHeader('en-us'),
+                    navigation: await getNavigation('en-us')
                 }
                 const dt = entryRes?.header?.[0] ? entryRes?.header?.[0] : null
                 setData({
