@@ -84,7 +84,7 @@ export interface CardCollectionHeader {
 }
 export interface CardCollection extends CardCollectionHeader {
   $?: MappedPreview<CardCollection>;
-  card?: ImageCardItem[] | [];
+  cards?: ImageCardItem[] | [];
 }
 
 export type ImageCardItem = ImageCardGraphics &
