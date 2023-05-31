@@ -16,15 +16,15 @@ export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | 
 }
 
 export const getPaths = async (contentType:string, locale:string) => {
-    const entries = await getEntries(contentType, locale, [], [])
+    let entries = await getEntries(contentType, locale, [], [])
+    entries = entries !== null ? entries : []
     const paths: { params: { slug:string[] } }[] = []
-    entries.forEach((entry : {url:string}) => {
+    entries?.forEach((entry : {url:string}) => {
         paths.push({ params: { slug: [entry.url.toString()] } })
     })
     return paths
 }
 
-// (string | { params: ParsedUrlQuery; locale?: string | undefined; })[]
 export const getHeader = (locale: string | undefined) => {
     return getEntries('header', locale, [], []) 
 }
