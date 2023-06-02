@@ -58,7 +58,8 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
         }
     }
     catch (error) {
-        throw new Error(error.message)
+        if (error?.error_message) throw new Error(JSON.stringify(error))
+        else throw new Error(error.message)
     }
 }
 
@@ -114,6 +115,7 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
         
     }
     catch (error) {
-        throw new Error(error.message)
+        if (error?.error_message) throw new Error(JSON.stringify(error))
+        else throw new Error(error.message)
     }
 }
