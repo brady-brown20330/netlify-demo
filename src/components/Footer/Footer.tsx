@@ -2,23 +2,23 @@ import { App } from '@/types'
 import React, { useEffect, useState } from 'react'
 import { Link } from '@/components'
 import { onEntryChange } from '@/config'
-import { getFooter } from '@/loaders'
+// import { getFooter } from '@/loaders'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const [data, setData] =useState(props)
     const { main_menu , $} = data
 
-    useEffect(() => {
-        async function fetchData () {
-            try {
-                const entryRes = await getFooter('en-us')
-                setData(entryRes?.[0] || null)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        onEntryChange(fetchData)
-    }, [])
+    // useEffect(() => {
+    //     async function fetchData () {
+    //         try {
+    //             const entryRes = await getFooter('en-us')
+    //             setData(entryRes?.[0] || null)
+    //         } catch (error) {
+    //             console.error(error)
+    //         }
+    //     }
+    //     onEntryChange(fetchData)
+    // }, [])
     
     const resolveLink = (link:App.menuLink) => {
         return link?.is_external_link ? link?.external_link : link?.internal_link?.url
