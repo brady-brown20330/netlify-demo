@@ -1,4 +1,4 @@
-import { CardCollection, Teaser, Hero,ImageAndText, Rte} from '@/components'
+import { CardCollection, Teaser, Hero,ImageAndText, Text} from '@/components'
 import { Page } from '@/types'
 
 
@@ -18,8 +18,8 @@ export default function RenderComponents ({components}: Page.pageRenderProps) {
             if (component.card_collection) {
                 return <CardCollection key={`component-${key}`} {...component.card_collection} />
             }
-            if (component.rte) {
-                return <Rte key={`component-${key}`} {...component.rte} />
+            if (component.text) {
+                return <Text key={`component-${key}`} {...component.text} />
             }
         })}</>
     )

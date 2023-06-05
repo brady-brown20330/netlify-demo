@@ -45,6 +45,10 @@ module.exports = {
                 normal: colors.gray[500],
                 focus: colors.gray[700],
                 hover: colors.gray[900]
+            },
+            background: {
+                primary: '#ffffff',
+                secondary: '#F5F5F5'
             }
         },
         extend: {
