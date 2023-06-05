@@ -27,8 +27,8 @@ export default function Home ({entry}:Page.Homepage) {
  
     return (<>
         {data?.title && <div 
-            className='h-[800px] text-center pt-20'
-            {...data?.$?.title}
+            className='h-[50vh] text-center pt-20'
+            // {...data?.$?.title}
         >
             {data.title}
         </div>}
