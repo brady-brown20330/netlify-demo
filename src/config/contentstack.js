@@ -5,9 +5,7 @@ export const Stack = (process.env.CONTENTSTACK_API_KEY && process.env.CONTENTSTA
     api_key: process.env.CONTENTSTACK_API_KEY,
     delivery_token: process.env.CONTENTSTACK_DELIVERY_TOKEN,
     environment: process.env.CONTENTSTACK_ENVIRONMENT,
-    branch: process.env.CONTENTSTACK_BRANCH
-        ? process.env.CONTENTSTACK_BRANCH
-        : 'main',
+    branch: process.env.CONTENTSTACK_BRANCH,
     region: Contentstack.Region[process.env.CONTENTSTACK_REGION],
     live_preview: {
         enable: true,

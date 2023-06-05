@@ -7,7 +7,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Link } from '@/components'
 import { onEntryChange } from '@/config'
-import { getHeader, getNavigation } from '@/loaders'
+// import { getHeader, getNavigation } from '@/loaders'
 // import { Navigation } from '../Navigation'
 
 function classNames (...classes: string[]) {
@@ -17,26 +17,26 @@ function classNames (...classes: string[]) {
 function Header (props: App.Header) {
     const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
-    const { logo, site_url, title, navigation } = data
+    const { logo, main_navigation: navigation } = data
 
-    useEffect(() => {
-        async function fetchData () {
-            try {
-                const entryRes = {
-                    header: await getHeader('en-us'),
-                    navigation: await getNavigation('en-us')
-                }
-                const dt = entryRes?.header?.[0] ? entryRes?.header?.[0] : null
-                setData({
-                    ...dt,
-                    navigation: entryRes?.navigation?.[0] || null
-                })
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        onEntryChange(fetchData)
-    }, [])
+    // useEffect(() => {
+    //     async function fetchData () {
+    //         try {
+    //             const entryRes = {
+    //                 header: await getHeader('en-us'),
+    //                 navigation: await getNavigation('en-us')
+    //             }
+    //             const dt = entryRes?.header?.[0] ? entryRes?.header?.[0] : null
+    //             setData({
+    //                 ...dt,
+    //                 navigation: entryRes?.navigation?.[0] || null
+    //             })
+    //         } catch (error) {
+    //             console.error(error)
+    //         }
+    //     }
+    //     onEntryChange(fetchData)
+    // }, [])
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
@@ -79,11 +79,11 @@ function Header (props: App.Header) {
 
                                 {/* Links */}
                                 <Tab.Group as='div' className='mt-2'>
-                                    <div className='border-b border-gray-200' {...navigation?.$?.uid}>
+                                    <div className='border-b border-gray-200'>
                                         <Tab.List className='-mb-px flex flex-col items-start px-4'>
-                                            {navigation?.main_menu?.map((category) => (
-                                                <Tab
-                                                    key={category?.main_link?.link_title}
+                                            {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item) => (
+                                                item?.text && <Tab
+                                                    key={item?.text}
                                                     className={({ selected }) =>
                                                         classNames(
                                                             selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 dark:!text-white outline-0',
@@ -91,19 +91,12 @@ function Header (props: App.Header) {
                                                         )
                                                     }
                                                 >
-                                                    {category?.main_link?.is_external_link 
-                                                        ? <Link
-                                                            url={category?.main_link?.external_link}
-                                                            className='hover:border-purple hover:text-purple'
-                                                        >
-                                                            {category?.main_link?.link_title}
-                                                        </Link>
-                                                        : <Link
-                                                            url={category?.main_link?.internal_link?.url}
-                                                            className='hover:border-purple hover:text-purple'
-                                                        >
-                                                            {category?.main_link?.link_title}
-                                                        </Link>}
+                                                    <Link
+                                                        url={item?.link}
+                                                        className='hover:border-purple hover:text-purple'
+                                                    >
+                                                        {item.text}
+                                                    </Link>
                                                 </Tab>
                                             ))}
                                         </Tab.List>
@@ -147,23 +140,23 @@ function Header (props: App.Header) {
                             <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center' {...logo?.$?.url}>
-                                        <Link url={site_url}>
-                                            <span className='sr-only'>{title}</span>
+                                    <div className='hidden lg:flex lg:w-[40%] lg:items-center'>
+                                        <Link url='/'>
+                                            <span className='sr-only'>Site Logo</span>
                                             <img
                                                 className='h-8 w-auto m-2 ml-4'
                                                 src={logo?.url}
-                                                alt={title}
+                                                alt={logo?.title}
                                             />
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full lg:flex'  {...navigation?.$?.uid}>
+                                    <div className='hidden h-full lg:flex'>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
-                                            <div className='flex h-full justify-center space-x-8'>
-                                                {navigation?.main_menu?.map((category) => (
-                                                    <Popover key={category?.main_link?.link_title} className='flex'>
+                                            <div className='flex h-full justify-center space-x-8 p-2'>
+                                                {navigation?.[0]?.items?.map((item) => (
+                                                    <Popover key={item?.text} className='flex'>
                                                         {({ open }: any) => (
                                                             <>
                                                                 <div className='relative flex'>
@@ -175,19 +168,12 @@ function Header (props: App.Header) {
                                                                             'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out outline-0'
                                                                         )}
                                                                     >
-                                                                        {category?.main_link?.is_external_link 
-                                                                            ? <Link
-                                                                                url={category?.main_link?.external_link}
-                                                                                className='hover:border-purple hover:text-purple'
-                                                                            >
-                                                                                {category?.main_link?.link_title}
-                                                                            </Link>
-                                                                            : <Link
-                                                                                url={category?.main_link?.internal_link?.url}
-                                                                                className='hover:border-purple hover:text-purple'
-                                                                            >
-                                                                                {category?.main_link?.link_title}
-                                                                            </Link>}
+                                                                        <Link
+                                                                            url={item?.link}
+                                                                            className='hover:border-purple hover:text-purple'
+                                                                        >
+                                                                            {item?.text}
+                                                                        </Link>
                                                                     </Popover.Button>
                                                                 </div>
 
@@ -204,30 +190,30 @@ function Header (props: App.Header) {
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
-                                                                        <div className='relative bg-white dark:bg-black h-1'>
+                                                                        <div className='relative bg-white dark:bg-black'>
                                                                             {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
                                                                             <div className='mx-auto max-w-7xl px-8'>
                                                                                 <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
-                                                                                    {/* Secondary navigation tobe added in sprint 2*/}
-                                                                                    <></>
-                                                                                    {/* {category.featured.map((item) => (
-                                                                                        <div key={item.name} className='group relative'>
-                                                                                            <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
-                                                                                                <img
-                                                                                                    src={item.imageSrc}
-                                                                                                    alt={item.imageAlt}
-                                                                                                    className='object-cover object-center'
-                                                                                                />
-                                                                                            </div>
-                                                                                            <a href={item.href} className='mt-4 block font-medium text-gray-900'>
-                                                                                                <span className='absolute inset-0 z-10' aria-hidden='true' />
-                                                                                                {item.name}
-                                                                                            </a>
-                                                                                            <p aria-hidden='true' className='mt-1'>
-                                                                                            Shop now
+                                                                                    {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
+                                                                                        <div key={`section-${ind}`}>
+                                                                                            <p  className='font-medium text-gray-900'>
+                                                                                                {sect.title}
                                                                                             </p>
+                                                                                            <ul
+                                                                                                role='list'
+                                                                                                aria-labelledby={`section-${ind}-heading-mobile`}
+                                                                                                className='mt-6 flex flex-col space-y-6'
+                                                                                            >
+                                                                                                {sect?.links?.map((subitem) => (
+                                                                                                    subitem?.text && <li key={subitem.text} className='flow-root'>
+                                                                                                        <Link url={subitem.link} className='-m-2 block p-2 text-gray-500'>
+                                                                                                            {subitem.text}
+                                                                                                        </Link>
+                                                                                                    </li>
+                                                                                                ))}
+                                                                                            </ul>
                                                                                         </div>
-                                                                                    ))} */}
+                                                                                    ))}
 
                                                                                 </div>
                                                                             </div>
@@ -255,14 +241,14 @@ function Header (props: App.Header) {
                                     </div>
 
                                     {/* Logo (lg-) */}
-                                    <a href={site_url} className='lg:hidden'>
-                                        <span className='sr-only'>{title}</span>
+                                    <Link url='/' className='lg:hidden'>
+                                        <span className='sr-only'>Site Logo</span>
                                         <img
                                             src={logo?.url}
-                                            alt={title}
+                                            alt={logo?.title}
                                             className='h-8 w-auto'
                                         />
-                                    </a>
+                                    </Link>
 
                                     <div className='flex flex-1 items-center justify-end'>
                                         <div className='flex items-center lg:ml-8'>
