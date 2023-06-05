@@ -30,7 +30,7 @@ function Header (props: App.Header) {
     }
 
     const handleClose=()=>{
-        setCurrPanel('')
+        // setCurrPanel('')
     }
 
     useEffect(() => {
@@ -205,36 +205,39 @@ function Header (props: App.Header) {
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
-                                                                        <div className='relative bg-white dark:bg-black'>
-                                                                            {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
-                                                                            <div className='mx-auto max-w-7xl px-8'>
-                                                                                <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
-                                                                                    {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
-                                                                                        <div key={`section-${ind}`}>
-                                                                                            {sect?.title && <Link 
-                                                                                                url={sect?.link}
-                                                                                                className='font-medium text-base text-gray-900 hover:text-purple hover:underline'>
-                                                                                                {sect.title}
-                                                                                            </Link>}
-                                                                                            <ul
-                                                                                                role='list'
-                                                                                                aria-labelledby={`section-${ind}-heading-mobile`}
-                                                                                                className='mt-6 flex flex-col space-y-6'
-                                                                                            >
-                                                                                                {sect?.links?.map((subitem) => (
-                                                                                                    subitem?.text && <li key={subitem.text} className='flow-root'>
-                                                                                                        <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
-                                                                                                            {subitem.text}
-                                                                                                        </Link>
-                                                                                                    </li>
-                                                                                                ))}
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    ))}
+                                                                        {item && item?.mega_menu?.[0]?.section?.length 
+                                                                            ? <div className='relative bg-white dark:bg-black'>
+                                                                                {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
+                                                                                <div className='mx-auto max-w-7xl px-8'>
+                                                                                    <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
+                                                                                        {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
+                                                                                            <div key={`section-${ind}`}>
+                                                                                                {sect?.title && <Link 
+                                                                                                    url={sect?.link}
+                                                                                                    className='font-medium text-base text-gray-900 hover:text-purple hover:underline'>
+                                                                                                    {sect.title}
+                                                                                                </Link>}
+                                                                                                <ul
+                                                                                                    role='list'
+                                                                                                    aria-labelledby={`section-${ind}-heading-mobile`}
+                                                                                                    className='mt-6 flex flex-col space-y-6'
+                                                                                                >
+                                                                                                    {sect?.links?.map((subitem) => (
+                                                                                                        subitem?.text && <li key={subitem.text} className='flow-root'>
+                                                                                                            <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
+                                                                                                                {subitem.text}
+                                                                                                            </Link>
+                                                                                                        </li>
+                                                                                                    ))}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        ))}
 
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
+                                                                            </div> 
+                                                                            : <></>
+                                                                        }
                                                                     </Popover.Panel>
                                                                 </Transition>
                                                             </>
