@@ -30,7 +30,7 @@ function Header (props: App.Header) {
     }
 
     const handleClose=()=>{
-        // setCurrPanel('')
+        setCurrPanel('')
     }
 
     useEffect(() => {
