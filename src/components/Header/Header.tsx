@@ -97,17 +97,19 @@ function Header (props: App.Header) {
                                                         >
                                                             {item.text}
                                                         </Link>
-                                                        { currPanel=== item?.text
-                                                            ? <ChevronUpIcon
-                                                                data-title={item?.text}
-                                                                className='block h-4 px-4 text-purple cursor-pointer'
-                                                                onClick={handleClose}
-                                                            />
-                                                            :<ChevronDownIcon
-                                                                data-title={item?.text}
-                                                                className='block h-4 px-4 cursor-pointer'
-                                                                onClick={(e:React.MouseEvent) => {handleMouseOver(e)}}
-                                                            />}
+                                                        {item && item?.mega_menu?.[0]?.section && item?.mega_menu?.[0]?.section?.length > 0 && <>
+                                                            { currPanel=== item?.text
+                                                                ? <ChevronUpIcon
+                                                                    data-title={item?.text}
+                                                                    className='block h-4 px-4 text-purple cursor-pointer'
+                                                                    onClick={handleClose}
+                                                                />
+                                                                :<ChevronDownIcon
+                                                                    data-title={item?.text}
+                                                                    className='block h-4 px-4 cursor-pointer'
+                                                                    onClick={(e:React.MouseEvent) => {handleMouseOver(e)}}
+                                                                />}
+                                                        </>}
                                                         
                                                     </div>
                                                     <div className='flex flex-col items-start px-4'>
