@@ -11,17 +11,19 @@ import { App } from '@/types'
 // }
 
 const SingleCol: React.FC<App.SingleColLayout> = (
-    { header, navigation, footer, children }: React.PropsWithChildren<App.SingleColLayout>
+    props : React.PropsWithChildren<App.SingleColLayout>
 ) => {  
     return (
         <>
-            {!_.isEmpty(header) && <Header {...header} navigation={navigation}/>}
+            <Header 
+                {...props}
+            />
 
             <div className='mx-auto' >
-                {children}
+                {props.children}
             </div>
 
-            {!_.isEmpty(footer) && <Footer {...footer}/>}
+            {/* {!_.isEmpty(footer) && <Footer {...footer}/>} */}
         </>
     )
 }

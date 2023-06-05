@@ -1,4 +1,4 @@
-import { teaserReferenceIncludes, heroReferenceIncludes, imageCardsReferenceIncludes } from '@/components'
+import { teaserReferenceIncludes, heroReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
 import { getEntries, getEntryByUrl } from '@/services'
 
@@ -16,21 +16,25 @@ export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | 
 }
 
 export const getPaths = async (contentType:string, locale:string) => {
-    const entries = await getEntries(contentType, locale, [], [])
+    let entries = await getEntries(contentType, locale, [], [])
+    entries = entries !== null ? entries : []
     const paths: { params: { slug:string[] } }[] = []
-    entries.forEach((entry : {url:string}) => {
+    entries?.forEach((entry : {url:string}) => {
         paths.push({ params: { slug: [entry.url.toString()] } })
     })
     return paths
 }
 
-// (string | { params: ParsedUrlQuery; locale?: string | undefined; })[]
-export const getHeader = (locale: string | undefined) => {
-    return getEntries('header', locale, [], []) 
+export const getAppConfigData = (locale:string|undefined) => {
+    const refUids = prefixReferenceIncludes('main_navigation', ...includeheaderRefUids)
+    return getEntries('web_configuration', locale, refUids, [])
 }
-export const getNavigation = (locale: string | undefined) => {
-    return getEntries('navigation', locale, [], []) 
-}
-export const getFooter = (locale: string | undefined) => {
-    return getEntries('footer', locale, [], []) 
-}
+// export const getHeader = (locale: string | undefined) => {
+//     return getEntries('header', locale, [], []) 
+// }
+// export const getNavigation = (locale: string | undefined) => {
+//     return getEntries('navigation', locale, [], []) 
+// }
+// export const getFooter = (locale: string | undefined) => {
+//     return getEntries('footer', locale, [], []) 
+// }
