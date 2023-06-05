@@ -1,1 +1,1 @@
-export {getEntries, getEntryByUrl} from './contentstack'
+export {getEntries, getEntryByUrl, getEntryByUID} from './contentstack'

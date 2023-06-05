@@ -61,10 +61,6 @@ MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     let appProps = {}
     const { locale } = router // Will return `fr` for `/fr/*` pages
     const web_config = await getAppConfigData(locale) || null
-    // console.log('🚀 ~ file: _app.tsx:67 ~ MyApp.getInitialProps= ~ configObj:', configObj?.[0]?.main_navigation)
-    // const header = await getHeader(locale) || null
-    // const navigation = await getNavigation(locale) || null
-    // const footer = await getFooter(locale) || null
 
     if (Component.getInitialProps) {
         appProps = await Component.getInitialProps(ctx)
@@ -72,9 +68,6 @@ MyApp.getInitialProps = async ({  Component, ctx, router }:AppContext) => {
     return {
         appProps,
         web_config: web_config?.length > 0 ? web_config[0] : null,
-        // header: configObj?.length > 0 ? configObj?[0] : null,
-        // navigation: navigation?.length > 0 ? navigation[0] : null,
-        // footer: footer?.length > 0 ? footer[0] : null,
         locale
     }
 }

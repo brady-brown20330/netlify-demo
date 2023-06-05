@@ -2,11 +2,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable max-len */
 import { Fragment, useEffect, useState } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Dialog, Popover, Transition } from '@headlessui/react'
+import { Bars3Icon, ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Link } from '@/components'
 import { onEntryChange } from '@/config'
+import { getAppConfigData } from '@/loaders'
+import React from 'react'
 // import { getHeader, getNavigation } from '@/loaders'
 // import { Navigation } from '../Navigation'
 
@@ -17,29 +19,35 @@ function classNames (...classes: string[]) {
 function Header (props: App.Header) {
     const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
-    const { logo, main_navigation: navigation } = data
+    const [currPanel, setCurrPanel] = useState('')
+    const { logo, main_navigation: navigation, $ } = data
 
-    // useEffect(() => {
-    //     async function fetchData () {
-    //         try {
-    //             const entryRes = {
-    //                 header: await getHeader('en-us'),
-    //                 navigation: await getNavigation('en-us')
-    //             }
-    //             const dt = entryRes?.header?.[0] ? entryRes?.header?.[0] : null
-    //             setData({
-    //                 ...dt,
-    //                 navigation: entryRes?.navigation?.[0] || null
-    //             })
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    //     onEntryChange(fetchData)
-    // }, [])
+    const handleMouseOver = (e: React.MouseEvent) => {
+        const title=(e.target as HTMLElement).getAttribute('data-title')
+        if(title && title !== null){
+            setCurrPanel(title)
+        }
+    }
+
+    const handleClose=()=>{
+        setCurrPanel('')
+    }
+
+    useEffect(() => {
+        async function fetchData () {
+            try {
+                const entryRes = await getAppConfigData('en-us')
+                entryRes && entryRes?.[0] && setData({...entryRes?.[0]})
+                
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        onEntryChange(fetchData)
+    }, [])
 
     return (
-        <div className='sticky z-50 top-0 bg-white dark:bg-black'>
+        <div className='sticky z-50 top-0 bg-white dark:bg-black' {...$?.title}>
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as='div' className='relative z-40 lg:hidden' onClose={setOpen}>
@@ -66,66 +74,73 @@ function Header (props: App.Header) {
                             leaveTo='-translate-x-full'
                         >
                             <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-black pb-12 shadow-xl'>
-                                <div className='flex px-4 pb-2 pt-5'>
-                                    <button
+                                <div className='border-b border-gray-200'>
+                                    
+                                    <div className='absolute pt-16 -mb-px flex flex-col items-start px-4 py-4 w-full'>
+                                        {/* <button
                                         type='button'
-                                        className='-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400'
+                                        className='relative left-[90%] pt-16 '
                                         onClick={() => setOpen(false)}
                                     >
                                         <span className='sr-only'>Close menu</span>
                                         <XMarkIcon className='h-6 w-6' aria-hidden='true' />
-                                    </button>
-                                </div>
+                                    </button> */}
+                                        {/* Links */}
 
-                                {/* Links */}
-                                <Tab.Group as='div' className='mt-2'>
-                                    <div className='border-b border-gray-200'>
-                                        <Tab.List className='-mb-px flex flex-col items-start px-4'>
-                                            {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item) => (
-                                                item?.text && <Tab
-                                                    key={item?.text}
-                                                    className={({ selected }) =>
-                                                        classNames(
-                                                            selected ? 'border-purple border-b-4 text-purple' : 'border-transparent text-gray-900 dark:!text-white outline-0',
-                                                            'flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium outline-0'
-                                                        )
-                                                    }
-                                                >
-                                                    <Link
-                                                        url={item?.link}
-                                                        className='hover:border-purple hover:text-purple'
-                                                    >
-                                                        {item.text}
-                                                    </Link>
-                                                </Tab>
-                                            ))}
-                                        </Tab.List>
-                                    </div>
-                                    <Tab.Panels as={Fragment}>
-                                        {/* Secondary navigation for mobile tobe added in sprint 2*/}
-                                        <></>
-                                        {/* {navigation1.categories.map((category) => (
-                                            <Tab.Panel key={category.name} className='space-y-12 px-4 py-6'>
-                                                <div className='grid grid-cols-2 gap-x-4 gap-y-10'>
-                                                    {category.featured.map((item) => (
-                                                        <div key={item.name} className='group relative'>
-                                                            <div className='aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75'>
-                                                                <img src={item.imageSrc} alt={item.imageAlt} className='object-cover object-center' />
+                                        {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item) => (
+                                            item?.text 
+                                                && <>
+                                                    <div className={'flex items-center py-4 hover:!text-purple'}>
+                                                        <Link
+                                                            url={item?.link}
+                                                            className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : ''} hover:border-b-2 hover:border-purple`}
+                                                        >
+                                                            {item.text}
+                                                        </Link>
+                                                        { currPanel=== item?.text
+                                                            ? <ChevronUpIcon
+                                                                data-title={item?.text}
+                                                                className='block h-4 px-4 text-purple cursor-pointer'
+                                                                onClick={handleClose}
+                                                            />
+                                                            :<ChevronDownIcon
+                                                                data-title={item?.text}
+                                                                className='block h-4 px-4 cursor-pointer'
+                                                                onClick={(e:React.MouseEvent) => {handleMouseOver(e)}}
+                                                            />}
+                                                        
+                                                    </div>
+                                                    <div className='flex flex-col items-start px-4'>
+                                                        {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
+                                                            <div
+                                                                key={`section-${ind}`}
+                                                                className={`py-6 !items-start ${currPanel === item?.text ? '': 'hidden'}`}>
+                                                                {sect?.title && <Link 
+                                                                    url={sect?.link}
+                                                                    className='font-medium text-base flex  items-start text-gray-900 hover:text-purple hover:underline'>
+                                                                    {sect.title}
+                                                                </Link>}
+                                                                <ul
+                                                                    role='list'
+                                                                    aria-labelledby={`section-${ind}-heading-mobile`}
+                                                                    className='mt-6 flex flex-col items-start space-y-6'
+                                                                >
+                                                                    {sect?.links?.map((subitem) => (
+                                                                        subitem?.text && <li key={subitem.text} className='flow-root'>
+                                                                            <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
+                                                                                {subitem.text}
+                                                                            </Link>
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
                                                             </div>
-                                                            <a href={item.href} className='mt-6 block text-sm font-medium text-gray-900'>
-                                                                <span className='absolute inset-0 z-10' aria-hidden='true' />
-                                                                {item.name}
-                                                            </a>
-                                                            <p aria-hidden='true' className='mt-1 text-sm text-gray-500'>
-                                Shop now
-                                                            </p>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </Tab.Panel>
-                                        ))} */}
-                                    </Tab.Panels>
-                                </Tab.Group>
+                                                        ))}
+                                                    </div>
+                                                </>
+                                        ))}
+                                    </div>
+                                </div>
+                                   
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
@@ -140,7 +155,7 @@ function Header (props: App.Header) {
                             <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:w-[40%] lg:items-center'>
+                                    <div className='hidden lg:flex lg:flex-1 lg:items-center'>
                                         <Link url='/'>
                                             <span className='sr-only'>Site Logo</span>
                                             <img
@@ -151,33 +166,33 @@ function Header (props: App.Header) {
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full lg:flex'>
+                                    <div className='hidden h-full items-center lg:flex' onMouseLeave={handleClose}>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
-                                            <div className='flex h-full justify-center space-x-8 p-2'>
-                                                {navigation?.[0]?.items?.map((item) => (
+                                            <div className='flex justify-center space-x-8'>
+                                                {navigation?.[0]?.items?.map((item, i) => (
                                                     <Popover key={item?.text} className='flex'>
-                                                        {({ open }: any) => (
+                                                        {() => (
                                                             <>
-                                                                <div className='relative flex'>
-                                                                    <Popover.Button
+                                                                <div
+                                                                    className='relative flex'
+                                                                    data-title={item?.text}
+                                                                    onMouseOver = {(e:React.MouseEvent) => handleMouseOver(e)}
+                                                                >
+                                                                    <Link
+                                                                        url={item?.link}
                                                                         className={classNames(
-                                                                            open
-                                                                                ? 'border-purple text-purple'
-                                                                                : 'border-transparent text-gray-700 dark:text-white hover:text-gray-800 outline-0',
-                                                                            'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out outline-0'
+                                                                            currPanel == item?.text ? 'border-b-2 border-purple text-purple' : '',
+                                                                            'relative z-10 text-black py-5 transition-colors duration-200 ease-out'
                                                                         )}
+                                                                        data-title={item?.text}
                                                                     >
-                                                                        <Link
-                                                                            url={item?.link}
-                                                                            className='hover:border-purple hover:text-purple'
-                                                                        >
-                                                                            {item?.text}
-                                                                        </Link>
-                                                                    </Popover.Button>
+                                                                        {item?.text}
+                                                                    </Link>
                                                                 </div>
 
                                                                 <Transition
+                                                                    show={currPanel !== '' ? true : false}
                                                                     as={Fragment}
                                                                     enter='transition ease-out duration-200'
                                                                     enterFrom='opacity-0'
@@ -186,7 +201,7 @@ function Header (props: App.Header) {
                                                                     leaveFrom='opacity-100'
                                                                     leaveTo='opacity-0'
                                                                 >
-                                                                    <Popover.Panel className='absolute inset-x-0 top-full text-sm text-gray-500'>
+                                                                    <Popover.Panel className={`absolute inset-x-0 top-full text-sm text-gray-500 ${item?.text === currPanel ? 'block': 'hidden'}`}>
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
@@ -196,9 +211,11 @@ function Header (props: App.Header) {
                                                                                 <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                                                                     {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
                                                                                         <div key={`section-${ind}`}>
-                                                                                            <p  className='font-medium text-gray-900'>
+                                                                                            {sect?.title && <Link 
+                                                                                                url={sect?.link}
+                                                                                                className='font-medium text-base text-gray-900 hover:text-purple hover:underline'>
                                                                                                 {sect.title}
-                                                                                            </p>
+                                                                                            </Link>}
                                                                                             <ul
                                                                                                 role='list'
                                                                                                 aria-labelledby={`section-${ind}-heading-mobile`}
@@ -206,7 +223,7 @@ function Header (props: App.Header) {
                                                                                             >
                                                                                                 {sect?.links?.map((subitem) => (
                                                                                                     subitem?.text && <li key={subitem.text} className='flow-root'>
-                                                                                                        <Link url={subitem.link} className='-m-2 block p-2 text-gray-500'>
+                                                                                                        <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
                                                                                                             {subitem.text}
                                                                                                         </Link>
                                                                                                     </li>

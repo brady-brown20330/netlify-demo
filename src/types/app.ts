@@ -8,7 +8,7 @@ export type menuLink = {
   external_link? : string;
   internal_link?: InternalLink;
 }
-export interface Header {
+export interface Header extends Entry {
   logo?: Asset;
   // site_url?: string;
   main_navigation?: Navigation[];

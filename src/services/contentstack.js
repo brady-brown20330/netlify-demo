@@ -119,3 +119,44 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
         else throw new Error(error.message)
     }
 }
+
+export const getEntryByUID = async (contentTypeUid, locale, entryUid, referenceFieldPath, jsonRtePath) => {
+    try {    
+        let result    
+        if(!Stack) {
+            throw new Error('===== No stack initialization found====== \n check environment variables: \
+            CONTENTSTACK_API_KEY, CONTENTSTACK_DELIVERY_TOKEN, CONTENTSTACK_MANAGEMENT_TOKEN, CONTENTSTACK_REGION, CONTENTSTACK_ENVIRONMENT')
+        }
+        const entryQuery = Stack.ContentType(contentTypeUid)
+            .Entry(entryUid)
+            .language(locale)
+
+        //   if (localeConfig.allow_fallback) {
+        //     entryQuery
+        //       .includeFallback()
+        //   }
+        if (entryQuery) {
+            if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
+
+            result = await entryQuery
+                .includeFallback()
+                .toJSON()
+                .fetch()
+                
+            if (jsonRtePath) {
+                jsonToHTML({
+                    entry: result,
+                    paths: jsonRtePath,
+                    renderOption: renderOption
+                })
+            }
+
+            isEditButtonsEnabled && addEditableTags(result, contentTypeUid, true, locale)
+            return result
+        }
+    }
+    catch (error) {
+        if (error?.error_message) throw new Error(JSON.stringify(error))
+        else throw new Error(error.message)
+    }
+}

@@ -25,6 +25,7 @@ export interface pageLink {
 export interface LinkComponent extends pageLink {
   children?: ReactNode;
   className?: string;
+  'data-title'?:string
 }
 
 export interface CtaCollection {

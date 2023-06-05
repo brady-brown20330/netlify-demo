@@ -5,6 +5,7 @@ import { LinkComponent} from '@/types/components'
 
 const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
     const { url, children, className } = props
+    const elemattr = {className, ['data-title']: props?.['data-title'] }
 
     let internal_link, external_link
     if ( typeof url !== 'string') {
@@ -17,11 +18,11 @@ const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
     const href = buildLinkUrl(internal_link, external_link)
 
 
-    const LinkWrapper = () => <Link href={`${href}`} className={className}>
+    const LinkWrapper = () => <Link href={`${href}`} {...elemattr}>
         {children}
     </Link>
 
-    const LinkPlaceholder = () => <span className={className}>
+    const LinkPlaceholder = () => <span {...elemattr}>
         {children}
     </span>
 

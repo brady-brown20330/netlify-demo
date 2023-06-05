@@ -1,6 +1,6 @@
 import { teaserReferenceIncludes, heroReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, textJSONRtePaths } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
-import { getEntries, getEntryByUrl } from '@/services'
+import { getEntries, getEntryByUID, getEntryByUrl } from '@/services'
 
 export const getHomePage = ( cmsUrlPath: string | undefined, locale: string | undefined) => {
     return getEntryByUrl('home_page',locale, '/', [], [])
@@ -26,9 +26,25 @@ export const getPaths = async (contentType:string, locale:string) => {
     return paths
 }
 
-export const getAppConfigData = (locale:string|undefined) => {
-    const refUids = prefixReferenceIncludes('main_navigation', ...includeheaderRefUids)
-    return getEntries('web_configuration', locale, refUids, [])
+export const getAppConfigData = async (locale:string|undefined) => {
+
+    const webConf=await getEntries('web_configuration', locale, [], [])
+    if (!webConf || webConf === null) {
+        return null
+    }
+    
+    if(webConf?.[0]?.main_navigation?.[0]?.uid && webConf?.[0]?.main_navigation?.[0]?._content_type_uid) {
+        const navData = await getEntryByUID(
+            webConf?.[0]?.main_navigation?.[0]?._content_type_uid,
+            locale,
+            webConf?.[0]?.main_navigation?.[0]?.uid,
+            includeheaderRefUids,
+            []
+        )
+        webConf[0].main_navigation[0] = navData
+        return webConf
+    }
+    
 }
 // export const getHeader = (locale: string | undefined) => {
 //     return getEntries('header', locale, [], []) 
