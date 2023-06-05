@@ -55,9 +55,12 @@ export interface ImageComponent extends Image {
   className?: string;
 }
 
-export interface Rte {
+export interface Text {
   content?: string;
-  $? : MappedPreview<Rte>;
+  styles?: {
+    background_color?: string;
+  }
+  $? : MappedPreview<Text>;
 }
 
 export interface ImageAndText {
