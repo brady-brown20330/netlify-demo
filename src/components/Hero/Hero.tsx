@@ -14,12 +14,12 @@ const Hero = (props:Component.Hero) => {
             {content && <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
                 {content}
             </p>}
-            {cta?.title && <div className='mt-10 flex items-center gap-x-6'>
+            {cta?.text && <div className='mt-10 flex items-center gap-x-6'>
                 <Link
                     url={cta?.link}
                     className='btnPrimary px-6 py-2.5 '
                 >
-                    {cta.title}
+                    {cta.text}
                 </Link>
             </div>}
         </div>)
