@@ -32,7 +32,7 @@ export interface CtaCollection {
   ctas?: Cta[];
 }
 export type Cta = {
-  title?: string;
+  text?: string;
   link?: InternalLink[];
 };
 
