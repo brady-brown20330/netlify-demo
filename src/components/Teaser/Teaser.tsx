@@ -3,13 +3,12 @@ import { Link } from '../Link'
 import { Image } from '../Image'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
-    const { $,heading, content, cta, image } = props
+    const { $, heading, content, cta, image, styles} = props
     
     return (
         <div
-            className={'relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16'}
+            className={`relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16 flex flex-col items-center text-center justify-center ${styles?.full_screen ? 'h-[100vh]' : ''}`}
             {...$?.heading}
-
         >
             <div className='absolute inset-0 overflow-hidden'>
                 {image?.[0]?.image?.asset?.url
@@ -35,4 +34,5 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
         </div>
     )
 }
+
 export { Teaser }
