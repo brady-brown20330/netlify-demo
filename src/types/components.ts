@@ -39,7 +39,7 @@ export type Cta = {
 export interface Hero {
   key?: Key | null;
   heading?: string;
-  image: AssetPreset;
+  image: globalImage;
   image_alt_text: string;
   image_position?: string;
   content: string;
@@ -47,8 +47,10 @@ export interface Hero {
   $?: MappedPreview<Hero>;
 }
 
+export type globalImage  =  Asset & AssetPreset
+
 export interface Image {
-  image?: AssetPreset;
+  image?: globalImage;
   image_alt_text?: string;
   image_position?: string;
 }
@@ -64,14 +66,14 @@ export interface Text {
   $? : MappedPreview<Text>;
 }
 
-export interface ImageAndText {
+export interface TextAndImage {
   heading?: string;
-  image: AssetPreset;
+  image: globalImage;
   image_alt_text: string;
   image_position?: string;
   image_height?: string;
   content?: string;
-  $?: MappedPreview<ImageAndText>;
+  $?: MappedPreview<TextAndImage>;
 }
 export interface Teaser {
   $?: MappedPreview<Teaser>;
@@ -99,9 +101,7 @@ export type ImageCardItem = ImageCardGraphics &
     $: MappedPreview<ImageCardGraphics & ImageCardText>;
   };
 
-export interface ImageCardGraphics {
-  image: AssetPreset;
-  image_alt_text: string;
+export interface ImageCardGraphics extends Image {
   count?: number;
 }
 export interface ImageCardText {
