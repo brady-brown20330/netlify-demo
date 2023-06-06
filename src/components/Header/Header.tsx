@@ -47,7 +47,7 @@ function Header (props: App.Header) {
     }, [])
 
     return (
-        <div className='sticky z-50 top-0 bg-white dark:bg-black' {...$?.title}>
+        <div className='sticky z-50 top-0 bg-white dark:bg-black'>
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as='div' className='relative z-40 lg:hidden' onClose={setOpen}>
@@ -76,7 +76,7 @@ function Header (props: App.Header) {
                             <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-black pb-12 shadow-xl'>
                                 <div className='border-b border-gray-200'>
                                     
-                                    <div className='absolute pt-16 -mb-px flex flex-col items-start px-4 py-4 w-full'>
+                                    <div className='absolute pt-16 -mb-px flex flex-col items-start px-4 py-4 w-full'  {...$?.title}>
                                         {/* <button
                                         type='button'
                                         className='relative left-[90%] pt-16 '
@@ -152,7 +152,7 @@ function Header (props: App.Header) {
             <header className='relative'>
                 <nav aria-label='Top'>
                     {/* Top navigation */}
-                    <div className='bg-white dark:bg-black'>
+                    <div className='bg-white dark:bg-black'  {...$?.title}>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
                             <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-16 items-center justify-between'>
@@ -254,7 +254,7 @@ function Header (props: App.Header) {
                                     <div className='flex flex-1 items-center lg:hidden'>
                                         <button
                                             type='button'
-                                            className='rounded-md bg-white dark:bg-black p-2 text-gray-400 dark:text-white'
+                                            className='rounded-md bg-white dark:bg-black px-8 text-gray-400 dark:text-white'
                                             onClick={() => setOpen(true)}
                                         >
                                             <span className='sr-only'>Open menu</span>

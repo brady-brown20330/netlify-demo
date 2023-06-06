@@ -66,12 +66,13 @@ export interface Text {
   $? : MappedPreview<Text>;
 }
 
-export interface TextAndImage {
+export interface TextAndImage extends Image {
   heading?: string;
-  image: globalImage;
-  image_alt_text: string;
-  image_position?: string;
-  image_height?: string;
+  styles:{
+    image_position?: string;
+    theme?:string;
+  }
+  cta: Cta[];
   content?: string;
   $?: MappedPreview<TextAndImage>;
 }
