@@ -12,7 +12,7 @@ const Card: React.FC<any> = (props: any) => {
             className='group relative'
             {...$?.title}
         >
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
+            {/* eslint-disable-next-line */}
             {image &&
                 <Image
                     image={image}
