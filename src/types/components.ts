@@ -81,6 +81,9 @@ export interface Teaser {
   content?: string;
   cta?: Cta[];
   image?: Image[];
+  styles?: {
+    full_screen?: boolean;
+  }
 }
 
 export interface CardCollectionHeader {
