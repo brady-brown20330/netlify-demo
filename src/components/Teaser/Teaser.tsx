@@ -24,11 +24,11 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
                 {content && <p className={'mt-3 text-xl !text-white'}>
                     {content}
                 </p>}
-                {cta?.[0]?.title && <Link
+                {cta?.[0]?.text && <Link
                     url={cta?.[0]?.link}
                     className={'btnSecondary px-8 py-3 mt-8 sm:w-auto'}
                 >
-                    {cta[0].title}
+                    {cta[0].text}
                 </Link>}
             </div>
         </div>
