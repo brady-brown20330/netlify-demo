@@ -3,6 +3,7 @@ import { Page } from '@/types'
 
 
 export default function RenderComponents ({components}: Page.pageRenderProps) {
+
     return (<>
         {components?.map((
             component, key: number) => {

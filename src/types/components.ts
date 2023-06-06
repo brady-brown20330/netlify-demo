@@ -88,12 +88,13 @@ export interface Teaser {
 
 export interface CardCollectionHeader {
   $?: MappedPreview<CardCollectionHeader>;
+  header?: Array<any>;
   heading?: string;
   sub_heading?: string;
 }
 export interface CardCollection extends CardCollectionHeader {
   $?: MappedPreview<CardCollection>;
-  cards?: ImageCardItem[] | [];
+  card?: ImageCardItem[] | [];
 }
 
 export type ImageCardItem = ImageCardGraphics &
