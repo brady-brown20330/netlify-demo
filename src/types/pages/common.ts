@@ -1,4 +1,4 @@
-import {Hero,Teaser,ImageAndText, CardCollection,Text } from '../components'
+import {Hero,Teaser,TextAndImage, CardCollection,Text } from '../components'
 
 export type SeoProps = {
     title?: string
@@ -12,7 +12,7 @@ export type SeoProps = {
 export interface pageBlocks {
     hero?:Hero
     teaser?:Teaser
-    image_and_text?:ImageAndText
+    text_and_image?:TextAndImage
     text?: Text
     card_collection?:CardCollection
     seo?:SeoProps

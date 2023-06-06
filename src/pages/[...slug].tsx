@@ -1,10 +1,10 @@
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { useEffect, useState } from 'react'
 import { getLandingPage, getPaths } from '@/loaders'
-
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { useEffect, useState } from 'react'
+
 
 export default function LandingPage ({entry, locale}:Page.LandingPage) { 
     const [data, setData] = useState(entry)
@@ -21,12 +21,6 @@ export default function LandingPage ({entry, locale}:Page.LandingPage) {
         onEntryChange(fetchData)
     }, [entry?.url, locale])
 
-    useEffect(() => {    
-        if(document) {
-            document.querySelector('html')?.removeAttribute('class')
-            document.querySelector('html')?.classList.add(data?.theme?.toLowerCase() || 'light')
-        }
-    }, [data?.theme])
 
     return (<>
         {data?.components && Object.keys(data.components)?.length ? (

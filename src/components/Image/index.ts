@@ -1,1 +1,1 @@
-export * from './Image'
+export {ImageWrapper as Image} from './ImageWrapper'
