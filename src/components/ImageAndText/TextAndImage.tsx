@@ -71,7 +71,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                             {image?.url && <Image
                                 image={image}
                                 image_alt_text={image_alt_text}
-                                className={'w-full object-cover aspect-[2] md:aspect-[3/1] object-center bg-white/5 shadow-2xl ring-1 ring-white/10'}
+                                className={'w-full object-cover aspect-[2] md:aspect-[3/1] object-center bg-white/5 shadow-2xl ring-1 ring-white/10 dark:text-white'}
                             />}
                         </div>
                     </div>
@@ -93,7 +93,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                             {image?.url && <Image
                                 image={image}
                                 image_alt_text={image_alt_text}
-                                className={'w-full h-full xl:aspect-[6/3] aspect-[3/2] bg-white/5 shadow-2xl ring-1 ring-white/10 object-cover object-center'}
+                                className={'w-full h-full xl:aspect-[6/3] aspect-[3/2] bg-white/5 shadow-2xl ring-1 ring-white/10 object-cover object-center dark:text-white'}
                             />}
                         </div>
                     </div> : <></>

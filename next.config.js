@@ -7,12 +7,7 @@ const nextConfig = {
         localeDetection: false
     },
     images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'images.contentstack.io'
-            }
-        ]
+        domains: ['images.contentstack.io']
     },
     env: { // available at build time
         CONTENTSTACK_API_KEY: process.env.CONTENTSTACK_API_KEY,
