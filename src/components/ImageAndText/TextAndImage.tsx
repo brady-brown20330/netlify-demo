@@ -7,23 +7,33 @@ export function TextAndImage (props:Component.TextAndImage) {
     const {$,heading, content ,image, image_alt_text,cta, styles: {image_position, theme}} = props
 
     const TextBlock = () => (
-        <div className={`mx-auto max-w-2xl ${image_position === 'left' ? 'lg:ml:0 pr-4 lg:pr-8' : 'ml-4 md:ml-8' }`}>
-            <>         
-                {heading && <h1 className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 sm:text-6xl dark:text-white'>
-                    {heading}
-                </h1>}
-                {content && <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
-                    {content}
-                </p>}
-                {cta?.[0]?.text && <div className='mt-10 flex items-center gap-x-6'>
-                    <Link
-                        url={cta?.[0]?.link}
-                        className='btnPrimary px-6 py-2.5'
-                    >
-                        {cta[0].text}
-                    </Link>
-                </div>}
-            </> 
+        <div 
+            className={classNames(
+                image_position === 'left' ? 'lg:ml:0 pr-4 lg:pr-8' : 'xs:ml-4 md:ml-8',
+                'mx-auto my-auto max-w-2xl'
+            )}
+        >
+            {heading && <h1
+                className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 sm:text-6xl dark:text-white'>
+                {heading}
+            </h1>}
+            {content && <p
+                className='mt-4 text-lg leading-8 text-gray-600 dark:text-white'>
+                {content}
+            </p>}
+            {cta?.[0]?.text && <div
+                className={classNames(
+                    image_position === 'left' ? 'my-8 xs:mt-8 xs:mb-0' : 'mt-8',
+                    'flex items-center gap-x-6'
+                )}
+            >
+                <Link
+                    url={cta?.[0]?.link}
+                    className='btnPrimary px-6 py-2.5'
+                >
+                    {cta[0].text}
+                </Link>
+            </div>}
 
         </div>
     )
@@ -31,12 +41,11 @@ export function TextAndImage (props:Component.TextAndImage) {
     
     return (
         <div className={`${theme === 'dark' ? 'dark': ''}`}>
-            <div className='relative py-16 px-8 mx-auto bg-[#F0F3F7] dark:bg-black'>
+            <div className='relative py-16 px-8 mx-auto bg-white dark:bg-black'>
                 {image_position && ['top', 'bottom'].includes(image_position) ? <div 
                     className={classNames(
                         `${image_position === 'top' ? 'flex-col-reverse' 
                             : image_position === 'bottom'?  'flex-col'
-                            // : image_position === 'left'? 'flex-row-reverse'
                                 : ''}`,
                         'flex container'
                     )}
@@ -69,15 +78,14 @@ export function TextAndImage (props:Component.TextAndImage) {
                 </div>
                     : image_position && ['right', 'left'].includes(image_position) ? <div 
                         className={classNames(
-                            `${image_position === 'right' ? 'flex-row-reverse' 
-                                : image_position === 'left'?  'flex-row'
-                                // : image_position === 'left'? 'flex-row-reverse'
+                            `${image_position === 'right' ? 'xs:flex-row-reverse flex-col-reverse' 
+                                : image_position === 'left'?  'xs:flex-row flex-col'
                                     : ''}`,
                             'flex container'
                         )}
                         {...$?.heading}
                     >
-                        <div className='max-w-7xl lg:mx-0'>
+                        <div className='max-w-7xl my-auto'>
                             <TextBlock />
                         </div>
                         <div className={'relative flex-[0_0_50%]'}>

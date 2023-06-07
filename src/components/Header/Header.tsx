@@ -3,14 +3,13 @@
 /* eslint-disable max-len */
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
-import { Bars3Icon, ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Link } from '@/components'
 import { onEntryChange } from '@/config'
 import { getAppConfigData } from '@/loaders'
 import React from 'react'
-// import { getHeader, getNavigation } from '@/loaders'
-// import { Navigation } from '../Navigation'
+import { useRouter } from 'next/router'
 
 function classNames (...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -20,6 +19,7 @@ function Header (props: App.Header) {
     const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
     const [currPanel, setCurrPanel] = useState('')
+    const router = useRouter()
     const { logo, main_navigation: navigation, $ } = data
 
     const handleMouseOver = (e: React.MouseEvent) => {
@@ -45,6 +45,11 @@ function Header (props: App.Header) {
         }
         onEntryChange(fetchData)
     }, [])
+
+    useEffect(() => {
+        // console.log('=====path change triggered==========')
+        setCurrPanel('')
+    }, [router.asPath])
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
@@ -172,7 +177,7 @@ function Header (props: App.Header) {
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item, i) => (
+                                                {navigation?.[0]?.items?.map((item) => (
                                                     <Popover key={item?.text} className='flex'>
                                                         {() => (
                                                             <>

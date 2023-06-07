@@ -21,7 +21,6 @@ export interface AssetPresetMetadata {
 export interface AssetPreset {
     asset: Asset
     metadata: AssetPresetMetadata
-    url?: string
 }
 export interface presetOptionEffects {
     saturate:number

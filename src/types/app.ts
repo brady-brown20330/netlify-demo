@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { Asset, Entry, MappedPreview } from './common'
-import { Link, InternalLink } from './components'
+import { InternalLink } from './components'
 
 export type menuLink = {
   link_title?: string | null;
