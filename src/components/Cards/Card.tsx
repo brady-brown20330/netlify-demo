@@ -3,7 +3,7 @@ import { Image, Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
 import { classNames } from '@/utils'
 
-const Card: React.FC<any> = (props: any) => {
+const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
 
     const { $, image, image_alt_text, title, cta, content,count } = props
 
@@ -22,7 +22,7 @@ const Card: React.FC<any> = (props: any) => {
                         count === 1 ? '!h-full'
                             :count === 2 ? 'lg:h-64' 
                                 :count === 3 ? 'lg:h-52'
-                                    :count >= 4 ? 'lg:h-40'
+                                    : count && count >= 4 ? 'lg:h-40'
                                         : '',
                         'h-48 w-full object-center object-fit object-cover'
                     )}
