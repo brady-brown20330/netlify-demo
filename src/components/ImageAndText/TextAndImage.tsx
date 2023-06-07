@@ -71,7 +71,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                             {image?.url && <Image
                                 image={image}
                                 image_alt_text={image_alt_text}
-                                className={'w-full object-cover aspect-[2] xl:aspect-[3/1] object-center bg-white/5 shadow-2xl ring-1 ring-white/10'}
+                                className={'w-full object-cover aspect-[2] md:aspect-[3/1] object-center bg-white/5 shadow-2xl ring-1 ring-white/10'}
                             />}
                         </div>
                     </div>
