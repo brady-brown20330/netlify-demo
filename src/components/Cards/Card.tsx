@@ -12,13 +12,12 @@ const Card: React.FC<any> = (props: any) => {
             className='group relative'
             {...$?.title}
         >
-            {/* eslint-disable-next-line */}
-            {image &&
-                <Image
-                    image={image}
-                    image_alt_text={image_alt_text}
-                    className={`w-full object-center object-cover w-full object-cover ${imageClass}`}
-                />
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
+            {image && <Image
+                image={image}
+                image_alt_text={image_alt_text}
+                className={`w-full object-center object-cover w-full object-cover ${imageClass}`}
+            />
             }
             <div className='mt-6 text-xl text-gray-500 dark:text-white'>
                 {title && <h4 className='font-bold'

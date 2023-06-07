@@ -1,5 +1,7 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const colors = require('tailwindcss/colors')
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 
 module.exports = {
     content: [
@@ -50,6 +52,10 @@ module.exports = {
                 primary: '#ffffff',
                 secondary: '#F5F5F5'
             }
+        },
+        screens: {
+            'xs': '475px',
+            ...defaultTheme.screens
         },
         extend: {
             padding: {

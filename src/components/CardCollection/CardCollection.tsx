@@ -9,7 +9,7 @@ import { classNames } from '@/utils'
 import { CardCollection as CardCollectionProps } from '@/types/components'
 
 const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
-    const {$, header, heading, sub_heading, card } =props
+    const {$, header, card } = props
 
     // const isComponentValid: boolean = isCardsValid(props)
 
