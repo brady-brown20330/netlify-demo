@@ -10,10 +10,7 @@ import { onEntryChange } from '@/config'
 import { getAppConfigData } from '@/loaders'
 import React from 'react'
 import { useRouter } from 'next/router'
-
-function classNames (...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
+import { classNames } from '@/utils'
 
 function Header (props: App.Header) {
     const [data, setData] = useState(props)
