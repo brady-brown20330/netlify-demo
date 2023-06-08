@@ -1,28 +1,10 @@
 import { App } from '@/types'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from '@/components'
-import { onEntryChange } from '@/config'
-// import { getFooter } from '@/loaders'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const [data, setData] =useState(props)
-    const { main_menu , $} = data
-
-    // useEffect(() => {
-    //     async function fetchData () {
-    //         try {
-    //             const entryRes = await getFooter('en-us')
-    //             setData(entryRes?.[0] || null)
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    //     onEntryChange(fetchData)
-    // }, [])
-    
-    const resolveLink = (link:App.menuLink) => {
-        return link?.is_external_link ? link?.external_link : link?.internal_link?.url
-    }
+    const { section , $} = data
     
     return (
         <footer className='dark:bg-black' aria-labelledby='footer-heading'>
@@ -34,33 +16,33 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                         
                     <div className='mx-auto mt-16 max-w-5xl' {...$?.uid}>
                         <div className='flex justify-start flex-wrap md:justify-between'>
-                            {main_menu?.map((navItem, index) => <>
+                            {section?.map((navItem, index) => <>
                                 <div
                                     key={`navItem-${index}`}
-                                    className={`mb-16 ${main_menu?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
+                                    className={`mb-16 ${section?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
                                 > 
-                                    {navItem?.main_link?.link_title && <h3 
+                                    {navItem?.title && <h3 
                                         className='text-md font-medium text-gray-900 dark:text-white'
                                     >
                                         <Link
-                                            url={resolveLink(navItem?.main_link)}
+                                            url={navItem?.link}
                                         >
-                                            {navItem.main_link.link_title}
+                                            {navItem?.title}
                                         </Link>
                                     </h3>}
                                     <ul 
                                         role='list' 
                                         className='mt-6 space-y-6'
                                     >
-                                        {navItem?.sub_menu?.map((item, i:number) => (
-                                            item?.sub_link?.link_title && <li
+                                        {navItem?.links?.map((item, i:number) => (
+                                            item?.text && <li
                                                 key={`submenu-${index}-${i}`}
                                                 className='text-sm'>
                                                 <Link
-                                                    url={resolveLink(item?.sub_link)}
+                                                    url={item?.link?.[0]?.url}
                                                     className='text-gray-500 hover:text-gray-600 dark:text-white'
                                                 >
-                                                    {item.sub_link.link_title}
+                                                    {item?.text}
                                                 </Link>
                                             </li>
                                         ))}
@@ -74,5 +56,4 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
             </div>
         </footer>
     )
-}
-  
+}  
