@@ -1,4 +1,4 @@
-import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, textJSONRtePaths } from '@/components'
+import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, includefooterRefUids, textJSONRtePaths} from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
 import { getEntries, getEntryByUID, getEntryByUrl } from '@/services'
 
@@ -32,7 +32,6 @@ export const getArticle = (cmsUrlPath: string | undefined, locale: string | unde
 }
 
 export const getAppConfigData = async (locale:string|undefined) => {
-
     const webConf=await getEntries('web_configuration', locale, [], [])
     if (!webConf || webConf === null) {
         return null
@@ -47,8 +46,20 @@ export const getAppConfigData = async (locale:string|undefined) => {
             []
         )
         webConf[0].main_navigation[0] = navData
-        return webConf
     }
+    
+    if(webConf?.[0]?.footer_navigation?.[0]?.uid && webConf?.[0]?.footer_navigation?.[0]?._content_type_uid) {
+        const footerData = await getEntryByUID(
+            webConf?.[0]?.footer_navigation?.[0]?._content_type_uid,
+            locale,
+            webConf?.[0]?.footer_navigation?.[0]?.uid,
+            includefooterRefUids,
+            []
+        )
+        webConf[0].footer_navigation = footerData
+    }
+
+    if (webConf) return webConf
     
 }
 // export const getHeader = (locale: string | undefined) => {

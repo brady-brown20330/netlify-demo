@@ -32,11 +32,13 @@ export interface Navigation extends Entry {
   // $?: MappedPreview<Header>;
 }
 export interface Footer extends Entry {
-  main_menu: {
-    main_link?: menuLink
-    sub_menu?: {
-      sub_link?: menuLink
-    }[];
+  section?:{
+    title?: string
+    link: InternalLink[]
+    links: {
+      text?: string
+      link: InternalLink[]
+    }[]
   }[];
   $?: MappedPreview<Footer>;
 }
@@ -44,7 +46,7 @@ export interface Footer extends Entry {
 export type SingleColLayout = {
   logo?: Asset;
   main_navigation?: Navigation[];
-  // footer?: Footer;
+  footer_navigation?: Footer;
   children: React.ReactNode;
 };
 

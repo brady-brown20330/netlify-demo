@@ -6,7 +6,7 @@ import { App } from '@/types'
 
 const SingleCol: React.FC<App.SingleColLayout> = (
     props : React.PropsWithChildren<App.SingleColLayout>
-) => {  
+) => {
     return (
         <>
             <Header 
@@ -17,7 +17,7 @@ const SingleCol: React.FC<App.SingleColLayout> = (
                 {props.children}
             </div>
 
-            {/* {!_.isEmpty(footer) && <Footer {...footer}/>} */}
+            <Footer {...props?.footer_navigation}/>
         </>
     )
 }
