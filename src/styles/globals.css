@@ -43,14 +43,13 @@ body {
   .text ol { @apply list-decimal py-1 px-6 }
 
   .text li{
-    @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-2
+    @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-1
   }
 
-  .text p { @apply py-1 leading-5}
+  .text p { @apply py-1 leading-7 text-justify}
 
   .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 
-  .text img { @apply w-[267px] h-[140px] }
-
+  .text img { @apply w-full my-8 mx-auto}
 }
 

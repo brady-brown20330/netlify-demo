@@ -26,6 +26,11 @@ export const getPaths = async (contentType:string, locale:string) => {
     return paths
 }
 
+export const getArticle = (cmsUrlPath: string | undefined, locale: string | undefined) => {
+    const jsonRtePaths = ['content']
+    return getEntryByUrl('article', locale, `${cmsUrlPath}`, [], jsonRtePaths)  
+}
+
 export const getAppConfigData = async (locale:string|undefined) => {
     const webConf=await getEntries('web_configuration', locale, [], [])
     if (!webConf || webConf === null) {
