@@ -28,11 +28,6 @@ function MyApp (props: App.Props) {
         web_config
     } = props
 
-
-    useEffect(()=> {
-        if(!navigator.onLine) throw new Error('===== Network connection failed ====== ')
-    }, [])
-
     return (
         <>
             <Head>

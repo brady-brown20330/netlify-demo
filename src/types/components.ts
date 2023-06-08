@@ -117,6 +117,14 @@ export type CardImage = Asset & {
   count?: number;
 };
 
+export type ArticleCover = {
+  title?:string
+  content?:string
+  summary?:string
+  cover_image?:globalImage
+  $?:MappedPreview<ArticleCover>
+}
+
 // ######################### COMPONENTS END #########################
 
 
