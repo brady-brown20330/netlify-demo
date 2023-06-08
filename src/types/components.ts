@@ -119,7 +119,6 @@ export type CardImage = Asset & {
 
 export type ArticleCover = {
   title?:string
-  content?:string
   summary?:string
   cover_image?:globalImage
   $?:MappedPreview<ArticleCover>

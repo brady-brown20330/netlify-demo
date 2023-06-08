@@ -34,7 +34,10 @@ export default function Article ({entry, locale}:Page.Article) {
         />
         {entry && <RenderComponents components={[
             {
-                text: { content }
+                text: { 
+                    content,
+                    $: entry?.$
+                }
             }
             // {
             //     card_collection: {

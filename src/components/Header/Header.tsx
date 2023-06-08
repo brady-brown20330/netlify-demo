@@ -44,8 +44,8 @@ function Header (props: App.Header) {
     }, [])
 
     useEffect(() => {
-        // console.log('=====path change triggered==========')
         setCurrPanel('')
+        setOpen(false)
     }, [router.asPath])
 
     return (

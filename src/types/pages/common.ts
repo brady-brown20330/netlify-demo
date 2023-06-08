@@ -1,4 +1,5 @@
-import {Hero,Teaser,TextAndImage, CardCollection,Text } from '../components'
+import {Hero,Teaser,TextAndImage, CardCollection,Text, ArticleCover } from '../components'
+import { MappedPreview } from '../common'
 
 export type SeoProps = {
     title?: string
@@ -21,3 +22,7 @@ export interface pageBlocks {
 export type pageRenderProps = {
     components:pageBlocks[];
   }
+export interface ArticleProps extends ArticleCover {
+  content?:string
+  $?: MappedPreview<ArticleProps>
+}
