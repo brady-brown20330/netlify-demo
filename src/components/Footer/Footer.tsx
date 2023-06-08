@@ -1,10 +1,32 @@
 import { App } from '@/types'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from '@/components'
+import { onEntryChange } from '@/config'
+import { getEntryByUID } from '@/services'
+import { includefooterRefUids } from '@/components'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
-    const [data, setData] =useState(props)
-    const { section , $} = data
+    const [data, setData] = useState(props)
+    const { section , $ } = data
+
+    useEffect(() => {
+        async function fetchData () {
+            try {
+                const footerData = await getEntryByUID(
+                    'menu',
+                    data?.locale,
+                    data?.uid,
+                    includefooterRefUids,
+                    []
+                )
+                footerData && setData(footerData)
+                
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        onEntryChange(fetchData)
+    }, [])
     
     return (
         <footer className='dark:bg-black' aria-labelledby='footer-heading'>
