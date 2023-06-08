@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { AppContext } from 'next/app'
-import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { getAppConfigData } from '@/loaders'
@@ -27,11 +26,6 @@ function MyApp (props: App.Props) {
         locale,
         web_config
     } = props
-
-
-    useEffect(()=> {
-        if(!navigator.onLine) throw new Error('===== Network connection failed ====== ')
-    }, [])
 
     return (
         <>
