@@ -1,6 +1,6 @@
 import { MappedPreview, PageEntry } from '@/types/common'
 import { pageRenderProps } from './common'
-import { ArticleCover, globalImage } from '../components'
+import { ArticleCover } from '../components'
 
 export type Homepage = {
     entry: PageEntry

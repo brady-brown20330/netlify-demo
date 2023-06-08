@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { AppContext } from 'next/app'
-import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { getAppConfigData } from '@/loaders'
