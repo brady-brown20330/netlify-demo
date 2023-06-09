@@ -7,17 +7,18 @@ import { App } from '@/types'
 const SingleCol: React.FC<App.SingleColLayout> = (
     props : React.PropsWithChildren<App.SingleColLayout>
 ) => {
+    const footer = { ...props?.footer_navigation }
     return (
         <>
             <Header 
                 {...props}
             />
 
-            <div className='mx-auto' >
+            <div className='mx-auto' >   
                 {props.children}
             </div>
 
-            <Footer {...props?.footer_navigation}/>
+            <Footer {...footer[0]}/>
         </>
     )
 }
