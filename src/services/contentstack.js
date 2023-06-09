@@ -3,7 +3,13 @@ import { Stack, isEditButtonsEnabled } from '@/config'
 import { addEditableTags, jsonToHTML } from '@contentstack/utils'
 
 const renderOption = {
-    span: (node, next) => next(node.children)
+    span: (node, next) => next(node?.children),
+    a: (asset) => {
+        return `<a href=${asset?.attrs?.url} target=${asset?.attrs?.target}
+        style='text-align:${asset?.attrs?.style?.['text-align'] ? asset.attrs.style?.['text-align'] : 'left' }'>
+            ${asset?.children?.[0]?.text}
+        </a>`
+    }
 }
 
 /**
@@ -64,13 +70,12 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
 }
 
 
-
-
 /**
  *
  * fetches all the entries from specific content-type
  * @param {* content-type uid} contentTypeUid
  * @param {* locale} locale
+ * @param {* entryUrl} entryUrl
  * @param {* reference field name} referenceFieldPath
  * @param {* Json RTE path} jsonRtePath
  *
@@ -120,6 +125,17 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
     }
 }
 
+
+/**
+ *
+ * fetches all the entries from specific content-type
+ * @param {* content-type uid} contentTypeUid
+ * @param {* locale} locale
+ * @param {* entryUid} entryUid
+ * @param {* reference field name} referenceFieldPath
+ * @param {* Json RTE path} jsonRtePath
+ *
+ */
 export const getEntryByUID = async (contentTypeUid, locale, entryUid, referenceFieldPath, jsonRtePath) => {
     try {    
         let result    
