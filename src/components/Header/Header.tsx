@@ -28,6 +28,11 @@ function Header (props: App.Header) {
 
     const handleClose=()=>{
         setCurrPanel('')
+        // let isSectionActive = false
+        // document.querySelectorAll('.section')?.forEach((sect) => {
+        //     if (sect.classList.contains('cslp-edit-mode') ) isSectionActive = true
+        // })
+        // !isSectionActive && setCurrPanel('')
     }
 
     useEffect(() => {
@@ -78,7 +83,7 @@ function Header (props: App.Header) {
                             <Dialog.Panel className='relative flex w-full max-w-xs flex-col overflow-y-auto bg-white dark:bg-black pb-12 shadow-xl'>
                                 <div className='border-b border-gray-200'>
                                     
-                                    <div className='absolute pt-16 -mb-px flex flex-col items-start px-4 py-4 w-full'  {...$?.title}>
+                                    <div className='absolute top-8 pt-16 -mb-px flex flex-col items-start px-4 py-4 w-full'>
                                         {/* <button
                                         type='button'
                                         className='relative left-[90%] pt-16 '
@@ -92,10 +97,14 @@ function Header (props: App.Header) {
                                         {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item) => (
                                             item?.text 
                                                 && <>
-                                                    <div className={'flex items-center py-4 hover:!text-purple'}>
+                                                    <div
+                                                        className={'flex items-center py-4 hover:!text-purple'}>
                                                         <Link
                                                             url={item?.link}
                                                             className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : ''} hover:border-b-2 hover:border-purple`}
+                                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                            // @ts-ignore
+                                                            $={...item?.$?.text}
                                                         >
                                                             {item.text}
                                                         </Link>
@@ -114,23 +123,27 @@ function Header (props: App.Header) {
                                                         </>}
                                                         
                                                     </div>
-                                                    <div className='flex flex-col items-start px-4'>
+                                                    <div className='flex flex-col items-start px-4 w-full'>
                                                         {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
                                                             <div
                                                                 key={`section-${ind}`}
-                                                                className={`py-6 !items-start ${currPanel === item?.text ? '': 'hidden'}`}>
+                                                                className={`mt-6 !items-start w-full ${currPanel === item?.text ? '': 'hidden'}`}
+                                                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                                // @ts-ignore
+                                                                {...sect?.$?.title}
+                                                            >
                                                                 {sect?.title && <Link 
                                                                     url={sect?.link}
-                                                                    className='font-medium text-base flex  items-start text-gray-900 hover:text-purple hover:underline'>
+                                                                    className='font-medium text-base flex items-start text-gray-900 hover:text-purple hover:underline pt-2'>
                                                                     {sect.title}
                                                                 </Link>}
                                                                 <ul
                                                                     role='list'
                                                                     aria-labelledby={`section-${ind}-heading-mobile`}
-                                                                    className='mt-6 flex flex-col items-start space-y-6'
+                                                                    className='mt-6 flex flex-col items-start space-y-4'
                                                                 >
                                                                     {sect?.links?.map((subitem) => (
-                                                                        subitem?.text && <li key={subitem.text} className='flow-root'>
+                                                                        subitem?.text && <li key={subitem.text} className=''>
                                                                             <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
                                                                                 {subitem.text}
                                                                             </Link>
@@ -154,42 +167,51 @@ function Header (props: App.Header) {
             <header className='relative'>
                 <nav aria-label='Top'>
                     {/* Top navigation */}
-                    <div className='bg-white dark:bg-black'  {...$?.title}>
+                    <div className='bg-white dark:bg-black'>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
                             <div className='border-b border-gray-400 dark:border-gray-600'>
-                                <div className='flex h-16 items-center justify-between'>
+                                <div className='flex h-20 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center'>
-                                        <Link url='/'>
+                                    <div className='hidden lg:flex lg:flex-1 lg:items-center ml-4'>
+                                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                                        {/* @ts-ignore */}
+                                        <Link url='/' $={logo?.$?.url}>
                                             <span className='sr-only'>Site Logo</span>
                                             <img
-                                                className='h-8 w-auto m-2 ml-4'
+                                                className='h-8 w-auto m-2'
                                                 src={logo?.url}
                                                 alt={logo?.title}
                                             />
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full items-center lg:flex' onMouseLeave={handleClose}>
+                                    <div className='hidden h-full items-center lg:flex' style={{border: '2px solid'}}>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item) => (
+                                                {navigation?.[0]?.items?.map((item, i) => (
                                                     <Popover key={item?.text} className='flex'>
                                                         {() => (
                                                             <>
                                                                 <div
-                                                                    className='relative flex'
+                                                                    // className='relative flex'
+                                                                    className={classNames(
+                                                                        currPanel == item?.text ? 'border-b-2 border-purple text-purple' : '',
+                                                                        'relative flex'
+                                                                    )}
                                                                     data-title={item?.text}
                                                                     onMouseOver = {(e:React.MouseEvent) => handleMouseOver(e)}
                                                                 >
                                                                     <Link
                                                                         url={item?.link}
                                                                         className={classNames(
-                                                                            currPanel == item?.text ? 'border-b-2 border-purple text-purple' : '',
-                                                                            'relative z-10 text-black py-5 transition-colors duration-200 ease-out'
+                                                                            currPanel == item?.text ? 'text-purple' : '',
+                                                                            'top-link relative z-10 text-black py-7 transition-colors duration-200 ease-out'
                                                                         )}
                                                                         data-title={item?.text}
+                                                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                                        // @ts-ignore
+                                                                        $={item?.$?.text}
                                                                     >
                                                                         {item?.text}
                                                                     </Link>
@@ -205,7 +227,10 @@ function Header (props: App.Header) {
                                                                     leaveFrom='opacity-100'
                                                                     leaveTo='opacity-0'
                                                                 >
-                                                                    <Popover.Panel className={`absolute inset-x-0 top-full text-sm text-gray-500 ${item?.text === currPanel ? 'block': 'hidden'}`}>
+                                                                    <Popover.Panel 
+                                                                        className={`absolute inset-x-0 top-full text-sm text-gray-500 ${item?.text === currPanel ? 'block': 'hidden'}`}
+                                                                        onMouseLeave={handleClose}
+                                                                    >
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
@@ -215,7 +240,9 @@ function Header (props: App.Header) {
                                                                                 <div className='mx-auto max-w-7xl px-8'>
                                                                                     <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
                                                                                         {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
-                                                                                            <div key={`section-${ind}`}>
+                                                                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                                                            // @ts-ignore
+                                                                                            <div className='section' key={`section-${ind}`} {...sect?.$?.title}>
                                                                                                 {sect?.title && <Link 
                                                                                                     url={sect?.link}
                                                                                                     className='font-medium text-base text-gray-900 hover:text-purple hover:underline'>
@@ -265,12 +292,17 @@ function Header (props: App.Header) {
                                     </div>
 
                                     {/* Logo (lg-) */}
-                                    <Link url='/' className='lg:hidden'>
+                                    <Link url='/'
+                                        className='lg:hidden'
+                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                        //   @ts-ignore
+                                        $={logo?.$?.url}
+                                    >
                                         <span className='sr-only'>Site Logo</span>
                                         <img
                                             src={logo?.url}
                                             alt={logo?.title}
-                                            className='h-8 w-auto'
+                                            className='h-8 w-auto m-2'
                                         />
                                     </Link>
 
