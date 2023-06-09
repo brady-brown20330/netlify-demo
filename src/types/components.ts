@@ -95,7 +95,7 @@ export interface CardCollectionHeader {
 }
 export interface CardCollection {
   $?: MappedPreview<CardCollection>;
-  card?: ImageCardItem[] | [];
+  cards?: ImageCardItem[] | [];
   header?: CardCollectionHeader[];
 }
 
