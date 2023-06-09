@@ -51,7 +51,7 @@ export type SingleColLayout = {
 };
 
 export type csWebConfig =   Entry & Header & {
-  footer_navigation: Footer; 
+  footer_navigation: Footer[]; 
 }
 
 export interface Props extends AppProps {
