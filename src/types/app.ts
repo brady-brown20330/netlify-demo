@@ -46,7 +46,7 @@ export interface Footer extends Entry {
 export type SingleColLayout = {
   logo?: Asset;
   main_navigation?: Navigation[];
-  footer_navigation?: Footer;
+  footer_navigation?: Footer[];
   children: React.ReactNode;
 };
 
