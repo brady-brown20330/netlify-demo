@@ -32,7 +32,8 @@ export const getArticle = (cmsUrlPath: string | undefined, locale: string | unde
 }
 
 export const getAppConfigData = async (locale:string|undefined) => {
-    const webConf=await getEntries('web_configuration', locale, [], [])
+    const webConf=await getEntries('web_configuration', locale, ['footer_navigation', ...prefixReferenceIncludes('footer_navigation', ...includefooterRefUids)], [])
+
     if (!webConf || webConf === null) {
         return null
     }
@@ -48,19 +49,8 @@ export const getAppConfigData = async (locale:string|undefined) => {
         webConf[0].main_navigation[0] = navData
     }
     
-    if(webConf?.[0]?.footer_navigation?.[0]?.uid && webConf?.[0]?.footer_navigation?.[0]?._content_type_uid) {
-        const footerData = await getEntryByUID(
-            webConf?.[0]?.footer_navigation?.[0]?._content_type_uid,
-            locale,
-            webConf?.[0]?.footer_navigation?.[0]?.uid,
-            includefooterRefUids,
-            []
-        )
-        webConf[0].footer_navigation = footerData
-    }
-
     if (webConf) return webConf
-    
+
 }
 // export const getHeader = (locale: string | undefined) => {
 //     return getEntries('header', locale, [], []) 
