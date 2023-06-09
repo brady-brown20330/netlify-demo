@@ -1,6 +1,5 @@
 import { MappedPreview, PageEntry } from '@/types/common'
-import { pageRenderProps } from './common'
-import { ArticleCover } from '../components'
+import { ArticleProps, pageRenderProps } from './common'
 
 export type Homepage = {
     entry: PageEntry
@@ -12,7 +11,7 @@ export type LandingPage = {
 }
 
 export type Article = {
-  entry: PageEntry & ArticleCover
+  entry: PageEntry & ArticleProps
   locale?:string
   $?:MappedPreview<Article>
 }
