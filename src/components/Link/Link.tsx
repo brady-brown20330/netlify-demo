@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { LinkComponent} from '@/types/components'
 
 const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
-    const { url, children, className } = props
-    const elemattr = {className, ['data-title']: props?.['data-title'] }
+    const { url, children, className, $ } = props
+    const elemattr = {className, ['data-title']: props?.['data-title'], ...$ }
 
     let internal_link, external_link
     if ( typeof url !== 'string') {
