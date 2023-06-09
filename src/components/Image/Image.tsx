@@ -7,7 +7,7 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {image?.url && <img 
             src={image.url}
-            alt={image_alt_text || image?.title}
+            alt={image_alt_text !== '' ? image_alt_text : image?.title}
             className={className || ''}
         />}
     </>
