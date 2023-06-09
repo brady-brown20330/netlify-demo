@@ -185,7 +185,7 @@ function Header (props: App.Header) {
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full items-center lg:flex' style={{border: '2px solid'}}>
+                                    <div className='hidden h-full items-center lg:flex'>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex justify-center space-x-8'>
