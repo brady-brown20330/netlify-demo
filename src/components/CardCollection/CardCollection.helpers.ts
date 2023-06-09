@@ -1,3 +1,3 @@
 export const imageCardsReferenceIncludes = [
-    'card.cta.link'
+    'cards.cta.link'
 ]
