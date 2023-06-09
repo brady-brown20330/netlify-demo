@@ -27,7 +27,7 @@ const ImagePreset: React.FC<ImageComponent> = (props: ImageComponent) => {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {image?.asset?.url && <img 
             src={renderImage()}
-            alt={image_alt_text || ''}
+            alt={image_alt_text || image?.asset?.title}
             className={className || ''}
         />}
     </>
