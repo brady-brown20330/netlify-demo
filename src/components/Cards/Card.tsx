@@ -4,7 +4,6 @@ import { ImageCardItem } from '@/types/components'
 import { classNames } from '@/utils'
 
 const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-
     const { $, image, image_alt_text, title, cta, content,count } = props
 
     return (
@@ -42,7 +41,7 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 }
             </div>
 
-            {cta?.text && <span className='mt-3 text-base font-semibold !text-purple'>
+            {cta?.link?.length !== 0 && cta?.text && <span className='mt-3 text-base font-semibold !text-purple'>
                 <Link
                     url={cta?.link}
                     className='!text-purple hover:border-b-2 hover:border-purple cursor-pointer'
