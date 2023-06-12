@@ -21,19 +21,19 @@ export function TextAndImage (props:Component.TextAndImage) {
                 className='mt-4 text-lg leading-8 text-gray-600 dark:text-white'>
                 {content}
             </p>}
-            {cta?.[0]?.text && <div
+            <div
                 className={classNames(
-                    image_position === 'left' ? 'my-8 xs:mt-8 xs:mb-0' : 'mt-8',
+                    image_position === 'left' && cta?.[0]?.text ? 'my-8 xs:mt-8 xs:mb-0' : 'mt-8',
                     'flex items-center gap-x-6'
                 )}
             >
-                <Link
+                {cta?.[0]?.text && <Link
                     url={cta?.[0]?.link}
                     className='btnPrimary px-6 py-2.5'
                 >
                     {cta[0].text}
-                </Link>
-            </div>}
+                </Link>}
+            </div>
 
         </div>
     )

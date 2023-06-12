@@ -17,7 +17,7 @@ function Header (props: App.Header) {
     const [open, setOpen] = useState(false)
     const [currPanel, setCurrPanel] = useState('')
     const router = useRouter()
-    const { logo, main_navigation: navigation, $ } = data
+    const { logo, main_navigation: navigation } = data
 
     const handleMouseOver = (e: React.MouseEvent) => {
         const title=(e.target as HTMLElement).getAttribute('data-title')
@@ -189,7 +189,7 @@ function Header (props: App.Header) {
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4'>
                                             <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item, i) => (
+                                                {navigation?.[0]?.items?.map((item) => (
                                                     <Popover key={item?.text} className='flex'>
                                                         {() => (
                                                             <>
