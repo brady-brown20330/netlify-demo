@@ -4,22 +4,18 @@ import { Link } from '@/components'
 import { onEntryChange } from '@/config'
 import { getEntryByUID } from '@/services'
 import { includefooterRefUids } from '@/components'
+import { getAppConfigData } from '@/loaders'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const [data, setData] = useState(props)
+    const locale = props?.locale || 'en-us'
     const { section , $ } = data
 
     useEffect(() => {
         async function fetchData () {
             try {
-                const footerData = await getEntryByUID(
-                    'menu',
-                    data?.locale,
-                    data?.uid,
-                    includefooterRefUids,
-                    []
-                )
-                footerData && setData(footerData)
+                const footerData = await getAppConfigData(locale)
+                setData(footerData?.[0]?.footer_navigation?.[0] || [])
                 
             } catch (error) {
                 console.error(error)
