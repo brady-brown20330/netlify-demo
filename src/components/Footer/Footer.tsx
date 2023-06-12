@@ -2,8 +2,6 @@ import { App } from '@/types'
 import React, { useState, useEffect } from 'react'
 import { Link } from '@/components'
 import { onEntryChange } from '@/config'
-import { getEntryByUID } from '@/services'
-import { includefooterRefUids } from '@/components'
 import { getAppConfigData } from '@/loaders'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
@@ -15,7 +13,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
         async function fetchData () {
             try {
                 const footerData = await getAppConfigData(locale)
-                setData(footerData?.[0]?.footer_navigation?.[0] || [])
+                setData(footerData?.[0]?.footer_navigation?.[0] || {})
                 
             } catch (error) {
                 console.error(error)
