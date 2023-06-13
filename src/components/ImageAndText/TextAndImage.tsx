@@ -27,7 +27,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                     'flex items-center gap-x-6'
                 )}
             >
-                {cta?.[0]?.text && <Link
+                {cta?.[0]?.text && cta?.[0]?.link && <Link
                     url={cta?.[0]?.link}
                     className='btnPrimary px-6 py-2.5'
                 >
@@ -56,7 +56,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                         {content && <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
                             {content}
                         </p>}
-                        {cta?.[0]?.text && <div className='mt-6 flex items-center gap-x-6'>
+                        {cta?.[0]?.text && cta?.[0]?.link && <div className='mt-6 flex items-center gap-x-6'>
                             <Link
                                 url={cta?.[0]?.link}
                                 className='btnPrimary px-6 py-2.5'
