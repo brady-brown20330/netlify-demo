@@ -13,7 +13,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
         async function fetchData () {
             try {
                 const footerData = await getAppConfigData(locale)
-                setData(footerData?.[0]?.footer_navigation?.[0] || {})
+                footerData?.[0]?.footer_navigation?.[0] ? setData(footerData?.[0]?.footer_navigation?.[0]) : setData({})
                 
             } catch (error) {
                 console.error(error)
