@@ -26,13 +26,16 @@ function Header (props: App.Header) {
         }
     }
 
-    const handleClose=()=>{
-        setCurrPanel('')
-        // let isSectionActive = false
-        // document.querySelectorAll('.section')?.forEach((sect) => {
-        //     if (sect.classList.contains('cslp-edit-mode') ) isSectionActive = true
-        // })
-        // !isSectionActive && setCurrPanel('')
+    const handleClose=(e:React.MouseEvent)=>{
+        // setCurrPanel('')
+        const boundingRect = document.querySelector('.panel.block')?.getBoundingClientRect()
+        let isSectionActive = false
+        document.querySelectorAll('.section')?.forEach((sect) => {
+            // if (sect.classList.contains('cslp-edit-mode')) isSectionActive = true
+            boundingRect && (e.clientY < boundingRect?.bottom) ?  isSectionActive = true : isSectionActive = false
+
+        })
+        !isSectionActive && setCurrPanel('')
     }
 
     useEffect(() => {
@@ -98,7 +101,7 @@ function Header (props: App.Header) {
                                             item?.text 
                                                 && <>
                                                     <div
-                                                        className={'flex items-center py-4 hover:!text-purple'}>
+                                                        className={'flex items-center pt-6 pb-2 hover:!text-purple'}>
                                                         <Link
                                                             url={item?.link}
                                                             className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : ''} hover:border-b-2 hover:border-purple`}
@@ -172,7 +175,9 @@ function Header (props: App.Header) {
                             <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-20 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center ml-4'>
+                                    <div className='hidden lg:flex lg:flex-1 lg:items-center ml-4'
+                                        onMouseEnter={() => {setCurrPanel('')}}
+                                    >
                                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                                         {/* @ts-ignore */}
                                         <Link url='/' $={logo?.$?.url}>
@@ -187,9 +192,9 @@ function Header (props: App.Header) {
 
                                     <div className='hidden h-full items-center lg:flex'>
                                         {/* Flyout menus */}
-                                        <Popover.Group className='inset-x-0 bottom-0 px-4'>
+                                        <Popover.Group className='inset-x-0 bottom-0 px-4' >
                                             <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item) => (
+                                                {navigation?.[0]?.items?.map((item, i) => (
                                                     <Popover key={item?.text} className='flex'>
                                                         {() => (
                                                             <>
@@ -228,7 +233,7 @@ function Header (props: App.Header) {
                                                                     leaveTo='opacity-0'
                                                                 >
                                                                     <Popover.Panel 
-                                                                        className={`absolute inset-x-0 top-full text-sm text-gray-500 ${item?.text === currPanel ? 'block': 'hidden'}`}
+                                                                        className={`panel absolute inset-x-0 top-full text-sm text-gray-500 ${item?.text === currPanel ? 'block': 'hidden'}`}
                                                                         onMouseLeave={handleClose}
                                                                     >
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
@@ -306,7 +311,10 @@ function Header (props: App.Header) {
                                         />
                                     </Link>
 
-                                    <div className='flex flex-1 items-center justify-end'>
+                                    <div
+                                        className='flex flex-1 h-full items-center justify-end'
+                                        onMouseEnter={() => {setCurrPanel('')}}
+                                    >
                                         <div className='flex items-center lg:ml-8'>
                                             <div className='ml-4 flow-root lg:ml-8'>                                                
                                             </div>
