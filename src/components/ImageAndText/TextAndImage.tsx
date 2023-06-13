@@ -9,7 +9,7 @@ export function TextAndImage (props:Component.TextAndImage) {
     const TextBlock = () => (
         <div 
             className={classNames(
-                image_position === 'left' ? 'lg:ml:0 pr-4 lg:pr-8' : 'xs:ml-4 md:ml-8',
+                image_position === 'right' ? 'lg:ml:0 pr-4 lg:pr-8' : 'xs:ml-4 md:ml-8',
                 'mx-auto my-auto max-w-2xl'
             )}
         >
@@ -23,7 +23,7 @@ export function TextAndImage (props:Component.TextAndImage) {
             </p>}
             <div
                 className={classNames(
-                    image_position === 'left' && cta?.[0]?.text ? 'my-8 xs:mt-8 xs:mb-0' : 'mt-8',
+                    image_position === 'right' && cta?.[0]?.text ? 'my-8 xs:mt-8 xs:mb-0' : 'mt-8',
                     'flex items-center gap-x-6'
                 )}
             >
@@ -78,8 +78,8 @@ export function TextAndImage (props:Component.TextAndImage) {
                 </div>
                     : image_position && ['right', 'left'].includes(image_position) ? <div 
                         className={classNames(
-                            `${image_position === 'right' ? 'xs:flex-row-reverse flex-col-reverse' 
-                                : image_position === 'left'?  'xs:flex-row flex-col'
+                            `${image_position === 'right' ? 'xs:flex-row flex-col' 
+                                : image_position === 'left'?  'xs:flex-row-reverse flex-col-reverse'
                                     : ''}`,
                             'flex container'
                         )}
