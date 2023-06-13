@@ -30,7 +30,7 @@ function Header (props: App.Header) {
         // setCurrPanel('')
         const boundingRect = document.querySelector('.panel.block')?.getBoundingClientRect()
         let isSectionActive = false
-        document.querySelectorAll('.section')?.forEach((sect) => {
+        document.querySelectorAll('.section')?.forEach(() => {
             // if (sect.classList.contains('cslp-edit-mode')) isSectionActive = true
             boundingRect && (e.clientY < boundingRect?.bottom) ?  isSectionActive = true : isSectionActive = false
 
@@ -194,7 +194,7 @@ function Header (props: App.Header) {
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4' >
                                             <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item, i) => (
+                                                {navigation?.[0]?.items?.map((item) => (
                                                     <Popover key={item?.text} className='flex'>
                                                         {() => (
                                                             <>
