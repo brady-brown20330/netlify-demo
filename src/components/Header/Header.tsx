@@ -31,9 +31,9 @@ function Header (props: App.Header) {
         const boundingRect = document.querySelector('.panel.block')?.getBoundingClientRect()
         let isSectionActive = false
         document.querySelectorAll('.section')?.forEach((sect) => {
-            if (sect.classList.contains('cslp-edit-mode')) isSectionActive = true
-            isSectionActive = boundingRect && (e.clientY < boundingRect?.bottom) && (e.clientX < boundingRect?.top) ?  true : false
-            
+            // if (sect.classList.contains('cslp-edit-mode')) isSectionActive = true
+            boundingRect && (e.clientY < boundingRect?.bottom) ?  isSectionActive = true : isSectionActive = false
+
         })
         !isSectionActive && setCurrPanel('')
     }
@@ -175,7 +175,9 @@ function Header (props: App.Header) {
                             <div className='border-b border-gray-400 dark:border-gray-600'>
                                 <div className='flex h-20 items-center justify-between'>
                                     {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center ml-4'>
+                                    <div className='hidden lg:flex lg:flex-1 lg:items-center ml-4'
+                                        onMouseEnter={() => {setCurrPanel('')}}
+                                    >
                                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                                         {/* @ts-ignore */}
                                         <Link url='/' $={logo?.$?.url}>
@@ -188,8 +190,7 @@ function Header (props: App.Header) {
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full items-center lg:flex' 
-                                        onMouseLeave={handleClose}>
+                                    <div className='hidden h-full items-center lg:flex'>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4' >
                                             <div className='flex justify-center space-x-8'>
@@ -310,7 +311,10 @@ function Header (props: App.Header) {
                                         />
                                     </Link>
 
-                                    <div className='flex flex-1 items-center justify-end'>
+                                    <div
+                                        className='flex flex-1 h-full items-center justify-end'
+                                        onMouseEnter={() => {setCurrPanel('')}}
+                                    >
                                         <div className='flex items-center lg:ml-8'>
                                             <div className='ml-4 flow-root lg:ml-8'>                                                
                                             </div>
