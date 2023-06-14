@@ -3,7 +3,13 @@ import { Stack, isEditButtonsEnabled } from '@/config'
 import { addEditableTags, jsonToHTML } from '@contentstack/utils'
 
 const renderOption = {
-    span: (node, next) => next(node.children)
+    span: (node, next) => next(node?.children),
+    a: (asset) => {
+        return `<a href=${asset?.attrs?.url} target=${asset?.attrs?.target}
+        style='text-align:${asset?.attrs?.style?.['text-align'] ? asset.attrs.style?.['text-align'] : 'left' }'>
+            ${asset?.children?.[0]?.text}
+        </a>`
+    }
 }
 
 /**
@@ -58,11 +64,10 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
         }
     }
     catch (error) {
-        throw new Error(error.message)
+        if (error?.error_message) throw new Error(JSON.stringify(error))
+        else throw new Error(error.message)
     }
 }
-
-
 
 
 /**
@@ -70,6 +75,7 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
  * fetches all the entries from specific content-type
  * @param {* content-type uid} contentTypeUid
  * @param {* locale} locale
+ * @param {* entryUrl} entryUrl
  * @param {* reference field name} referenceFieldPath
  * @param {* Json RTE path} jsonRtePath
  *
@@ -114,6 +120,59 @@ export const getEntryByUrl = async (contentTypeUid, locale, entryUrl, referenceF
         
     }
     catch (error) {
-        throw new Error(error.message)
+        if (error?.error_message) throw new Error(JSON.stringify(error))
+        else throw new Error(error.message)
+    }
+}
+
+
+/**
+ *
+ * fetches all the entries from specific content-type
+ * @param {* content-type uid} contentTypeUid
+ * @param {* locale} locale
+ * @param {* entryUid} entryUid
+ * @param {* reference field name} referenceFieldPath
+ * @param {* Json RTE path} jsonRtePath
+ *
+ */
+export const getEntryByUID = async (contentTypeUid, locale, entryUid, referenceFieldPath, jsonRtePath) => {
+    try {    
+        let result    
+        if(!Stack) {
+            throw new Error('===== No stack initialization found====== \n check environment variables: \
+            CONTENTSTACK_API_KEY, CONTENTSTACK_DELIVERY_TOKEN, CONTENTSTACK_MANAGEMENT_TOKEN, CONTENTSTACK_REGION, CONTENTSTACK_ENVIRONMENT')
+        }
+        const entryQuery = Stack.ContentType(contentTypeUid)
+            .Entry(entryUid)
+            .language(locale)
+
+        //   if (localeConfig.allow_fallback) {
+        //     entryQuery
+        //       .includeFallback()
+        //   }
+        if (entryQuery) {
+            if (referenceFieldPath) entryQuery.includeReference(referenceFieldPath)
+
+            result = await entryQuery
+                .includeFallback()
+                .toJSON()
+                .fetch()
+                
+            if (jsonRtePath) {
+                jsonToHTML({
+                    entry: result,
+                    paths: jsonRtePath,
+                    renderOption: renderOption
+                })
+            }
+
+            isEditButtonsEnabled && addEditableTags(result, contentTypeUid, true, locale)
+            return result
+        }
+    }
+    catch (error) {
+        if (error?.error_message) throw new Error(JSON.stringify(error))
+        else throw new Error(error.message)
     }
 }

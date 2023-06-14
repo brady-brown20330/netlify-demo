@@ -1,27 +1,24 @@
 
 import React from 'react'
-import * as _ from 'lodash'
 import { Footer } from '@/components/Footer'
-// import { Navigation } from '@/components/Navigation'
 import { Header } from '@/components/Header'
 import { App } from '@/types'
 
-// function classNames (...classes: string[]) {
-//     return classes.filter(Boolean).join(' ')
-// }
-
 const SingleCol: React.FC<App.SingleColLayout> = (
-    { header, navigation, footer, children }: React.PropsWithChildren<App.SingleColLayout>
-) => {  
+    props : React.PropsWithChildren<App.SingleColLayout>
+) => {
+    const footer = { ...props?.footer_navigation }
     return (
         <>
-            {!_.isEmpty(header) && <Header {...header} navigation={navigation}/>}
+            <Header 
+                {...props}
+            />
 
-            <div className='mx-auto' >
-                {children}
+            <div className='mx-auto' >   
+                {props.children}
             </div>
 
-            {!_.isEmpty(footer) && <Footer {...footer}/>}
+            <Footer {...footer[0]}/>
         </>
     )
 }

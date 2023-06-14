@@ -8,7 +8,7 @@ body {
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6, span, p  {
+  h1, h2, h3, h4, h5, h6, p  {
       @apply text-black dark:text-white
   }
 }
@@ -26,31 +26,30 @@ body {
   .btnTertiary{
     @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-medium text-gray-100 hover:opacity-80
   }
-  .rte h2{
+  .text h2{
     @apply text-[44px] font-bold dark:text-white py-3
   }
-  .rte h3 {
+  .text h3 {
     @apply font-bold text-2xl leading-[26px] text-[#253143] dark:text-white py-4
   }
-  .rte h5 {
+  .text h5 {
     @apply font-bold text-purple text-lg leading-7
   }  
-  .rte h6{
+  .text h6{
     @apply text-lg text-[#5B6B86] font-normal leading-7 dark:text-white py-2
   }
-  .rte ul { @apply list-disc py-1 px-6 }
+  .text ul { @apply list-disc py-1 px-6 }
 
-  .rte ol { @apply list-decimal py-1 px-6 }
+  .text ol { @apply list-decimal py-1 px-6 }
 
-  .rte li{
-    @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-2
+  .text li{
+    @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-1
   }
 
-  .rte p { @apply py-1 leading-5}
+  .text p { @apply py-1 leading-7 text-justify}
 
-  .rte a { @apply text-[16px] text-purple hover:underline font-semibold}
+  .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 
-  .rte img { @apply w-[267px] h-[140px] }
-
+  .text img { @apply w-full my-8 mx-auto}
 }
 

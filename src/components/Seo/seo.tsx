@@ -8,9 +8,9 @@ export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
     if (no_follow && no_index) {
         robots = 'noindex,nofollow'
     } else if (no_follow) {
-        robots = 'nofollow'
+        robots = 'index,nofollow'
     } else if (no_index) {
-        robots = 'noindex'
+        robots = 'noindex,follow'
     } else {
         robots = 'index,follow'
     }

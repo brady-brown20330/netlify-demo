@@ -4,26 +4,21 @@ import { Card } from '@/components'
 import { CardCollectionHeader } from './CardCollectionHeader'
 
 import { classNames } from '@/utils'
-// import { isHeaderValid, isCardsValid, validationInfo } from './CardCollection.helpers'
 
 import { CardCollection as CardCollectionProps } from '@/types/components'
 
 const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
-    const {$, heading, sub_heading, cards} =props
-    // const isComponentValid: boolean = isCardsValid(props)
-
-    // const { heading } = isHeaderValid(props) || isComponentValid ? props : {header: null}
-    // const { cards } = isCardsValid(props) ? props : {cards: null}
+    const { header, cards } = props
 
     return (
-        // <ComponentValidator validators={[isCardsValid(props)]} validationInfo={validationInfo}>
+        
         <div className={'pb-8 px-8 pb-8 sm:pb-12'}>
             <div className='max-w-7xl mx-auto '>
             
                 <CardCollectionHeader
-                    heading={heading}
-                    sub_heading={sub_heading}
-                    $={$}
+                    heading={header?.[0]?.heading}
+                    sub_heading={header?.[0]?.sub_heading}
+                    $={{...header?.[0]?.$}}
                 />
            
                 <div
@@ -36,10 +31,11 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
                         'grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                     )}
                 >
-                    {cards?.map((card, idx) => {
+                    {cards?.map((cardData: any, idx: number) => {
+                        //eslint-disable-next-line
                         return (<Card
                             key={idx}
-                            {...card}
+                            {...cardData}
                             count={cards.length}
                         />
                         )
@@ -48,7 +44,7 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
                 </div>
             </div>
         </div>
-        // </ComponentValidator>
+
     )
 }
 

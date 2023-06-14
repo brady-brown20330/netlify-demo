@@ -21,6 +21,7 @@ export const getPreferedBrowserLang = () => {
 
 export const getPreferedBrowserRegions = () => {
     if (navigator.languages != undefined) {
+        // eslint-disable-next-line func-names
         const preferedRegions: string[] = _.reduce(navigator.languages, function (regions: string[], lang: string) {
             try {
                 const l = new Intl.Locale(lang)

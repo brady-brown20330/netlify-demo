@@ -25,20 +25,21 @@ export interface pageLink {
 export interface LinkComponent extends pageLink {
   children?: ReactNode;
   className?: string;
+  'data-title'?:string
 }
 
 export interface CtaCollection {
   ctas?: Cta[];
 }
 export type Cta = {
-  title?: string;
+  text?: string;
   link?: InternalLink[];
 };
 
 export interface Hero {
   key?: Key | null;
   heading?: string;
-  image: AssetPreset;
+  image: globalImage;
   image_alt_text: string;
   image_position?: string;
   content: string;
@@ -46,8 +47,10 @@ export interface Hero {
   $?: MappedPreview<Hero>;
 }
 
+export type globalImage  =  Asset & AssetPreset
+
 export interface Image {
-  image?: AssetPreset;
+  image?: globalImage;
   image_alt_text?: string;
   image_position?: string;
 }
@@ -55,19 +58,23 @@ export interface ImageComponent extends Image {
   className?: string;
 }
 
-export interface Rte {
+export interface Text {
   content?: string;
-  $? : MappedPreview<Rte>;
+  styles?: {
+    background_color?: string;
+  }
+  $? : MappedPreview<Text>;
 }
 
-export interface ImageAndText {
+export interface TextAndImage extends Image {
   heading?: string;
-  image: AssetPreset;
-  image_alt_text: string;
-  image_position?: string;
-  image_height?: string;
+  styles:{
+    image_position?: string;
+    theme?:string;
+  }
+  cta: Cta[];
   content?: string;
-  $?: MappedPreview<ImageAndText>;
+  $?: MappedPreview<TextAndImage>;
 }
 export interface Teaser {
   $?: MappedPreview<Teaser>;
@@ -75,16 +82,21 @@ export interface Teaser {
   content?: string;
   cta?: Cta[];
   image?: Image[];
+  styles?: {
+    full_screen?: boolean;
+  }
 }
 
 export interface CardCollectionHeader {
   $?: MappedPreview<CardCollectionHeader>;
-  heading?: string;
-  sub_heading?: string;
+  heading?:string
+  sub_heading?:string
+  
 }
-export interface CardCollection extends CardCollectionHeader {
+export interface CardCollection {
   $?: MappedPreview<CardCollection>;
   cards?: ImageCardItem[] | [];
+  header?: CardCollectionHeader[];
 }
 
 export type ImageCardItem = ImageCardGraphics &
@@ -92,9 +104,7 @@ export type ImageCardItem = ImageCardGraphics &
     $: MappedPreview<ImageCardGraphics & ImageCardText>;
   };
 
-export interface ImageCardGraphics {
-  image: AssetPreset;
-  image_alt_text: string;
+export interface ImageCardGraphics extends Image {
   count?: number;
 }
 export interface ImageCardText {
@@ -106,6 +116,13 @@ export interface ImageCardText {
 export type CardImage = Asset & {
   count?: number;
 };
+
+export type ArticleCover = {
+  title?:string
+  summary?:string
+  cover_image?:globalImage
+  $?:MappedPreview<ArticleCover>
+}
 
 // ######################### COMPONENTS END #########################
 

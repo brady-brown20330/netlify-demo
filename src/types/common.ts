@@ -30,7 +30,7 @@ export interface CommonSystemInfo {
     user: string
   }
   tags?: string[]
-  title: string
+  title?: string
   uid?: string
   updated_at?: Date
   updated_by?: string
@@ -42,7 +42,7 @@ export type PageEntry = Entry & {
 
 export type Entry = CommonSystemInfo & {
   $?: MappedPreview<Entry & CommonSystemInfo>
-  locale: string
+  locale?: string
   _in_progress?: boolean
   _owner?: {
     active: boolean

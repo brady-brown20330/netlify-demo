@@ -83,10 +83,10 @@
       "error",
       "before"
     ],
-    // "func-names": [
-    //   "error",
-    //   "as-needed"
-    // ],
+    "func-names": [
+      "error",
+      "as-needed"
+    ],
     "space-before-function-paren": [
       "error",
       "always"
