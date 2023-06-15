@@ -4,7 +4,7 @@ import { ImageCardItem } from '@/types/components'
 import { classNames } from '@/utils'
 
 const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, cta, content, } = props
+    const { $, image, image_alt_text, title, cta, content, count } = props
 
     return (
         <div
@@ -18,11 +18,11 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                     image_alt_text={image_alt_text}
                     // className={'w-full object-center object-fit object-cover h-48 xl:h-40'}
                     className={classNames(
-                        // count === 1 ? '!h-full'
-                        //     :count === 2 ? 'lg:h-64' 
-                        //         :count === 3 ? 'lg:h-52'
-                        //             : count && count >= 4 ? 'lg:h-40'
-                        //                 : '',
+                        count === 1 ? 'h-auto w-auto'
+                            :count === 2 ? 'lg:h-64' 
+                                :count === 3 ? 'lg:h-52'
+                                    : count && count >= 4 ? 'h-48 lg:h-40'
+                                        : '',
                         'w-full object-center object-fit object-cover'
                     )}
                 />
