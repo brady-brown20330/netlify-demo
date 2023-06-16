@@ -39,14 +39,6 @@ export default function Article ({entry, locale}:Page.ArticlePage) {
                     $: entry?.$
                 }
             }
-            // {
-            //     card_collection: {
-            //         header: [{
-            //             heading: '',
-            //             sub_heading: ''
-            //         }]
-            //     }
-            // }
         ]}
         />}
     </>
