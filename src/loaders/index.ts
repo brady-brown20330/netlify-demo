@@ -26,7 +26,16 @@ export const getPaths = async (contentType:string, locale:string) => {
 }
 
 export const getArticle = (cmsUrlPath: string | undefined, locale: string | undefined) => {
-    return getEntryByUrl('article', locale, `${cmsUrlPath}`, [], [])  
+    const jsonRtePaths = ['content']
+    return getEntryByUrl('article', locale, `${cmsUrlPath}`, [], jsonRtePaths)  
+}
+
+export const getArticleListingPage = (cmsUrlPath: string | undefined, locale: string | undefined) => {
+    return getEntryByUrl('articles_listing_page', locale, cmsUrlPath, [], [])  
+}
+
+export const getArticles = (locale: string | undefined) => {
+    return getEntries('article', locale, [], [])  
 }
 
 export const getAppConfigData = async (locale:string|undefined) => {

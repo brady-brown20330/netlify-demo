@@ -1,5 +1,5 @@
 import { MappedPreview, PageEntry } from '@/types/common'
-import { ArticleProps, pageRenderProps } from './common'
+import { Article, pageRenderProps } from './common'
 
 export type Homepage = {
     entry: PageEntry
@@ -10,8 +10,13 @@ export type LandingPage = {
     locale?:string
 }
 
-export type Article = {
-  entry: PageEntry & ArticleProps
+export type ArticlePage = {
+  entry: PageEntry & Article
   locale?:string
-  $?:MappedPreview<Article>
+  $?:MappedPreview<ArticlePage>
+}
+export type ArticleListingPage = {
+  articles?: Article[] | []
+  entry?:PageEntry
+  locale?:string
 }

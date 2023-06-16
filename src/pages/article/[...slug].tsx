@@ -7,9 +7,9 @@ import {  Page } from '@/types'
 import { ArticleCover } from '@/components'
 
 
-export default function Article ({entry, locale}:Page.Article) { 
+export default function Article ({entry, locale}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
-    const { content, title, summary, cover_image, $ } = data
+    const { content } = data
     
     useEffect(() => {
         async function fetchData () {
@@ -27,10 +27,10 @@ export default function Article ({entry, locale}:Page.Article) {
 
     return (<>
         <ArticleCover
-            title= {title}
-            summary={summary}
-            cover_image={cover_image}
-            $={$}
+            title= {entry?.title}
+            summary={entry?.summary}
+            cover_image={entry?.cover_image}
+            $={entry?.$}
         />
         {entry && <RenderComponents components={[
             {
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' 
             ? '/article/' + params?.slug?.join('/') 
             : params.slug
-        const res: Page.Article = await getArticle(`${paramsPath}`,locale)
+        const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
         if (!res) return { notFound: true }
         return {
             props: {
