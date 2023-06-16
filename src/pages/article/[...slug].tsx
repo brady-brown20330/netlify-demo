@@ -9,7 +9,7 @@ import { ArticleCover } from '@/components'
 
 export default function Article ({entry, locale}:Page.Article) { 
     const [data, setData] = useState(entry)
-    const { content } = data
+    const { content, title, summary, cover_image, $ } = data
     
     useEffect(() => {
         async function fetchData () {
@@ -27,10 +27,10 @@ export default function Article ({entry, locale}:Page.Article) {
 
     return (<>
         <ArticleCover
-            title= {entry?.title}
-            summary={entry?.summary}
-            cover_image={entry?.cover_image}
-            $={entry?.$}
+            title= {title}
+            summary={summary}
+            cover_image={cover_image}
+            $={$}
         />
         {entry && <RenderComponents components={[
             {
