@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useEffect, useState } from 'react'
 import { getArticleListingPage, getArticles, getPaths } from '@/loaders'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
@@ -6,7 +7,8 @@ import { CardCollection } from '@/components'
 import { filterArticles } from '@/utils/articles'
 
 
-export default function Article ({entry, articles}:Page.ArticleListingPage) { 
+export default function Article ({entry, articles, locale}:Page.ArticleListingPage) { 
+    const [Entry, setEntry]= useState(entry)
     const cards:any =  articles?.map((article) => {
         return ({
             title: article?.title,
@@ -19,29 +21,29 @@ export default function Article ({entry, articles}:Page.ArticleListingPage) {
 
 
     
-    // useEffect(() => {
-    //     async function fetchData () {
-    //         try {
-    //             const entryRes = await getArticle(entry.url,locale)
-    //             setData(entryRes)
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    //     onEntryChange(fetchData)
-    // }, [entry?.url, locale])
+    useEffect(() => {
+        async function fetchData () {
+            try {
+                const entryRes = await getArticleListingPage(entry?.url, locale)
+                setEntry(entryRes)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        onEntryChange(fetchData)
+    }, [entry?.url, locale])
 
-
-    return (<>
+    return (
         <CardCollection 
             header={[{
-                heading: entry?.title
+                heading: Entry?.title,
+                $: {
+                    heading: Entry?.$?.title
+                }
             }]}
             cards={cards}
         />
-    </>
     )
-
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -67,10 +69,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
         const entry = await getArticleListingPage(`${paramsPath}`, locale)
         const res = await getArticles(locale)
-
-        // let filterArr = res.map((elem) => elem?.region?.length > 0 && params?.slug?.[1] && elem.region.includes(params.slug[1]) ? elem : false).filter((x) => x)
-
-        // console.log("🚀 ~ file: [...slug].tsx:70 ~ constgetStaticProps:GetStaticProps= ~ filterArr:", filterArr.length )
 
         if (params?.slug?.[0] && !['region', 'topic'].includes(params?.slug?.[0])) return { notFound: true }
         return {

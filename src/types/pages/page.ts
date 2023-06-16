@@ -1,6 +1,5 @@
 import { MappedPreview, PageEntry } from '@/types/common'
 import { Article, pageRenderProps } from './common'
-import { Entry } from 'contentstack'
 
 export type Homepage = {
     entry: PageEntry

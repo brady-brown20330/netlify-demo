@@ -24,7 +24,6 @@ export type pageRenderProps = {
   }
 export interface Article extends PageEntry,ArticleCover {
   region?: string[] | [] 
-  url: string
   content?:string
   $?: MappedPreview<Article>
 }

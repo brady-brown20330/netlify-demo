@@ -1,4 +1,4 @@
-import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, includefooterRefUids, textJSONRtePaths} from '@/components'
+import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, includefooterRefUids } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
 import { getEntries, getEntryByUID, getEntryByUrl } from '@/services'
 
@@ -12,8 +12,7 @@ export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | 
         ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes),
         ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes)
     )
-    const jsonRtePaths = prefixReferenceIncludes('components', ...textJSONRtePaths)
-    return getEntryByUrl('landing_page',locale, `${cmsUrlPath}`, newRefUids, jsonRtePaths)  
+    return getEntryByUrl('landing_page',locale, `${cmsUrlPath}`, newRefUids, [])  
 }
 
 export const getPaths = async (contentType:string, locale:string) => {
