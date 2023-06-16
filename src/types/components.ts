@@ -110,7 +110,7 @@ export interface ImageCardGraphics extends Image {
 export interface ImageCardText {
   title?: string;
   content?: string;
-  cta?: Cta;
+  cta?: Cta | string;
 }
 
 export type CardImage = Asset & {

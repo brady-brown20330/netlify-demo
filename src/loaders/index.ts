@@ -31,6 +31,14 @@ export const getArticle = (cmsUrlPath: string | undefined, locale: string | unde
     return getEntryByUrl('article', locale, `${cmsUrlPath}`, [], jsonRtePaths)  
 }
 
+export const getArticleListingPage = (cmsUrlPath: string | undefined, locale: string | undefined) => {
+    return getEntryByUrl('articles_listing_page', locale, cmsUrlPath, [], [])  
+}
+
+export const getArticles = (locale: string | undefined) => {
+    return getEntries('article', locale, [], [])  
+}
+
 export const getAppConfigData = async (locale:string|undefined) => {
     const webConf=await getEntries('web_configuration', locale, ['footer_navigation', ...prefixReferenceIncludes('footer_navigation', ...includefooterRefUids)], [])
 

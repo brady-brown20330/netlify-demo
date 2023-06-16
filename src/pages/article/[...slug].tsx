@@ -7,7 +7,7 @@ import {  Page } from '@/types'
 import { ArticleCover } from '@/components'
 
 
-export default function Article ({entry, locale}:Page.Article) { 
+export default function Article ({entry, locale}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
     const { content } = data
     
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' 
             ? '/article/' + params?.slug?.join('/') 
             : params.slug
-        const res: Page.Article = await getArticle(`${paramsPath}`,locale)
+        const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
         if (!res) return { notFound: true }
         return {
             props: {
