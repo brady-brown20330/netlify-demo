@@ -20,7 +20,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
             }
         }
         onEntryChange(fetchData)
-    }, [])
+    }, [locale])
     
     return (
         <footer className='dark:bg-black' aria-labelledby='footer-heading'>

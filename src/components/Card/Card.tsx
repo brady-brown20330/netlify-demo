@@ -18,8 +18,8 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 // className={'w-full object-center object-fit object-cover h-48 xl:h-40'}
                 className={classNames(
                     count === 1 ? 'h-auto w-auto'
-                        :count === 2 ? 'lg:h-64' 
-                            :count === 3 ? 'lg:h-52'
+                        :count === 2 ? 'h-48 lg:h-64' 
+                            :count === 3 ? 'h-48 lg:h-52'
                                 : count && count >= 4 ? 'h-48 lg:h-40'
                                     : '',
                     'w-full object-center object-fit object-cover'
