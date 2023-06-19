@@ -1,6 +1,6 @@
 export * from './Hero'
 export * from './Link'
-export * from './Cards'
+export * from './Card'
 export * from './Image'
 export * from './Teaser'
 export * from './CardCollection'

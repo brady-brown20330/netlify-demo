@@ -5,11 +5,13 @@ import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
 import { CardCollection } from '@/components'
 import { filterArticles } from '@/utils/articles'
+import { ImageCardItem } from '@/types/components'
+import { Article } from '@/types/pages'
 
 
 export default function Article ({entry, articles, locale}:Page.ArticleListingPage) { 
     const [Entry, setEntry]= useState(entry)
-    const cards:any =  articles?.map((article) => {
+    const cards: ImageCardItem[] | [] =  articles?.map((article) => {
         return ({
             title: article?.title,
             content: article?.summary,
@@ -17,7 +19,7 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
             $: article?.$,
             cta: article?.url
         })
-    })
+    }) as ImageCardItem[] | []
 
 
     
@@ -66,15 +68,18 @@ export const getStaticProps: GetStaticProps = async (context) => {
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' 
             ? '/articles/' + params?.slug?.join('/') 
             : params.slug
+        
+        if (params?.slug?.[0] && !['region', 'topic'].includes(params?.slug?.[0])) return { notFound: true }
 
         const entry = await getArticleListingPage(`${paramsPath}`, locale)
-        const res = await getArticles(locale)
+        const articles = await getArticles(locale)
+        const filteredArticles:Article[] | [] = filterArticles(articles, params) as Article[]
 
-        if (params?.slug?.[0] && !['region', 'topic'].includes(params?.slug?.[0])) return { notFound: true }
+        if (filteredArticles?.length <= 0 && !entry ) return {notFound: true}
         return {
             props: {
                 entry,
-                articles: filterArticles(res, params),
+                articles: filteredArticles,
                 locale
             },
             revalidate: 1000
