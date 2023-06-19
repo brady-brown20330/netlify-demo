@@ -4,11 +4,12 @@ import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
 import { CardCollection } from '@/components'
 import { useEffect, useState } from 'react'
+import { ImageCardItem } from '@/types/components'
 
 
 export default function ArticleListing ({entry, articles, locale}:Page.ArticleListingPage) { 
     const [Entry, setEntry] =useState(entry)
-    const cards:any =  articles?.map((article) => {
+    const cards:ImageCardItem[] | []  =  articles?.map((article) => {
         return ({
             title: article?.title,
             content: article?.summary,
@@ -16,7 +17,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
             $: article?.$,
             cta: article?.url
         })
-    })
+    }) as ImageCardItem[] | [] 
     
     useEffect(() => {
         async function fetchData () {
