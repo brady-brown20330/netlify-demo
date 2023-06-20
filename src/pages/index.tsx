@@ -1,51 +1,50 @@
-// import Image from 'next/image'
-// import { Inter } from 'next/font/google'
-// import _ from 'lodash'
-// import { inIframe } from '@/utils';
-import { Page } from '@/types'
-import { getHomePage } from '@/loaders'
 import { GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
+import { getHomePage } from '@/loaders'
+import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
+import {  Page } from '@/types'
 
 
-export default function Home ({entry}:Page.Homepage) {
+export default function Home ({entry, locale}:Page.LandingPage) { 
+    
     const [data, setData] = useState(entry)
-
     
     useEffect(() => {
         async function fetchData () {
             try {
-                const entryRes = await getHomePage( entry?.url,'en-us')
+                const entryRes = await getHomePage('', locale)
                 setData(entryRes)
             } catch (error) {
                 console.error(error)
             }
         }
         onEntryChange(fetchData)
-    }, [entry.url])
- 
+    }, [entry?.url, locale])
+
     return (<>
-        {data?.title && <div 
-            className='h-[50vh] text-center pt-20'
-            // {...data?.$?.title}
-        >
-            {data.title}
-        </div>}
+        {data?.components && Object.keys(data.components)?.length ? (
+            <RenderComponents
+                components={data?.components}
+            />
+        ) : <></>}
     </>
     )
 
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (context) => {
     try {
-        const res: Page.Homepage = await getHomePage('/','en-us')
-  
+        const {locale} = context
+        const res: Page.Homepage = await getHomePage('', locale)
+
         if (!res) return { notFound: true }
-  
         return {
             props: {
-                entry: {...res}
+                entry: {
+                    ...res
+                },
+                locale
             },
             revalidate: 1000
         }
