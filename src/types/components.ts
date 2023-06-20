@@ -124,6 +124,23 @@ export type ArticleCover = {
   $?:MappedPreview<ArticleCover>
 }
 
+export type RelatedRegionTopics = {
+  region?:string[]
+  topics?:string[]
+  $?:MappedPreview<RelatedRegionTopics>
+}
+
+export type RelatedArticles = {
+  locale?:string
+  
+  heading?:string
+  sub_heading?:string
+  number_of_articles?:number
+  related_article_tags?:string[]
+  $?:MappedPreview<RelatedArticles>
+
+}
+
 // ######################### COMPONENTS END #########################
 
 

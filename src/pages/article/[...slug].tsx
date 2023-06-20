@@ -4,13 +4,13 @@ import { getArticle, getPaths } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
-import { ArticleCover } from '@/components'
+import { ArticleCover, RelatedRegionTopics, RelatedArticles } from '@/components'
 
 
 export default function Article ({entry, locale}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
-    const { content, title, summary, cover_image, $ } = data
-    
+    const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data
+
     useEffect(() => {
         async function fetchData () {
             try {
@@ -22,8 +22,6 @@ export default function Article ({entry, locale}:Page.ArticlePage) {
         }
         onEntryChange(fetchData)
     }, [entry?.url, locale])
-
-
 
     return (<>
         <ArticleCover
@@ -41,6 +39,9 @@ export default function Article ({entry, locale}:Page.ArticlePage) {
             }
         ]}
         />}
+        {show_related_regions_and_topics && <RelatedRegionTopics region={region} topics={topics} $={$}/>}
+        {// eslint-disable-next-line max-len
+            show_related_articles && <RelatedArticles locale={locale} heading={related_articles?.heading} sub_heading={related_articles?.sub_heading} number_of_articles={related_articles?.number_of_articles} $={related_articles?.$} />}
     </>
     )
 

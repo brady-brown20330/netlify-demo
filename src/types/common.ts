@@ -32,9 +32,22 @@ export interface CommonSystemInfo {
   tags?: string[]
   title?: string
   uid?: string
+  show_related_regions_and_topics?:boolean
+  region?:string[]
+  topics?:string[]
+  show_related_articles?: boolean
+  related_articles?: related_articles
   updated_at?: Date
   updated_by?: string
 }
+
+export type related_articles = {
+  heading?:string
+  sub_heading?:string
+  number_of_articles?:number
+  related_article_tags?:string[]
+  $?: MappedPreview<related_articles>
+ }
 export type PageEntry = Entry & {
   // $?: MappedPreview<PageEntry>
   url: string
