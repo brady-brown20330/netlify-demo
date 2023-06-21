@@ -64,26 +64,26 @@ function Header (props: App.Header) {
         setOpen(false)
     }, [router.asPath])
 
-    // // ? Disable Scrolling when Nav panel is open - Mobile View
-    // useEffect(() => {
+    // ? Disable Scrolling when Nav panel is open - Mobile View
+    useEffect(() => {
         
-    //     if(open) {
+        if(open) {
             
-    //         document.body.style.overflowY = 'scroll'
-    //         document.body.style.position = 'fixed'
-    //         document.body.style.inlineSize = '100%'
+            document.body.style.overflowY = 'scroll'
+            document.body.style.position = 'fixed'
+            document.body.style.inlineSize = '100%'
             
-    //         return
+            return
         
-    //     } 
+        } 
         
-    //     document.body.style.overflowY = 'auto'
-    //     document.body.style.position = 'static'
-    //     document.body.style.inlineSize = '100%'
+        document.body.style.overflowY = 'auto'
+        document.body.style.position = 'static'
+        document.body.style.inlineSize = '100%'
         
-    //     return
+        return
 
-    // }, [open])
+    }, [open])
 
     // ? Disable Scrolling when Nav panel is open - Desktop View
     useEffect(() => {
