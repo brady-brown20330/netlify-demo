@@ -29,7 +29,7 @@ const RelatedArticles:React.FC<RelatedArticles> = (props:RelatedArticles) => {
     },[])
 
     return( <>
-        <div className='mt-[-36px]'>
+        <div className='-mt-24'>
             <CardCollection header={[{heading, sub_heading, $}]} cards={articles} />
         </div>       
     </>)
