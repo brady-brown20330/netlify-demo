@@ -13,11 +13,10 @@ const ArticleCover:React.FC<ArticleCover> = (props:ArticleCover) => {
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 {cover_image?.url && <Image
                     image={cover_image}
-                    // image_alt_text={image_alt_text}
                     className={'w-full max-auto object-cover aspect-[2] md:aspect-[3/1] object-center bg-white/5 shadow-2xl ring-1 ring-white/10 dark:text-white'}
                 />}
             </div>
-            {summary && <p className='mt-6 text-lg leading-8 text-gray-900 dark:text-white' {...$?.summary}>
+            {summary && <p className='mt-6 text-lg leading-8 font-semibold text-gray-700 dark:text-white' {...$?.summary}>
                 {summary}
             </p>}
         </div>
