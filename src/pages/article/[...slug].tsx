@@ -30,18 +30,24 @@ export default function Article ({entry, locale}:Page.ArticlePage) {
             cover_image={cover_image}
             $={$}
         />
-        {entry && <RenderComponents components={[
-            {
-                text: { 
-                    content,
-                    $: entry?.$
-                }
+        {entry && <RenderComponents components={[{
+            text: { 
+                content,
+                $: entry?.$
             }
-        ]}
+        }]}
         />}
-        {show_related_regions_and_topics && <RelatedRegionTopics region={region} topics={topics} $={$}/>}
-        {// eslint-disable-next-line max-len
-            show_related_articles && <RelatedArticles locale={locale} heading={related_articles?.heading} sub_heading={related_articles?.sub_heading} number_of_articles={related_articles?.number_of_articles} $={related_articles?.$} />}
+        {show_related_regions_and_topics && <RelatedRegionTopics
+            region={region} 
+            topics={topics} 
+            $={$}/>}
+        {show_related_articles && <RelatedArticles
+            locale={locale}
+            heading={related_articles?.heading}
+            sub_heading={related_articles?.sub_heading} 
+            number_of_articles={related_articles?.number_of_articles}
+            $={related_articles?.$}
+        />}
     </>
     )
 
