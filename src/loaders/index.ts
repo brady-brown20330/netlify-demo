@@ -1,9 +1,14 @@
-import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, includefooterRefUids, textJSONRtePaths} from '@/components'
+import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, includefooterRefUids } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
 import { getEntries, getEntryByUID, getEntryByUrl } from '@/services'
 
 export const getHomePage = ( cmsUrlPath: string | undefined, locale: string | undefined) => {
-    return getEntryByUrl('home_page',locale, '/', [], [])
+    const newRefUids = prefixReferenceIncludes('components',
+        ...prefixReferenceIncludes('text_and_image', ...textAndImageReferenceIncludes),
+        ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes),
+        ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes)
+    )
+    return getEntryByUrl('home_page',locale, '/', newRefUids, [])
 }
 
 export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | undefined) => {
@@ -12,8 +17,7 @@ export const getLandingPage = (cmsUrlPath: string | undefined, locale: string | 
         ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes),
         ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes)
     )
-    const jsonRtePaths = prefixReferenceIncludes('components', ...textJSONRtePaths)
-    return getEntryByUrl('landing_page',locale, `${cmsUrlPath}`, newRefUids, jsonRtePaths)  
+    return getEntryByUrl('landing_page',locale, `${cmsUrlPath}`, newRefUids, [])  
 }
 
 export const getPaths = async (contentType:string, locale:string) => {
@@ -29,6 +33,14 @@ export const getPaths = async (contentType:string, locale:string) => {
 export const getArticle = (cmsUrlPath: string | undefined, locale: string | undefined) => {
     const jsonRtePaths = ['content']
     return getEntryByUrl('article', locale, `${cmsUrlPath}`, [], jsonRtePaths)  
+}
+
+export const getArticleListingPage = (cmsUrlPath: string | undefined, locale: string | undefined) => {
+    return getEntryByUrl('articles_listing_page', locale, cmsUrlPath, [], [])  
+}
+
+export const getArticles = (locale: string | undefined) => {
+    return getEntries('article', locale, [], [])  
 }
 
 export const getAppConfigData = async (locale:string|undefined) => {

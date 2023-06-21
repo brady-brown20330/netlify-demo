@@ -1,3 +1,3 @@
 export const textJSONRtePaths = [
-    'text.content'
+    // 'text.content'
 ]

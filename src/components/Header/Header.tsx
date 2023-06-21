@@ -35,7 +35,15 @@ function Header (props: App.Header) {
             boundingRect && (e.clientY < boundingRect?.bottom) ?  isSectionActive = true : isSectionActive = false
 
         })
-        !isSectionActive && setCurrPanel('')
+        !isSectionActive && resetNav()
+    }
+
+    const resetNav = () => {
+        setCurrPanel('')
+    }
+    
+    const resetMobileNav = () => {
+        setOpen(false)
     }
 
     useEffect(() => {
@@ -55,6 +63,47 @@ function Header (props: App.Header) {
         setCurrPanel('')
         setOpen(false)
     }, [router.asPath])
+
+    // ? Disable Scrolling when Nav panel is open - Mobile View
+    useEffect(() => {
+        
+        if(open) {
+            
+            document.body.style.overflowY = 'scroll'
+            document.body.style.position = 'fixed'
+            document.body.style.inlineSize = '100%'
+            
+            return
+        
+        } 
+        
+        document.body.style.overflowY = 'auto'
+        document.body.style.position = 'static'
+        document.body.style.inlineSize = '100%'
+        
+        return
+
+    }, [open])
+
+    // ? Disable Scrolling when Nav panel is open - Desktop View
+    useEffect(() => {
+        
+        if(currPanel !== '') {
+            
+            document.body.style.overflowY = 'scroll'
+            document.body.style.position = 'fixed'
+            document.body.style.inlineSize = '100%'
+            
+            return
+        
+        } 
+        
+        document.body.style.overflowY = 'auto'
+        document.body.style.position = 'static'
+        document.body.style.inlineSize = '100%'
+        return
+
+    }, [currPanel])
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
@@ -102,15 +151,17 @@ function Header (props: App.Header) {
                                                 && <>
                                                     <div
                                                         className={'flex items-center pt-6 pb-2 hover:!text-purple'}>
-                                                        <Link
-                                                            url={item?.link}
-                                                            className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : ''} hover:border-b-2 hover:border-purple`}
-                                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                                            // @ts-ignore
-                                                            $={...item?.$?.text}
-                                                        >
-                                                            {item.text}
-                                                        </Link>
+                                                        <div onClick={resetMobileNav}>
+                                                            <Link
+                                                                url={item?.link}
+                                                                className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : ''} hover:border-b-2 hover:border-purple`}
+                                                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                                // @ts-ignore
+                                                                $={...item?.$?.text}
+                                                            >
+                                                                {item.text}
+                                                            </Link>
+                                                        </div>
                                                         {item && item?.mega_menu?.[0]?.section && item?.mega_menu?.[0]?.section?.length > 0 && <>
                                                             { currPanel=== item?.text
                                                                 ? <ChevronUpIcon
@@ -135,11 +186,13 @@ function Header (props: App.Header) {
                                                                 // @ts-ignore
                                                                 {...sect?.$?.title}
                                                             >
-                                                                {sect?.title && <Link 
-                                                                    url={sect?.link}
-                                                                    className='font-medium text-base flex items-start text-gray-900 hover:text-purple hover:underline pt-2'>
-                                                                    {sect.title}
-                                                                </Link>}
+                                                                <div onClick={resetMobileNav}>
+                                                                    {sect?.title && <Link 
+                                                                        url={sect?.link}
+                                                                        className='font-medium text-base flex items-start text-gray-900 hover:text-purple hover:underline pt-2'>
+                                                                        {sect.title}
+                                                                    </Link>}
+                                                                </div>
                                                                 <ul
                                                                     role='list'
                                                                     aria-labelledby={`section-${ind}-heading-mobile`}
@@ -147,9 +200,11 @@ function Header (props: App.Header) {
                                                                 >
                                                                     {sect?.links?.map((subitem) => (
                                                                         subitem?.text && <li key={subitem.text} className=''>
-                                                                            <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
-                                                                                {subitem.text}
-                                                                            </Link>
+                                                                            <div onClick={resetMobileNav}>
+                                                                                <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
+                                                                                    {subitem.text}
+                                                                                </Link>
+                                                                            </div>
                                                                         </li>
                                                                     ))}
                                                                 </ul>
@@ -248,11 +303,15 @@ function Header (props: App.Header) {
                                                                                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                                             // @ts-ignore
                                                                                             <div className='section' key={`section-${ind}`} {...sect?.$?.title}>
-                                                                                                {sect?.title && <Link 
-                                                                                                    url={sect?.link}
-                                                                                                    className='font-medium text-base text-gray-900 hover:text-purple hover:underline'>
-                                                                                                    {sect.title}
-                                                                                                </Link>}
+                                                                                                {sect?.title 
+                                                                                                && <div onClick={resetNav}>
+                                                                                                    <Link 
+                                                                                                        url={sect?.link}
+                                                                                                        className='font-medium text-base text-gray-900 hover:text-purple hover:underline'>
+                                                                                                        {sect.title}
+                                                                                                    </Link>
+                                                                                                </div>
+                                                                                                }
                                                                                                 <ul
                                                                                                     role='list'
                                                                                                     aria-labelledby={`section-${ind}-heading-mobile`}
@@ -260,13 +319,25 @@ function Header (props: App.Header) {
                                                                                                 >
                                                                                                     {sect?.links?.map((subitem) => (
                                                                                                         subitem?.text && <li key={subitem.text} className='flow-root'>
-                                                                                                            <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
-                                                                                                                {subitem.text}
-                                                                                                            </Link>
+                                                                                                            <div onClick={resetNav}>
+                                                                                                                <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
+                                                                                                                    {subitem.text}
+                                                                                                                </Link>
+                                                                                                            </div>
                                                                                                         </li>
                                                                                                     ))}
                                                                                                 </ul>
                                                                                             </div>
+
+
+
+
+
+
+
+
+
+
                                                                                         ))}
 
                                                                                     </div>

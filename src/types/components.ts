@@ -110,7 +110,7 @@ export interface ImageCardGraphics extends Image {
 export interface ImageCardText {
   title?: string;
   content?: string;
-  cta?: Cta;
+  cta?: Cta | string;
 }
 
 export type CardImage = Asset & {
@@ -122,6 +122,23 @@ export type ArticleCover = {
   summary?:string
   cover_image?:globalImage
   $?:MappedPreview<ArticleCover>
+}
+
+export type RelatedRegionTopics = {
+  region?:string[]
+  topics?:string[]
+  $?:MappedPreview<RelatedRegionTopics>
+}
+
+export type RelatedArticles = {
+  locale?:string
+  
+  heading?:string
+  sub_heading?:string
+  number_of_articles?:number
+  related_article_tags?:string[]
+  $?:MappedPreview<RelatedArticles>
+
 }
 
 // ######################### COMPONENTS END #########################

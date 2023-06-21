@@ -4,13 +4,13 @@ import { getArticle, getPaths } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
-import { ArticleCover } from '@/components'
+import { ArticleCover, RelatedRegionTopics, RelatedArticles } from '@/components'
 
 
-export default function Article ({entry, locale}:Page.Article) { 
+export default function Article ({entry, locale}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
-    const { content, title, summary, cover_image, $ } = data
-    
+    const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data
+
     useEffect(() => {
         async function fetchData () {
             try {
@@ -23,11 +23,9 @@ export default function Article ({entry, locale}:Page.Article) {
         onEntryChange(fetchData)
     }, [entry?.url, locale])
 
-
-
     return (<>
         <ArticleCover
-            title= {title}
+            title={title}
             summary={summary}
             cover_image={cover_image}
             $={$}
@@ -39,16 +37,11 @@ export default function Article ({entry, locale}:Page.Article) {
                     $: entry?.$
                 }
             }
-            // {
-            //     card_collection: {
-            //         header: [{
-            //             heading: '',
-            //             sub_heading: ''
-            //         }]
-            //     }
-            // }
         ]}
         />}
+        {show_related_regions_and_topics && <RelatedRegionTopics region={region} topics={topics} $={$}/>}
+        {// eslint-disable-next-line max-len
+            show_related_articles && <RelatedArticles locale={locale} heading={related_articles?.heading} sub_heading={related_articles?.sub_heading} number_of_articles={related_articles?.number_of_articles} $={related_articles?.$} />}
     </>
     )
 
@@ -74,7 +67,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' 
             ? '/article/' + params?.slug?.join('/') 
             : params.slug
-        const res: Page.Article = await getArticle(`${paramsPath}`,locale)
+        const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
         if (!res) return { notFound: true }
         return {
             props: {
