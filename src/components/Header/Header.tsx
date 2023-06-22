@@ -9,14 +9,12 @@ import { Link } from '@/components'
 import { onEntryChange } from '@/config'
 import { getAppConfigData } from '@/loaders'
 import React from 'react'
-import { useRouter } from 'next/router'
 import { classNames } from '@/utils'
 
 function Header (props: App.Header) {
     const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
     const [currPanel, setCurrPanel] = useState('')
-    const router = useRouter()
     const { logo, main_navigation: navigation } = data
 
     const handleMouseOver = (e: React.MouseEvent) => {
@@ -27,14 +25,9 @@ function Header (props: App.Header) {
     }
 
     const handleClose=(e:React.MouseEvent)=>{
-        // setCurrPanel('')
         const boundingRect = document.querySelector('.panel.block')?.getBoundingClientRect()
         let isSectionActive = false
-        document.querySelectorAll('.section')?.forEach(() => {
-            // if (sect.classList.contains('cslp-edit-mode')) isSectionActive = true
-            boundingRect && (e.clientY < boundingRect?.bottom) ?  isSectionActive = true : isSectionActive = false
-
-        })
+        boundingRect && (e.clientY < boundingRect?.bottom) ?  isSectionActive = true : isSectionActive = false
         !isSectionActive && resetNav()
     }
 
@@ -58,11 +51,6 @@ function Header (props: App.Header) {
         }
         onEntryChange(fetchData)
     }, [])
-
-    useEffect(() => {
-        setCurrPanel('')
-        setOpen(false)
-    }, [router.asPath])
 
     // ? Disable Scrolling when Nav panel is open - Mobile View
     useEffect(() => {
