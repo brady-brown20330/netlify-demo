@@ -13,6 +13,7 @@ export type LandingPage = {
 export type ArticlePage = {
   entry: PageEntry & Article
   locale?:string
+  articles?: Article[] | []
   $?:MappedPreview<ArticlePage>
 
 }
