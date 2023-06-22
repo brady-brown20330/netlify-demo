@@ -53,45 +53,45 @@ function Header (props: App.Header) {
     }, [])
 
     // ? Disable Scrolling when Nav panel is open - Mobile View
-    useEffect(() => {
+    // useEffect(() => {
         
-        if(open) {
+    //     if(open) {
             
-            document.body.style.overflowY = 'scroll'
-            document.body.style.position = 'fixed'
-            document.body.style.inlineSize = '100%'
+    //         document.body.style.overflowY = 'scroll'
+    //         document.body.style.position = 'fixed'
+    //         document.body.style.inlineSize = '100%'
             
-            return
+    //         return
         
-        } 
+    //     } 
         
-        document.body.style.overflowY = 'auto'
-        document.body.style.position = 'static'
-        document.body.style.inlineSize = '100%'
+    //     document.body.style.overflowY = 'auto'
+    //     document.body.style.position = 'static'
+    //     document.body.style.inlineSize = '100%'
         
-        return
+    //     return
 
-    }, [open])
+    // }, [open])
 
     // ? Disable Scrolling when Nav panel is open - Desktop View
-    useEffect(() => {
+    // useEffect(() => {
         
-        if(currPanel !== '') {
+    //     if(currPanel !== '') {
             
-            document.body.style.overflowY = 'scroll'
-            document.body.style.position = 'fixed'
-            document.body.style.inlineSize = '100%'
+    //         document.body.style.overflowY = 'scroll'
+    //         document.body.style.position = 'fixed'
+    //         document.body.style.inlineSize = '100%'
             
-            return
+    //         return
         
-        } 
+    //     } 
         
-        document.body.style.overflowY = 'auto'
-        document.body.style.position = 'static'
-        document.body.style.inlineSize = '100%'
-        return
+    //     document.body.style.overflowY = 'auto'
+    //     document.body.style.position = 'static'
+    //     document.body.style.inlineSize = '100%'
+    //     return
 
-    }, [currPanel])
+    // }, [currPanel])
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
