@@ -1,15 +1,29 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
-import { getArticle, getPaths } from '@/loaders'
+import { getArticle, getArticles, getPaths } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
 import { ArticleCover, RelatedRegionTopics, RelatedArticles } from '@/components'
+import { ImageCardItem } from '@/types/components'
 
-
-export default function Article ({entry, locale}:Page.ArticlePage) { 
+export default function Article ({entry, locale, articles}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
     const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data
+    
+    articles = articles?.filter((article)=> article.title !== entry.title) // exclude current article from the list of related articles
+
+    const cards: ImageCardItem[] | [] =  articles?.map((article) => {
+        return ({
+            title: article?.title,
+            content: article?.summary,
+            image: article?.cover_image,
+            $: article?.$,
+            cta: article?.url
+        })
+    }) as ImageCardItem[] | []
+    
+    const relatedArticles = cards.splice(0, (related_articles?.number_of_articles && related_articles?.number_of_articles <= 4) ? related_articles?.number_of_articles : 4)
 
     useEffect(() => {
         async function fetchData () {
@@ -42,11 +56,8 @@ export default function Article ({entry, locale}:Page.ArticlePage) {
             topics={topics} 
             $={$}/>}
         {show_related_articles && <RelatedArticles
-            locale={locale}
-            heading={related_articles?.heading}
-            sub_heading={related_articles?.sub_heading} 
-            number_of_articles={related_articles?.number_of_articles}
-            $={related_articles?.$}
+            related_articles={related_articles}
+            cards={relatedArticles}
         />}
     </>
     )
@@ -74,13 +85,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
             ? '/article/' + params?.slug?.join('/') 
             : params.slug
         const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
+        const articles = await getArticles(locale)
         if (!res) return { notFound: true }
         return {
             props: {
                 entry: {
                     ...res
                 },
-                locale
+                locale,
+                articles
             },
             revalidate: 1000
         }
