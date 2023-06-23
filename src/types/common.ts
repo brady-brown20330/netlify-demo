@@ -1,4 +1,5 @@
 import { AssetMetadata } from './extensions'
+import { related_articles } from './components'
 
 export type MappedPreview<T> = {
   [K in keyof T]: { 'data-cslp': string }
@@ -41,13 +42,6 @@ export interface CommonSystemInfo {
   updated_by?: string
 }
 
-export type related_articles = {
-  heading?:string
-  sub_heading?:string
-  number_of_articles?:number
-  related_article_tags?:string[]
-  $?: MappedPreview<related_articles>
- }
 export type PageEntry = Entry & {
   // $?: MappedPreview<PageEntry>
   url: string
