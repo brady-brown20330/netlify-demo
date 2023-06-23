@@ -10,6 +10,9 @@ import { ImageCardItem } from '@/types/components'
 export default function Article ({entry, locale, articles}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
     const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data
+    
+    articles = articles?.filter((article)=> article.title !== entry.title) // exclude current article from the list of related articles
+
     const cards: ImageCardItem[] | [] =  articles?.map((article) => {
         return ({
             title: article?.title,
@@ -20,7 +23,7 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
         })
     }) as ImageCardItem[] | []
     
-    const filterArticles = cards.splice(0, (related_articles?.number_of_articles && related_articles?.number_of_articles <= 4) ? related_articles?.number_of_articles : 4)
+    const relatedArticles = cards.splice(0, (related_articles?.number_of_articles && related_articles?.number_of_articles <= 4) ? related_articles?.number_of_articles : 4)
 
     useEffect(() => {
         async function fetchData () {
@@ -54,7 +57,7 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
             $={$}/>}
         {show_related_articles && <RelatedArticles
             related_articles={related_articles}
-            cards={filterArticles}
+            cards={relatedArticles}
         />}
     </>
     )
