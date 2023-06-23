@@ -27,13 +27,13 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
             />
             }
             <div className='mt-6 text-xl text-gray-500 dark:text-white'>
-                {title && <h4 className='font-bold'
+                {title && <h4 className='font-bold card-title'
                 >
                     {title}
                 </h4>
                 }
             </div>
-            {content && <p className='mt-2 text-base leading-8 text-gray-600 dark:text-white'
+            {content && <p className='mt-2 text-base leading-8 text-gray-600 dark:text-white card-content'
             >
                 {content}
             </p>
