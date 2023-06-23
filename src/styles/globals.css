@@ -51,5 +51,21 @@ body {
   .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 
   .text img { @apply w-full my-8 mx-auto}
+
+  .card-title {
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-content {
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
