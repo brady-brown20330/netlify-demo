@@ -131,15 +131,17 @@ export type RelatedRegionTopics = {
 }
 
 export type RelatedArticles = {
-  locale?:string
-  
+  related_articles?: related_articles
+  cards?:  ImageCardItem[] | []
+}
+
+export interface related_articles {
   heading?:string
   sub_heading?:string
   number_of_articles?:number
   related_article_tags?:string[]
-  $?:MappedPreview<RelatedArticles>
-
-}
+  $?: MappedPreview<related_articles>
+ }
 
 // ######################### COMPONENTS END #########################
 

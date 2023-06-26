@@ -13,10 +13,10 @@ const CardCollectionBody = ({cards}:{cards?: ImageCardItem[]|[]}) => {
         cards && cards?.length > 0 ? <div
             className={
                 classNames(
-                    cards?.length === 1 ? 'grid-cols-1 lg:grid-cols-1'
-                        : cards?.length === 2 ? 'grid-cols-2 lg:grid-cols-2'
-                            : cards?.length === 3 ? 'grid-cols-2 lg:grid-cols-3'
-                                : cards && cards?.length >= 4 ? 'grid-cols-2 lg:grid-cols-4'
+                    cards?.length === 1 ? 'lg:grid-cols-1'
+                        : cards?.length === 2 ? 'sm:grid-cols-2 lg:grid-cols-2'
+                            : cards?.length === 3 ? 'sm:grid-cols-2 lg:grid-cols-3'
+                                : cards && cards?.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4'
                                     : '',
                     'grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                 )
