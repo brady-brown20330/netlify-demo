@@ -1,4 +1,4 @@
-import {Hero,Teaser,TextAndImage, CardCollection,Text, ArticleCover } from '../components'
+import {Teaser,TextAndImage, CardCollection,Text, ArticleCover } from '../components'
 import { MappedPreview, PageEntry } from '../common'
 
 export type SeoProps = {
@@ -11,7 +11,6 @@ export type SeoProps = {
 }
 
 export interface pageBlocks {
-    hero?:Hero
     teaser?:Teaser
     text_and_image?:TextAndImage
     text?: Text

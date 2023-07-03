@@ -36,21 +36,8 @@ export type Cta = {
   link?: InternalLink[];
 };
 
-export interface Hero {
-  key?: Key | null;
-  heading?: string;
-  image: globalImage;
-  image_alt_text: string;
-  image_position?: string;
-  content: string;
-  cta: Cta;
-  $?: MappedPreview<Hero>;
-}
-
-export type globalImage  =  Asset & AssetPreset
-
 export interface Image {
-  image?: globalImage;
+  image?: AssetPreset & Asset;
   image_alt_text?: string;
   image_position?: string;
 }
@@ -118,10 +105,10 @@ export type CardImage = Asset & {
 };
 
 export type ArticleCover = {
-  title?:string
-  summary?:string
-  cover_image?:globalImage
-  $?:MappedPreview<ArticleCover>
+  title?: string
+  summary?: string
+  cover_image?: Image['image']
+  $?: MappedPreview<ArticleCover>
 }
 
 export type RelatedRegionTopics = {
@@ -155,7 +142,7 @@ export interface related_articles {
 // }
 // ######################### StatusIndicator END #########################
 
-export interface HeroLanguageSelector {
-  markets: Market[];
-  backgroundImage?: Asset;
-}
+// export interface HeroLanguageSelector {
+//   markets: Market[];
+//   backgroundImage?: Asset;
+// }

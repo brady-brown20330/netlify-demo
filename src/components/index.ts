@@ -1,4 +1,3 @@
-export * from './Hero'
 export * from './Link'
 export * from './Card'
 export * from './Image'

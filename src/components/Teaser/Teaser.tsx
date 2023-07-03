@@ -11,7 +11,7 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
             {...$?.heading}
         >
             <div className='absolute inset-0 overflow-hidden'>
-                {image?.[0]?.image?.asset?.url
+                {image?.[0]?.image?.url
                     // eslint-disable-next-line jsx-a11y/alt-text
                     && <Image 
                         {...image[0]}

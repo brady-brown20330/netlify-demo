@@ -95,9 +95,9 @@ function Header (props: App.Header) {
                                     </button> */}
                                         {/* Links */}
 
-                                        {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item) => (
+                                        {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item, i:number) => (
                                             item?.text 
-                                                && <>
+                                                && <Fragment key={`mobile-navItem-${i}`}>
                                                     <div
                                                         className={'flex items-center pt-6 pb-2 hover:!text-purple'}>
                                                         <div onClick={resetMobileNav}>
@@ -160,7 +160,7 @@ function Header (props: App.Header) {
                                                             </div>
                                                         ))}
                                                     </div>
-                                                </>
+                                                </Fragment>
                                         ))}
                                     </div>
                                 </div>
@@ -198,8 +198,8 @@ function Header (props: App.Header) {
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4' >
                                             <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item) => (
-                                                    <Popover key={item?.text} className='flex'>
+                                                {navigation?.[0]?.items?.map((item, i:number) => (
+                                                    <Popover key={`item-${i}`} className='flex'>
                                                         {() => (
                                                             <>
                                                                 <div
