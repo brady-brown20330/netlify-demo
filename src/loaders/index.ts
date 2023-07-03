@@ -36,7 +36,7 @@ export const getArticle = (cmsUrlPath: string | undefined, locale: string | unde
 }
 
 export const getArticleListingPage = (cmsUrlPath: string | undefined, locale: string | undefined) => {
-    return getEntryByUrl('articles_listing_page', locale, cmsUrlPath, [], [])  
+    return getEntryByUrl('article_listing_page', locale, cmsUrlPath, [], [])  
 }
 
 export const getArticles = (locale: string | undefined) => {
