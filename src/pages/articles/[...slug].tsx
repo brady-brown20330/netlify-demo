@@ -51,7 +51,7 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
 export const getStaticPaths: GetStaticPaths = async () => {
     // eslint-disable-next-line no-useless-catch
     try {
-        const paths = await getPaths('articles_listing_page', 'en-us')
+        const paths = await getPaths('article_listing_page', 'en-us')
         return {
             paths,
             fallback: 'blocking'
@@ -82,7 +82,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 articles: filteredArticles,
                 locale
             },
-            revalidate: 1000
+            revalidate: 10
         }
     } catch (error) {
         console.error(error)

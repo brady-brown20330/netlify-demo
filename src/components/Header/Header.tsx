@@ -58,7 +58,7 @@ function Header (props: App.Header) {
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
-                <Dialog as='div' className='relative z-40 lg:hidden' onClose={setOpen}>
+                <Dialog as='div' className='relative z-40 sm:hidden' onClose={setOpen}>
                     <Transition.Child
                         as={Fragment}
                         enter='transition-opacity ease-linear duration-300'
@@ -95,9 +95,9 @@ function Header (props: App.Header) {
                                     </button> */}
                                         {/* Links */}
 
-                                        {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item) => (
+                                        {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item, i:number) => (
                                             item?.text 
-                                                && <>
+                                                && <Fragment key={`mobile-navItem-${i}`}>
                                                     <div
                                                         className={'flex items-center pt-6 pb-2 hover:!text-purple'}>
                                                         <div onClick={resetMobileNav}>
@@ -160,7 +160,7 @@ function Header (props: App.Header) {
                                                             </div>
                                                         ))}
                                                     </div>
-                                                </>
+                                                </Fragment>
                                         ))}
                                     </div>
                                 </div>
@@ -177,29 +177,30 @@ function Header (props: App.Header) {
                     <div className='bg-white dark:bg-black'>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
                             <div className='border-b border-gray-400 dark:border-gray-600'>
-                                <div className='flex h-20 items-center justify-between'>
-                                    {/* Logo (lg+) */}
-                                    <div className='hidden lg:flex lg:flex-1 lg:items-center ml-4'
+                                <div className='flex min-h-20 items-center justify-between'>
+                                    {/* Logo (sm+) */}
+                                    <div className='hidden sm:flex sm:flex-1 sm:items-center'
                                         onMouseEnter={() => {setCurrPanel('')}}
                                     >
                                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                                         {/* @ts-ignore */}
-                                        <Link url='/' $={logo?.$?.url}>
+                                        <Link url='/'>
                                             <span className='sr-only'>Site Logo</span>
                                             <img
-                                                className='h-8 w-auto m-2'
+                                                className='h-8 w-auto m-4'
                                                 src={logo?.url}
                                                 alt={logo?.title}
+                                                {...logo?.$?.url}
                                             />
                                         </Link>
                                     </div>
 
-                                    <div className='hidden h-full items-center lg:flex'>
+                                    <div className='hidden h-full items-center sm:flex'>
                                         {/* Flyout menus */}
                                         <Popover.Group className='inset-x-0 bottom-0 px-4' >
-                                            <div className='flex justify-center space-x-8'>
-                                                {navigation?.[0]?.items?.map((item) => (
-                                                    <Popover key={item?.text} className='flex'>
+                                            <div className='flex justify-center space-x-8 flex-wrap'>
+                                                {navigation?.[0]?.items?.map((item, i:number) => (
+                                                    <Popover key={`item-${i}`} className='flex'>
                                                         {() => (
                                                             <>
                                                                 <div
@@ -277,16 +278,6 @@ function Header (props: App.Header) {
                                                                                                     ))}
                                                                                                 </ul>
                                                                                             </div>
-
-
-
-
-
-
-
-
-
-
                                                                                         ))}
 
                                                                                     </div>
@@ -304,11 +295,11 @@ function Header (props: App.Header) {
                                         </Popover.Group>
                                     </div>
 
-                                    {/* Mobile menu and search (lg-) */}
-                                    <div className='flex flex-1 items-center lg:hidden'>
+                                    {/* Mobile menu and search (sm-) */}
+                                    <div className='flex flex-1 items-center sm:hidden'>
                                         <button
                                             type='button'
-                                            className='rounded-md bg-white dark:bg-black px-8 text-gray-400 dark:text-white'
+                                            className='rounded-md bg-white dark:bg-black px-4 sm:px-8  text-gray-400 dark:text-white'
                                             onClick={() => setOpen(true)}
                                         >
                                             <span className='sr-only'>Open menu</span>
@@ -316,20 +307,22 @@ function Header (props: App.Header) {
                                         </button>
                                     </div>
 
-                                    {/* Logo (lg-) */}
-                                    <Link url='/'
-                                        className='lg:hidden'
+                                    {/* Logo (sm-) */}
+                                    <div className='sm:hidden h-20 flex flex-col justify-center'>
+                                        <Link url='/'
                                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                         //   @ts-ignore
-                                        $={logo?.$?.url}
-                                    >
-                                        <span className='sr-only'>Site Logo</span>
-                                        <img
-                                            src={logo?.url}
-                                            alt={logo?.title}
-                                            className='h-8 w-auto m-2'
-                                        />
-                                    </Link>
+                                            $={logo?.$?.url}
+                                        >
+                                            <span className='sr-only'>Site Logo</span>
+                                            <img
+                                                src={logo?.url}
+                                                alt={logo?.title}
+                                                className='h-8 w-auto m-2'
+                                            />
+                                        </Link>
+                                    </div>
+                                    
 
                                     <div
                                         className='flex flex-1 h-full items-center justify-end'

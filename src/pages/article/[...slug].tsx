@@ -95,7 +95,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 locale,
                 articles
             },
-            revalidate: 1000
+            revalidate: 10
         }
     } catch (error) {
         console.error(error)

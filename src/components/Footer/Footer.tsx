@@ -32,7 +32,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                         
                     <div className='mx-auto mt-16 max-w-5xl' {...$?.uid}>
                         <div className='flex justify-start flex-wrap md:justify-between'>
-                            {section?.map((navItem, index) => <>
+                            {section?.map((navItem, index) => 
                                 <div
                                     key={`navItem-${index}`}
                                     className={`mb-16 ${section?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
@@ -65,7 +65,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                     </ul>
                                 </div>
 
-                            </>)}
+                            )}
                         </div>
                     </div>
                 </div>
