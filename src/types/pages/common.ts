@@ -1,13 +1,18 @@
-import {Teaser,TextAndImage, CardCollection,Text, ArticleCover } from '../components'
+import { Teaser, TextAndImage, CardCollection, Text, ArticleCover } from '../components'
 import { MappedPreview, PageEntry } from '../common'
 
 export type SeoProps = {
+  title: string
+  url: string
+  seo?: {
     title?: string
     description?: string
     canonical_url?: string
     no_follow: boolean
     no_index: boolean
-    locale: string | undefined
+  }
+  summary?: string
+  locale: string | undefined
 }
 
 export interface pageBlocks {

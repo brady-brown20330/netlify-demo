@@ -27,17 +27,16 @@ function MyApp (props: App.Props) {
         web_config
     } = props
 
+    pageProps.entry.seo = undefined
     return (
         <>
             <Head>
-                {pageProps?.entry?.seo?.title ? <title>{pageProps?.entry?.seo?.title}</title> : <title>Universal Demo</title>}
-                
-                {pageProps?.entry?.seo && <SEO
-                    {...pageProps.entry.seo}
+                {pageProps?.entry?.seo?.title ? <title>{pageProps?.entry?.seo?.title}</title> : <title>{pageProps?.entry?.title}</title>}
+                {pageProps?.entry && <SEO
+                    {...pageProps?.entry}
                     locale={locale}
                 />}
             </Head>
-            {/* {console.log('--------', web_config)} */}
             <ErrorBoundary
                 FallbackComponent={ErrorHandler}
             >

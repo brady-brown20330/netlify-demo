@@ -2,7 +2,7 @@ import { Page } from '@/types'
 
 export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
 
-    const { no_follow, no_index, description, canonical_url, locale } = props
+    const { seo: {no_follow, no_index, description, canonical_url} = {}, locale, summary, url } = props
 
     let robots
     if (no_follow && no_index) {
@@ -29,7 +29,7 @@ export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
             />
             <meta
                 name='description'
-                content={description}
+                content={summary ? summary : description ? description : ''}
             />
             <meta
                 name='robots'
@@ -41,7 +41,7 @@ export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
             />
             <link
                 rel='canonical'
-                href={canonical_url}
+                href={canonical_url ? canonical_url : url}
             />
             <link
                 rel='icon'
