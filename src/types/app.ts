@@ -34,6 +34,7 @@ export interface Footer extends Entry {
       link: InternalLink[]
     }[]
   }[];
+  copyright_info: string;
   $?: MappedPreview<Footer>;
 }
 

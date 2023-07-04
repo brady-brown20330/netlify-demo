@@ -3,11 +3,16 @@ import React, { useState, useEffect } from 'react'
 import { Link, isFooterValid } from '@/components'
 import { onEntryChange } from '@/config'
 import { getAppConfigData } from '@/loaders'
+import parse from 'html-react-parser'
 
 export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
-    const [data, setData] = useState(props)
+    const [data, setData] = useState<App.Footer | any>(props)
     const locale = props?.locale || 'en-us'
-    const { section , $ } = data
+    const { section, copyright_info , $ } = data
+
+    console.log({
+        $
+    })
 
     useEffect(() => {
         async function fetchData () {
@@ -32,7 +37,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                         
                     <div className='mx-auto mt-16 max-w-5xl' {...$?.uid}>
                         <div className='flex justify-start flex-wrap md:justify-between'>
-                            {section?.map((navItem, index) => 
+                            {section?.map((navItem: any, index: number) => 
                                 <div
                                     key={`navItem-${index}`}
                                     className={`mb-16 ${section?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
@@ -50,7 +55,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                         role='list' 
                                         className='mt-6 space-y-6'
                                     >
-                                        {navItem?.links?.map((item, i:number) => (
+                                        {navItem?.links?.map((item: any, i: number) => (
                                             item?.text && <li
                                                 key={`submenu-${index}-${i}`}
                                                 className='text-sm'>
@@ -67,7 +72,16 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
 
                             )}
                         </div>
+                        
                     </div>
+                    {
+                        (copyright_info && copyright_info !== '') ?
+                        <div className='copyright-info-section text-center text-gray-500 mb-4' {...$?.copyright_info}>
+                            {
+                                parse(copyright_info)
+                            }
+                        </div> : null
+                    }
                 </div>
             </div>}
         </footer>
