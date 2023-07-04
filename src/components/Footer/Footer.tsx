@@ -10,10 +10,6 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
     const locale = props?.locale || 'en-us'
     const { section, copyright_info , $ } = data
 
-    console.log({
-        $
-    })
-
     useEffect(() => {
         async function fetchData () {
             try {
@@ -75,12 +71,12 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                         
                     </div>
                     {
-                        (copyright_info && copyright_info !== '') ?
-                        <div className='copyright-info-section text-center text-gray-500 mb-4' {...$?.copyright_info}>
-                            {
-                                parse(copyright_info)
-                            }
-                        </div> : null
+                        copyright_info && copyright_info !== ''
+                            ? <div className='copyright-info-section text-center text-gray-500 mb-4' {...$?.copyright_info}>
+                                {
+                                    parse(copyright_info)
+                                }
+                            </div> : null
                     }
                 </div>
             </div>}

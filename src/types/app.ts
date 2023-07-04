@@ -38,6 +38,20 @@ export interface Footer extends Entry {
   $?: MappedPreview<Footer>;
 }
 
+export interface FooterSection {
+  title?: string
+  link: InternalLink[]
+  links: {
+    text?: string
+    link: InternalLink[]
+  }[]
+}
+
+export interface FooterLink {
+  text?: string
+  link: InternalLink[]
+}
+ 
 export type SingleColLayout = {
   logo?: Asset;
   main_navigation?: Navigation[];
