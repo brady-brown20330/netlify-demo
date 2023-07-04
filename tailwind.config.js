@@ -61,6 +61,11 @@ module.exports = {
             padding: {
                 '1/3': '33.33333%',
                 '2/3': '66.66667%'
+            },
+            colors: {
+                gray: {
+                    600: '#5B6B86',
+                },
             }
         },
         letterSpacing: {
