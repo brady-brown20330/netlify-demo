@@ -1,6 +1,6 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { getArticle, getArticles, getPaths } from '@/loaders'
+import { getArticle, getArticles } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
@@ -64,20 +64,8 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
 
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    // eslint-disable-next-line no-useless-catch
-    try {
-        const paths = await getPaths('article', 'en-us')
-        return {
-            paths,
-            fallback: 'blocking'
-        }
-    } catch (error) {
-        throw error
-    }
-}
   
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
         const {params, locale} = context
         if (!params || !params.slug || params?.slug?.length <= 0 ) return { notFound: true }
@@ -94,8 +82,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 },
                 locale,
                 articles
-            },
-            revalidate: 10
+            }
         }
     } catch (error) {
         console.error(error)

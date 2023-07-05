@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 import { getArticleListingPage, getArticles } from '@/loaders'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
@@ -49,7 +49,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
 
 }
   
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
         const {locale} = context
 
@@ -61,8 +61,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 entry,
                 articles,
                 locale
-            },
-            revalidate: 10
+            }
         }
     } catch (error) {
         console.error(error)

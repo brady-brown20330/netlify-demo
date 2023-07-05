@@ -33,19 +33,6 @@ export default function LandingPage ({entry, locale}:Page.LandingPage) {
     )
 
 }
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//     // eslint-disable-next-line no-useless-catch
-//     try {
-//         const paths = await getPaths('landing_page', 'en-us')
-//         return {
-//             paths,
-//             fallback: 'blocking'
-//         }
-//     } catch (error) {
-//         throw error
-//     }
-// }
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
@@ -61,7 +48,6 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
                 },
                 locale
             }
-            // revalidate: 10
         }
     } catch (error) {
         console.error(error)

@@ -1,6 +1,6 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { getArticleListingPage, getArticles, getPaths } from '@/loaders'
+import { getArticleListingPage, getArticles } from '@/loaders'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
 import { CardCollection } from '@/components'
@@ -47,21 +47,8 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
         />
     )
 }
-
-export const getStaticPaths: GetStaticPaths = async () => {
-    // eslint-disable-next-line no-useless-catch
-    try {
-        const paths = await getPaths('article_listing_page', 'en-us')
-        return {
-            paths,
-            fallback: 'blocking'
-        }
-    } catch (error) {
-        throw error
-    }
-}
   
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
         const {params, locale} = context
         if (!params || !params.slug || params?.slug?.length <= 0 ) return { notFound: true }
@@ -81,8 +68,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                 entry,
                 articles: filteredArticles,
                 locale
-            },
-            revalidate: 10
+            }
         }
     } catch (error) {
         console.error(error)
