@@ -21,10 +21,10 @@ body {
     @apply rounded-md bg-purple text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple
   }
   .btnSecondary {
-    @apply block w-full rounded-md border border-transparent bg-white !text-black text-base font-medium text-gray-900 hover:bg-gray-100
+    @apply block w-full rounded-md border border-transparent bg-white !text-black text-base font-semibold text-gray-900 hover:bg-gray-100
   }
   .btnTertiary{
-    @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-medium text-gray-100 hover:opacity-80
+    @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-semibold text-gray-100 hover:opacity-80
   }
   .text h2{
     @apply text-[44px] font-bold dark:text-white py-3
