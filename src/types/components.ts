@@ -33,6 +33,7 @@ export interface CtaCollection {
 }
 export type Cta = {
   text?: string;
+  external_url?: string;
   link?: InternalLink[];
 };
 

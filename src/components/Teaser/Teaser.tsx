@@ -4,7 +4,9 @@ import { Image } from '../Image'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     const { $, heading, content, cta, image} = props
-    
+
+    const ctaLink = cta && cta?.[0].link && cta?.[0].link.length > 0 ? cta?.[0].link : [{ url: cta?.[0].external_url }]
+
     return (
         <div
             className={'relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16 flex flex-col items-center text-center justify-center'}
@@ -24,8 +26,8 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
                 {content && <p className={'mt-3 text-xl !text-white'}>
                     {content}
                 </p>}
-                {cta?.[0]?.text && <Link
-                    url={cta?.[0]?.link}
+                {cta?.[0]?.text && ctaLink?.[0].url && <Link
+                    url={ctaLink}
                     className={'btnSecondary px-8 py-3 mt-8 sm:w-auto'}
                 >
                     {cta[0].text}
