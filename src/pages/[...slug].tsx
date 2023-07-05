@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getLandingPage, getPaths } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
@@ -34,20 +34,20 @@ export default function LandingPage ({entry, locale}:Page.LandingPage) {
 
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    // eslint-disable-next-line no-useless-catch
-    try {
-        const paths = await getPaths('landing_page', 'en-us')
-        return {
-            paths,
-            fallback: 'blocking'
-        }
-    } catch (error) {
-        throw error
-    }
-}
+// export const getStaticPaths: GetStaticPaths = async () => {
+//     // eslint-disable-next-line no-useless-catch
+//     try {
+//         const paths = await getPaths('landing_page', 'en-us')
+//         return {
+//             paths,
+//             fallback: 'blocking'
+//         }
+//     } catch (error) {
+//         throw error
+//     }
+// }
   
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
         const {params, locale} = context
         if (!params || !params.slug || params?.slug?.length <= 0 ) return { notFound: true }
@@ -60,8 +60,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
                     ...res
                 },
                 locale
-            },
-            revalidate: 10
+            }
+            // revalidate: 10
         }
     } catch (error) {
         console.error(error)
