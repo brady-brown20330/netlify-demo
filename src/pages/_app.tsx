@@ -27,7 +27,6 @@ function MyApp (props: App.Props) {
         web_config
     } = props
 
-    pageProps.entry.seo = undefined
     return (
         <>
             <Head>

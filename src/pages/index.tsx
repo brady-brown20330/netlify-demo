@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getHomePage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
@@ -33,7 +33,7 @@ export default function Home ({entry, locale}:Page.LandingPage) {
 
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
         const {locale} = context
         const res: Page.Homepage = await getHomePage('', locale)
@@ -45,8 +45,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
                     ...res
                 },
                 locale
-            },
-            revalidate: 10
+            }
         }
     } catch (error) {
         console.error(error)
