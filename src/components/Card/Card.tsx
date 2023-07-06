@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
-import { resolveCtaLink, resolveCtaText } from './Card.helper'
+import { resolveCardCta, resolveCtaText } from './Card.helper'
 import { classNames } from '@/utils'
 
 const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
@@ -28,7 +28,7 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
         >
             <div className='flex flex-col'>
                 {cta ? <Link
-                    url={resolveCtaLink(cta)}
+                    url={resolveCardCta(cta)}
                 >
                     {cardImage}
                 </Link> : <>
@@ -51,7 +51,7 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
             <div>
                 {cta && <p className='mt-3 text-base font-semibold !text-purple'>
                     <Link
-                        url={resolveCtaLink(cta)}
+                        url={resolveCardCta(cta)}
                         className='!text-purple hover:border-b-2  hover:border-purple cursor-pointer'
                     >
                         {resolveCtaText(cta)}

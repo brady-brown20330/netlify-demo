@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Component } from '@/types'
 import { Image, Link } from '@/components'
-import { classNames } from '@/utils'
+import { classNames, resolveCta } from '@/utils'
 
 export function TextAndImage (props:Component.TextAndImage) {
     const {$, heading, content, image, image_alt_text, cta, styles: {image_position, theme}} = props
 
-    const ctaLink = cta && cta?.[0].link && cta?.[0].link.length > 0 ? cta?.[0].link : [{ url: cta?.[0].external_url }]
-
+    const ctaLink = resolveCta(cta)
     const TextBlock = () => (
         <div 
             className={classNames(
@@ -29,7 +28,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                     'flex items-center gap-x-6'
                 )}
             >
-                {cta?.[0]?.text && ctaLink?.[0].url && <Link
+                {cta?.[0]?.text && ctaLink && <Link
                     url={ctaLink}
                     className='btnPrimary px-6 py-2.5'
                 >
@@ -57,7 +56,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                         {content && <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
                             {content}
                         </p>}
-                        {cta?.[0]?.text && ctaLink?.[0].url && <div className='mt-6 flex items-center gap-x-6'>
+                        {cta?.[0]?.text && ctaLink && <div className='mt-6 flex items-center gap-x-6'>
                             <Link
                                 url={ctaLink}
                                 className='btnPrimary px-6 py-2.5'

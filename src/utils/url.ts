@@ -1,6 +1,11 @@
 import _ from 'lodash'
+import { Cta, InternalLink } from '../types/components'
 
-import { InternalLink } from '../types/components'
+export const resolveCta = (cta?:Cta[]) => {
+    if(!cta) return
+    if(cta?.length > 0 && cta?.[0]?.link && cta?.[0]?.link?.length > 0) return cta[0].link as InternalLink[]
+    if(cta?.[0]?.external_url) return cta?.[0]?.external_url as string
+}
 
 export const buildLinkUrl = (internalLink?: InternalLink[], url?: string, locale?: string) => {
     let result = ''
