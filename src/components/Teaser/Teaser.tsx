@@ -1,11 +1,12 @@
 import { Teaser as TeaserProps } from '@/types/components'
 import { Link } from '../Link'
 import { Image } from '../Image'
+import { resolveCta } from '@/utils'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     const { $, heading, content, cta, image} = props
 
-    const ctaLink = cta && cta?.[0].link && cta?.[0].link.length > 0 ? cta?.[0].link : [{ url: cta?.[0].external_url }]
+    const ctaLink = resolveCta(cta)
 
     return (
         <div
@@ -26,7 +27,7 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
                 {content && <p className={'mt-3 text-xl !text-white'}>
                     {content}
                 </p>}
-                {cta?.[0]?.text && ctaLink?.[0].url && <Link
+                {cta?.[0]?.text && ctaLink && <Link
                     url={ctaLink}
                     className={'btnSecondary px-8 py-3 mt-8 sm:w-auto'}
                 >
