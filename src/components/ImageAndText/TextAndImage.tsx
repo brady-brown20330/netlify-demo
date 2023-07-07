@@ -15,7 +15,7 @@ export function TextAndImage (props:Component.TextAndImage) {
             )}
         >
             {heading && <h1
-                className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 sm:text-6xl dark:text-white'>
+                className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 lg:text-6xl dark:text-white'>
                 {heading}
             </h1>}
             {content && <p
