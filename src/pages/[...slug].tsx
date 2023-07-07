@@ -1,6 +1,6 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { getLandingPage, getPaths } from '@/loaders'
+import { getLandingPage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
