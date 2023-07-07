@@ -1,6 +1,7 @@
 export * from './Link'
 export * from './Card'
 export * from './Image'
+export * from './Preset'
 export * from './Teaser'
 export * from './CardCollection'
 export * from './ImageAndText'
