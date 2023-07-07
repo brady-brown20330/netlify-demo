@@ -40,6 +40,7 @@ export interface Image {
   image?: AssetPreset & Asset;
   image_alt_text?: string;
   image_position?: string;
+  $? : MappedPreview<Image>;
 }
 export interface ImageComponent extends Image {
   className?: string;
@@ -62,11 +63,6 @@ export interface TextAndImage extends Image {
   cta: Cta[];
   content?: string;
   $?: MappedPreview<TextAndImage>;
-}
-
-export interface ImagePreset extends Image {
-  // ..
-  $: MappedPreview<ImagePreset>
 }
 
 export interface Teaser {

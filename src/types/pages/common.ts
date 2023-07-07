@@ -1,4 +1,4 @@
-import { Teaser, TextAndImage, CardCollection, Text, ArticleCover, ImagePreset } from '../components'
+import { Teaser, TextAndImage, CardCollection, Text, ArticleCover, Image } from '../components'
 import { MappedPreview, PageEntry } from '../common'
 
 export type SeoProps = {
@@ -20,7 +20,7 @@ export interface pageBlocks {
     text_and_image?:TextAndImage
     text?: Text
     card_collection?:CardCollection
-    image_preset?: ImagePreset
+    image_preset?: Image
     seo?:SeoProps
   }
   
