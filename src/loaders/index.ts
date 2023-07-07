@@ -36,7 +36,12 @@ export const getArticle = (cmsUrlPath: string | undefined, locale: string | unde
 }
 
 export const getArticleListingPage = (cmsUrlPath: string | undefined, locale: string | undefined) => {
-    return getEntryByUrl('article_listing_page', locale, cmsUrlPath, [], [])  
+    const newRefUids = prefixReferenceIncludes('components',
+        ...prefixReferenceIncludes('text_and_image', ...textAndImageReferenceIncludes),
+        ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes),
+        ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes)
+    )
+    return getEntryByUrl('article_listing_page', locale, cmsUrlPath, newRefUids, [])  
 }
 
 export const getArticles = (locale: string | undefined) => {

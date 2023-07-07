@@ -30,11 +30,14 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
             <h2 id='footer-heading' className='sr-only'>
           Footer
             </h2>
-            {isFooterValid(data) && <div className='mx-auto max-w-7xl px-6 pb-8 pt-16 lg:px-8'>
+            {isFooterValid(data) && <div className='mx-auto max-w-7xl px-6 py-8 lg:px-8 border-t border-gray-300 '>
                 <div className='lg:grid lg:grid-cols-6 lg:gap-8'>
                     <span />
-                    <div className='grid sm:grid-cols-4 gap-8 lg:col-span-4 grid-rows-2 sm:grid-rows-1 grid-cols-2' {...$?.title} >
-                        {section?.map((navItem, index: number) => <div className='ml-0 sm:ml-4 md:ml-8'>
+                    <div className='py-2 grid sm:grid-cols-4 gap-8 lg:col-span-4 grid-rows-2 sm:grid-rows-1 grid-cols-2' {...$?.title} >
+                        {section?.map((navItem, index: number) => <div
+                            className='ml-0 sm:ml-4 md:ml-8'
+                            key={`footer-section-${index}`}
+                        >
                             {navItem?.title ? <h3 
                                 className='text-sm font-semibold leading-6'
                             >
@@ -50,7 +53,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                             >
                                 {navItem?.links?.map((item, i: number) => (
                                     item?.text && <li
-                                        key={`submenu-${index}-${i}`}
+                                        key={`footer-links-${index}-${i}`}
                                         className='text-sm'>
                                         <Link
                                             url={item?.link?.[0]?.url}
@@ -67,7 +70,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                 </div>
                 {
                     copyright_info && copyright_info !== ''
-                        && <div className='mt-8 border-t border-gray/10 pt-8 text-center text-gray-500'>
+                        && <div className='mt-8 border-t border-gray-300 pt-8 text-center text-gray-500'>
                             <div  {...$?.copyright_info}> {parse(copyright_info)}</div>
                         </div>
                 }

@@ -176,7 +176,7 @@ function Header (props: App.Header) {
                     {/* Top navigation */}
                     <div className='bg-white dark:bg-black'>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
-                            <div className='border-b border-gray-400 dark:border-gray-600'>
+                            <div className='border-b border-gray-300 dark:border-gray-400'>
                                 <div className='flex min-h-20 items-center justify-between'>
                                     {/* Logo (sm+) */}
                                     <div className='hidden sm:flex sm:flex-1 sm:items-center'
