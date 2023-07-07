@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
-import { Key, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Asset, MappedPreview } from './common'
-import { Market } from './generic'
 import { AssetPreset } from './extensions'
 
 export type Link = {
@@ -41,6 +40,7 @@ export interface Image {
   image?: AssetPreset & Asset;
   image_alt_text?: string;
   image_position?: string;
+  $? : MappedPreview<Image>;
 }
 export interface ImageComponent extends Image {
   className?: string;
@@ -64,6 +64,7 @@ export interface TextAndImage extends Image {
   content?: string;
   $?: MappedPreview<TextAndImage>;
 }
+
 export interface Teaser {
   $?: MappedPreview<Teaser>;
   heading?: string;

@@ -1,4 +1,4 @@
-import { CardCollection, Teaser,TextAndImage, Text} from '@/components'
+import { CardCollection, Teaser,TextAndImage, Text, Preset} from '@/components'
 import { Page } from '@/types'
 
 
@@ -18,6 +18,9 @@ export default function RenderComponents ({components}: Page.pageRenderProps) {
             }
             if (component.text) {
                 return <Text key={`component-${key}`} {...component.text} />
+            }
+            if (component.image_preset) {
+                return <Preset key={`component-${key}`} {...component.image_preset}/>
             }
         })}</>
     )
