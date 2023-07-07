@@ -5,10 +5,13 @@ import {  Page } from '@/types'
 import { CardCollection } from '@/components'
 import { useEffect, useState } from 'react'
 import { ImageCardItem } from '@/types/components'
+import RenderComponents from '@/RenderComponents'
 
 
 export default function ArticleListing ({entry, articles, locale}:Page.ArticleListingPage) { 
-    const [Entry, setEntry] =useState(entry)
+
+    const [Entry, setEntry] = useState(entry)
+    
     const cards:ImageCardItem[] | []  =  articles?.map((article) => {
         return ({
             title: article?.title,
@@ -31,22 +34,20 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
         onEntryChange(fetchData)
     }, [entry?.url, locale])
 
-
-
     return (<>
-        <CardCollection 
-            header={[{
-                heading: Entry?.title,
-                $: {
-                    heading: Entry?.$?.title
-                }
-            }]}
-            cards={cards}
-
-        />
+        {Entry?.title && <div className='text-center w-full my-4'><span className='mx-auto text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white' {...Entry?.$?.title}>{Entry?.title}</span></div>}
+        {Entry?.components && Object.keys(Entry.components)?.length ? (
+            <RenderComponents
+                components={Entry?.components}
+            />
+        ) : <></>}
+        <div className='-mt-8'>
+            <CardCollection
+                cards={cards}
+            />
+        </div>
     </>
     )
-
 }
   
 export const getServerSideProps:GetServerSideProps = async (context) => {

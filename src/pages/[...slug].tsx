@@ -7,7 +7,6 @@ import {  Page } from '@/types'
 
 
 export default function LandingPage ({entry, locale}:Page.LandingPage) { 
-    
     const [data, setData] = useState(entry)
     
     useEffect(() => {
