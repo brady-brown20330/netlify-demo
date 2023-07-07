@@ -38,7 +38,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                     key={`navItem-${index}`}
                                     className={`mb-16 ${section?.length > 5 ? 'md:w-32 w-40' : 'w-44'}`}
                                 > 
-                                    {navItem?.title && <h3 
+                                    {navItem?.title ? <h3 
                                         className='text-md font-medium text-gray-900 dark:text-white'
                                     >
                                         <Link
@@ -46,7 +46,7 @@ export const Footer:React.FC<App.Footer> = (props:App.Footer) => {
                                         >
                                             {navItem?.title}
                                         </Link>
-                                    </h3>}
+                                    </h3>: <>&nbsp;</>}
                                     <ul 
                                         role='list' 
                                         className='mt-6 space-y-6'
