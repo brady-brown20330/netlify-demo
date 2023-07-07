@@ -13,11 +13,11 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
         <div className={'py-8 px-8 sm:pb-12'}>
             <div className='max-w-7xl mx-auto '>
 
-                <CardCollectionHeader
+                {header && <CardCollectionHeader
                     heading={header?.[0]?.heading}
                     sub_heading={header?.[0]?.sub_heading}
                     $={{ ...header?.[0]?.$ }}
-                />
+                />}
                 <CardCollectionBody 
                     cards={cards}
                 />

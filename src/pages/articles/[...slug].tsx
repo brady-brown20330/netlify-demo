@@ -7,10 +7,13 @@ import { CardCollection } from '@/components'
 import { filterArticles } from '@/utils/articles'
 import { ImageCardItem } from '@/types/components'
 import { Article } from '@/types/pages'
+import RenderComponents from '@/RenderComponents'
 
 
 export default function Article ({entry, articles, locale}:Page.ArticleListingPage) { 
-    const [Entry, setEntry]= useState(entry)
+
+    const [Entry, setEntry] = useState(entry)
+    
     const cards: ImageCardItem[] | [] =  articles?.map((article) => {
         return ({
             title: article?.title,
@@ -21,8 +24,6 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
         })
     }) as ImageCardItem[] | []
 
-
-    
     useEffect(() => {
         async function fetchData () {
             try {
@@ -35,16 +36,19 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
         onEntryChange(fetchData)
     }, [entry?.url, locale])
 
-    return (
-        <CardCollection 
-            header={[{
-                heading: Entry?.title,
-                $: {
-                    heading: Entry?.$?.title
-                }
-            }]}
-            cards={cards}
-        />
+    return (<>
+        {Entry?.title && <div className='text-center w-full my-4'><span className='mx-auto text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white' {...Entry?.$?.title}>{Entry?.title}</span></div>}
+        {Entry?.components && Object.keys(Entry.components)?.length ? (
+            <RenderComponents
+                components={Entry?.components}
+            />
+        ) : <></>}
+        <div className='-mt-8'>
+            <CardCollection
+                cards={cards}
+            />
+        </div>
+    </>
     )
 }
   
