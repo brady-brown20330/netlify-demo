@@ -35,7 +35,9 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
     }, [entry?.url, locale])
 
     return (<>
-        {Entry?.title && <div className='text-center w-full my-4'><span className='mx-auto text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white' {...Entry?.$?.title}>{Entry?.title}</span></div>}
+        {Entry?.title && <div className='py-16 px-8 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
+            <h1 className='mx-auto text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white' {...Entry?.$?.title}>{Entry?.title}</h1>
+        </div>}
         {Entry?.components && Object.keys(Entry.components)?.length ? (
             <RenderComponents
                 components={Entry?.components}
