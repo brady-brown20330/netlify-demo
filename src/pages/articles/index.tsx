@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { getArticleListingPage, getArticles } from '@/loaders'
 import { onEntryChange } from '@/config'
 import {  Page } from '@/types'

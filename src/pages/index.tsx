@@ -1,4 +1,4 @@
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getHomePage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
