@@ -8,23 +8,33 @@ import { filterArticles } from '@/utils/articles'
 import { ImageCardItem } from '@/types/components'
 import { Article } from '@/types/pages'
 import RenderComponents from '@/RenderComponents'
-
+import { Pagination } from '@/components/Pagination'
 
 export default function Article ({entry, articles, locale}:Page.ArticleListingPage) { 
 
     const [Entry, setEntry] = useState(entry)
-    
-    const cards: ImageCardItem[] | [] =  articles?.map((article) => {
-        return ({
-            title: article?.title,
-            content: article?.summary,
-            image: article?.cover_image,
-            $: article?.$,
-            cta: article?.url
-        })
-    }) as ImageCardItem[] | []
+    const [cards, setCards] = useState<ImageCardItem[] | []>([])
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    // eslint-disable-next-line
+    const [articlesPerPage, setArticlesPerPage] = useState<number>(12)
 
+    const RenderCardCollection = () => {
+
+        const lastIndex = currentPage * articlesPerPage
+        const firstIndex = lastIndex - articlesPerPage
+        
+        const articlesList: ImageCardItem[] | [] = cards.slice(firstIndex, lastIndex)
+
+        return(
+            <CardCollection
+                cards={articlesList}
+            />
+        )
+
+    }
+    
     useEffect(() => {
+        
         async function fetchData () {
             try {
                 const entryRes = await getArticleListingPage(entry?.url, locale)
@@ -34,6 +44,19 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
             }
         }
         onEntryChange(fetchData)
+
+        const cardsData: ImageCardItem[] | [] =  articles?.map((article) => {
+            return ({
+                title: article?.title,
+                content: article?.summary,
+                image: article?.cover_image,
+                $: article?.$,
+                cta: article?.url
+            })
+        }) as ImageCardItem[] | []
+
+        setCards(cardsData)
+
     }, [entry?.url, locale])
 
     return (<>
@@ -46,9 +69,17 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
             />
         ) : <></>}
         <div className='-mt-8'>
-            <CardCollection
-                cards={cards}
-            />
+            <RenderCardCollection />
+            {
+                cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
+                    <Pagination
+                        length={cards?.length}
+                        dataPerPage={articlesPerPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
+                </div>
+            }
         </div>
     </>
     )

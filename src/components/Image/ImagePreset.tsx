@@ -1,5 +1,6 @@
-import { resolveAssetPreset  } from '@/utils'
+import { classNames, resolveAssetPreset  } from '@/utils'
 import { ImageComponent } from '@/types/components'
+import { CSSProperties } from 'react'
 
 
 const ImagePreset: React.FC<ImageComponent> = (props: ImageComponent) => {
@@ -13,22 +14,24 @@ const ImagePreset: React.FC<ImageComponent> = (props: ImageComponent) => {
                 ...image
             })
             if(resolvedImg && resolvedImg?.url) {
-                return resolvedImg.url
+                return resolvedImg
             } else {
-                return asset?.url
+                return asset
             }
         } else {
             console.debug ('Asset could not be resolved')
         }
         
     }
+    const newImage = renderImage() as ImageComponent['image'] & {styles?: CSSProperties}
 
     return <>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         {image?.asset?.url && <img 
-            src={renderImage()}
+            src={newImage?.url}
             alt={image_alt_text !== '' ? image_alt_text : image?.asset?.title}
-            className={className || ''}
+            className={classNames(className ? className : '')}
+            style={newImage?.styles ? newImage?.styles : undefined}
         />}
     </>
 }

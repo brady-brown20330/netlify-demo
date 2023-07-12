@@ -1,8 +1,8 @@
 import { Footer } from '@/types/app'
 
 export const includefooterRefUids = [
-    'section.link',
-    'section.links.link'
+    'sections.link',
+    'sections.links.link'
 ]
 
 export const isFooterValid = (footer:Footer) => {

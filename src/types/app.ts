@@ -13,7 +13,7 @@ export interface Navigation extends Entry {
     text?:string
     link?:InternalLink[]
     mega_menu?:{
-      section?:{
+      sections?:{
         title?:string
         link:InternalLink[]
         links: {
@@ -26,7 +26,7 @@ export interface Navigation extends Entry {
   // $?: MappedPreview<Header>;
 }
 export interface Footer extends Entry {
-  section?:{
+  sections?:{
     title?: string
     link: InternalLink[]
     links: {

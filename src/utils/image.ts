@@ -1,4 +1,4 @@
-import { AssetPreset, AssetPresetMetadata, presetOptionEffects, presetOptions, resolvePresetParams, resolvedStyles } from '@/types/extensions'
+import { AssetPreset, presetOptionEffects, presetOptions, resolvePresetParams, resolvedStyles } from '@/types/extensions'
 
 const filterBGColor = (color:string) => {
     return color[0] === '#' ? color.slice(1) :color
@@ -77,7 +77,8 @@ const getImageURL = (src:string, options:presetOptions) => {
 const getImageStyles = (options:presetOptions) => {
     const styles:resolvedStyles = {}
     if (options?.transform?.rotate) {
-        styles.transform = `scale(${1 + (Math.abs(Math.ceil((options?.transform?.rotate || 0) / 10))) / 10}) rotate(${options?.transform?.rotate || 0}deg)`
+        styles.transform = `scale(0.75) rotate(${options?.transform?.rotate || 0}deg)`
+        // styles.transform = `scale(${1 + (Math.abs(Math.ceil((options?.transform?.rotate || 0) / 10))) / 10}) rotate(${options?.transform?.rotate || 0}deg)`
     }
     return styles
 }
@@ -126,9 +127,9 @@ const getTranformParams = (transformVal:resolvedStyles) => {
     return params
 }
 
-const resolvePresetName = ( metadata: AssetPresetMetadata) => {
-    return metadata?.preset?.name || ''
-}
+// const resolvePresetName = ( metadata: AssetPresetMetadata) => {
+//     return metadata?.preset?.name || ''
+// }
 
 /**
  * @param {object} asset
@@ -140,16 +141,18 @@ const resolvePresetName = ( metadata: AssetPresetMetadata) => {
  * 
  */
 export const resolveAssetPreset = ({ asset, metadata }:AssetPreset) => {
-    const {extension_uid} = metadata
-    const preset = fetchPresetByPresetName({
-        asset,
-        presetName: resolvePresetName( metadata ),
-        extension_uid
-    })
+    // const {extension_uid} = metadata
+    // const preset = fetchPresetByPresetName({
+    //     asset,
+    //     presetName: resolvePresetName( metadata ),
+    //     extension_uid
+    // })
+    const preset = metadata.preset
+    if(!preset?.name) return undefined
 
     if (preset && preset.options) {
         asset.url = getImageURL(asset.url, preset.options)
-        return asset
+        return {...asset, styles: getImageStyles(preset.options)}
     }
     return undefined
 }

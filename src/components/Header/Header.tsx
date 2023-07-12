@@ -111,7 +111,7 @@ function Header (props: App.Header) {
                                                                 {item.text}
                                                             </Link>
                                                         </div>
-                                                        {item && item?.mega_menu?.[0]?.section && item?.mega_menu?.[0]?.section?.length > 0 && <>
+                                                        {item && item?.mega_menu?.[0]?.sections && item?.mega_menu?.[0]?.sections?.length > 0 && <>
                                                             { currPanel=== item?.text
                                                                 ? <ChevronUpIcon
                                                                     data-title={item?.text}
@@ -127,7 +127,7 @@ function Header (props: App.Header) {
                                                         
                                                     </div>
                                                     <div className='flex flex-col items-start px-4 w-full'>
-                                                        {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
+                                                        {item && item?.mega_menu?.[0]?.sections?.map((sect, ind) => (
                                                             <div
                                                                 key={`section-${ind}`}
                                                                 className={`mt-6 !items-start w-full ${currPanel === item?.text ? '': 'hidden'}`}
@@ -244,12 +244,12 @@ function Header (props: App.Header) {
                                                                         {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
                                                                         <div className='absolute inset-0 top-1/2 bg-white dark:bg-black shadow' aria-hidden='true' />
 
-                                                                        {item && item?.mega_menu?.[0]?.section?.length 
+                                                                        {item && item?.mega_menu?.[0]?.sections?.length 
                                                                             ? <div className='relative bg-white dark:bg-black'>
                                                                                 {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
                                                                                 <div className='mx-auto max-w-7xl px-8'>
                                                                                     <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
-                                                                                        {item && item?.mega_menu?.[0]?.section?.map((sect, ind) => (
+                                                                                        {item && item?.mega_menu?.[0]?.sections?.map((sect, ind) => (
                                                                                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                                             // @ts-ignore
                                                                                             <div className='section' key={`section-${ind}`} {...sect?.$?.title}>

@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import { ReactNode } from 'react'
+import { ReactNode, Dispatch, SetStateAction } from 'react'
 import { Asset, MappedPreview } from './common'
 import { AssetPreset } from './extensions'
 
@@ -130,7 +130,14 @@ export interface related_articles {
   number_of_articles?:number
   related_article_tags?:string[]
   $?: MappedPreview<related_articles>
- }
+}
+
+export interface pagination {
+  length: number
+  dataPerPage: number
+  currentPage: number
+  setCurrentPage: Dispatch<SetStateAction<number>>
+}
 
 // ######################### COMPONENTS END #########################
 
