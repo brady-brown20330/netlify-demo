@@ -61,7 +61,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
     }, [entry?.url, locale])
 
     return (<>
-        {Entry?.title && <div className='py-16 px-8 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
+        {Entry?.title && <div className='pt-16 px-8 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
             <h1 className='mx-auto text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white' {...Entry?.$?.title}>{Entry?.title}</h1>
         </div>}
         {Entry?.components && Object.keys(Entry.components)?.length ? (
@@ -69,7 +69,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
                 components={Entry?.components}
             />
         ) : <></>}
-        <div className='-mt-8'>
+        <div className='card-collection mt-8'>
             <RenderCardCollection />
             {
                 cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>

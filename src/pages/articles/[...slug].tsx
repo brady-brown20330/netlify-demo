@@ -69,7 +69,7 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
                 components={Entry?.components}
             />
         ) : <></>}
-        <div className='-mt-8'>
+        <div className='card-collection mt-8'>
             <RenderCardCollection />
             {
                 cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
