@@ -27,6 +27,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
         return(
             <CardCollection
                 cards={articlesList}
+                totalCount={cards?.length}
             />
         )
 

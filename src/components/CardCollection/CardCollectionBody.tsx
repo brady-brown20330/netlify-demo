@@ -4,20 +4,35 @@ import { Card } from '../Card'
 import { Link } from '@/components/Link'
 import { ImageCardItem } from '@/types/components'
 
-
-const CardCollectionBody = ({cards}:{cards?: ImageCardItem[]|[]}) => {
+const CardCollectionBody = ({cards, totalCount}:{cards?: ImageCardItem[]|[], totalCount: number }) => {
     const router = useRouter()
     const isArticleListingPage = router.pathname.includes('/articles/')
+
+    const gridConfigurator  = () => {
+
+        if(totalCount > 12) return 'sm:grid-cols-2 lg:grid-cols-4'
+
+        switch(cards?.length) {
+        case 1:
+            return 'lg:grid-cols-1'
+
+        case 2:
+            return 'sm:grid-cols-2 lg:grid-cols-2'
+
+        case 3: 
+            return 'sm:grid-cols-2 lg:grid-cols-3'
+
+        default:
+            return 'sm:grid-cols-2 lg:grid-cols-4'
+        }
+
+    }
 
     return (
         cards && cards?.length > 0 ? <div
             className={
                 classNames(
-                    cards?.length === 1 ? 'lg:grid-cols-1'
-                        : cards?.length === 2 ? 'sm:grid-cols-2 lg:grid-cols-2'
-                            : cards?.length === 3 ? 'sm:grid-cols-2 lg:grid-cols-3'
-                                : cards && cards?.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4'
-                                    : '',
+                    gridConfigurator(),
                     'grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                 )
             }

@@ -85,7 +85,8 @@ export interface CardCollectionHeader {
 export interface CardCollection {
   $?: MappedPreview<CardCollection>;
   cards?: ImageCardItem[] | [];
-  header?: CardCollectionHeader[];
+  header?: CardCollectionHeader;
+  totalCount?: number;
 }
 
 export type ImageCardItem = ImageCardGraphics &

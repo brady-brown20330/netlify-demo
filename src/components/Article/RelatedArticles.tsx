@@ -9,7 +9,7 @@ const RelatedArticles:React.FC<RelatedArticles> = (props:RelatedArticles) => {
     
     return( <>
         <div className='-mt-24'>
-            <CardCollection header={[{heading, sub_heading, $}]} cards={cards} />
+            <CardCollection header={{heading, sub_heading, $}} cards={cards} />
         </div>       
     </>)
 }
