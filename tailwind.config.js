@@ -65,7 +65,8 @@ module.exports = {
             colors: {
                 gray: {
                     600: '#5B6B86',
-                },
+                    900: '#253143'
+                }
             }
         },
         letterSpacing: {
@@ -77,6 +78,7 @@ module.exports = {
             widest: '0.1em'
         },
         fontFamily: {
+            inter: ['Inter'],
             sans: ['Inter, sans-serif'],
             thin: ['Inter-thin,Inter, sans-serif'],
             semiBold: ['Inter-SemiBold,Inter, sans-serif'],

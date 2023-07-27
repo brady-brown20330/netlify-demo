@@ -1,6 +1,6 @@
 import { Teaser as TeaserProps } from '@/types/components'
-import { Link } from '../Link'
-import { Image } from '../Image'
+import { Link } from '@/components'
+import { Image } from '../common/Image'
 import { resolveCta } from '@/utils'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
@@ -10,7 +10,7 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
 
     return (
         <div
-            className={'relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16 flex flex-col items-center text-center justify-center'}
+            className={'relative bg-gray-600 px-6 py-32 sm:px-12 sm:py-40 lg:px-16 flex flex-col items-center text-center justify-center'}
             {...$?.heading}
         >
             <div className='absolute inset-0 overflow-hidden'>
@@ -22,9 +22,9 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
                     />
                 }
             </div>
-            <div className='relative mx-auto flex max-w-3xl flex-col items-center text-center'>
-                {heading && <h2 className={'text-3xl font-bold tracking-tight sm:text-4xl !text-white'}>{heading}</h2>}
-                {content && <p className={'mt-3 text-xl !text-white'}>
+            <div className='relative mx-auto flex max-w-5xl flex-col items-center text-center'>
+                {heading && <h2 className={'mb-3 text-center text-white'}>{heading}</h2>}
+                {content && <p className={'text-lg text-center text-white'}>
                     {content}
                 </p>}
                 {cta?.[0]?.text && ctaLink && <Link

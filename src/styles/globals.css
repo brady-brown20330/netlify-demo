@@ -4,13 +4,35 @@
 
 
 body {
-  @apply bg-white dark:bg-black
+  @apply bg-white dark:bg-black font-inter
+}
+
+@media (min-width:640px)  {
+
+  .card-styled:nth-child(2n-2){
+    position: relative;
+    top: 94px;
+  }
 }
 
 @layer base {
-  h1, h2, h3, h4, h5, h6, p  {
-      @apply text-black dark:text-white
+  h1, h2, h3, h4, h5, h6 {
+      @apply text-black dark:text-white !font-inter font-bold text-[#253143]
   }
+  h1 {
+    @apply text-[52px] leading-[54px]
+  }
+  h2 {
+    @apply text-[44px] leading-[45px]
+  }
+  h3 {
+    @apply text-[24px] leading-[26px]
+  }
+  p {
+    @apply font-normal text-black dark:text-white !leading-5
+  }
+
+
 }
 
 @layer components {
@@ -18,15 +40,18 @@ body {
     @apply relative max-w-7xl mx-auto;
   }
   .btnPrimary {
-    @apply rounded-md bg-purple text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple
+    @apply !font-inter rounded-md bg-purple text-sm font-semibold text-white shadow-sm hover:bg-[#3C2970] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple
   }
   .btnSecondary {
-    @apply block w-full rounded-md border border-transparent bg-white !text-black text-base font-semibold text-gray-900 hover:bg-gray-100
+    @apply !font-inter block w-full rounded-md border border-transparent bg-white !text-black text-base font-semibold text-gray-900 duration-300
   }
-  .btnTertiary{
+  .btnSecondary:hover{
+    @apply bg-black !text-white
+  }
+  .btnTertiary {
     @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-semibold text-gray-100 hover:opacity-80
   }
-  .text h2{
+  .text h2 {
     @apply text-[44px] font-bold dark:text-white py-3
   }
   .text h3 {
@@ -42,11 +67,11 @@ body {
 
   .text ol { @apply list-decimal py-1 px-6 }
 
-  .text li{
+  .text li {
     @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-1
   }
 
-  .text p { @apply py-1 leading-7 text-justify}
+  .text p { @apply py-1 leading-5 text-justify}
 
   .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 

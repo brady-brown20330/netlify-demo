@@ -4,9 +4,15 @@ import { ImageCardItem } from '@/types/components'
 import { resolveCardCta, resolveCtaText } from './Card.helper'
 import { classNames } from '@/utils'
 
+// ? TSOND-153 | Revamp code for demo purpose
+import { useRouter } from 'next/router'
+
 const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, cta, content, count } = props
+    const { $, image, image_alt_text, title, cta, content, count, totalCount } = props
     
+    // ? TSOND-153 | Revamp code for demo purpose
+    const router = useRouter()
+
     {/* eslint-disable-next-line jsx-a11y/alt-text */}
     const cardImage = image ? <Image
         image={image}
@@ -21,9 +27,10 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
         )}
     /> : <></>
 
+    // ? TSOND-174 | Revamp code for demo purpose
     return (
         <div
-            className='group h-full relative flex flex-col justify-between'
+            className={`group h-full relative flex flex-col justify-between ${totalCount && totalCount  > 4 && router?.pathname === '/articles/revamp' ? 'card-styled' : ''}`}
             {...$?.title}
         >
             <div className='flex flex-col'>
@@ -42,7 +49,7 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                     </h4>
                     }
                 </div>
-                {content && <p className='mt-2 text-base leading-8 text-gray-600 dark:text-white card-content'
+                {content && <p className='mt-2 text-base leading-5 text-gray-600 dark:text-white card-content'
                 >
                     {content}
                 </p>

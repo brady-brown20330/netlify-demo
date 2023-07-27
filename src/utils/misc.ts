@@ -1,3 +1,5 @@
+import { isEditButtonsEnabled } from '@/config'
+import * as _ from 'lodash'
 
 export const prefixReferenceIncludes = (mbId: string, ...references: string[]) => {
     const result = references.map(e => mbId + '.' + e)
@@ -10,6 +12,10 @@ export const inIframe = () => {
     } catch (e) {
         return true
     }
+}
+
+export const isDataInLiveEdit = (data: any) => {
+    return (_.isNull(data) || _.isEmpty(data)) && !inIframe() && isEditButtonsEnabled
 }
 
 export const addToDateNow = (seconds: number) => {

@@ -2,35 +2,39 @@ import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getLandingPage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
-import { onEntryChange } from '@/config'
+import { isEditButtonsEnabled, onEntryChange } from '@/config'
 import {  Page } from '@/types'
+import { isDataInLiveEdit } from '@/utils'
+import { NotFoundComponent } from '@/components'
 
 
 export default function LandingPage ({entry, locale}:Page.LandingPage) { 
-    const [data, setData] = useState(entry)
+    const [data, setData] = useState<Page.LandingPage['entry'] | null>(entry)
     
     useEffect(() => {
         async function fetchData () {
             try {
                 const entryRes = await getLandingPage(entry.url,locale)
-                setData(entryRes)
+                setData(entryRes ?? null)
             } catch (error) {
                 console.error(error)
             }
         }
-        onEntryChange(fetchData)
+        isEditButtonsEnabled && onEntryChange(fetchData)
     }, [entry?.url, locale])
 
 
-    return (<>
-        {data?.components && Object.keys(data.components)?.length ? (
-            <RenderComponents
-                components={data?.components}
-            />
-        ) : <></>}
-    </>
+    return (
+        data
+            ? data?.components && Object.keys(data.components)?.length ? (
+                <RenderComponents
+                    components={data?.components}
+                /> 
+            ) : '' 
+            :<>
+                {isDataInLiveEdit(data) && <NotFoundComponent />}
+            </>
     )
-
 }
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
@@ -39,7 +43,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
         if (!params || !params.slug || params?.slug?.length <= 0 ) return { notFound: true }
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' ? '/' + params?.slug?.join('/') : params.slug
         const res: Page.LandingPage = await getLandingPage(`${paramsPath}`,locale)
-        if (!res) return { notFound: true }
+        if (!isEditButtonsEnabled && !res) return { notFound: true }
         return {
             props: {
                 entry: {

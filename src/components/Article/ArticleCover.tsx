@@ -4,11 +4,11 @@ import React from 'react'
 
 const ArticleCover:React.FC<ArticleCover> = (props:ArticleCover) => {
     const {title, summary, cover_image, $} = props
-    return( <div className={'px-8 pt-16'}>
+    return( <div className={'px-8 pt-16 mb-8'}>
         <div
             className='container mx-auto'
         >
-            {title && <h2 className='text-3xl font-bold tracking-tight sm:text-4xl' {...$?.title}>{title}</h2>}
+            {title && <h1 {...$?.title}>{title}</h1>}
             <div className={'relative overflow-hidden mt-6'}>
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
                 {cover_image?.url && <Image

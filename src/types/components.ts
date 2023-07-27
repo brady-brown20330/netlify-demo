@@ -91,6 +91,7 @@ export interface CardCollection {
 
 export type ImageCardItem = ImageCardGraphics &
   ImageCardText & {
+    totalCount?: number;
     $: MappedPreview<ImageCardGraphics & ImageCardText>;
   };
 

@@ -2,14 +2,15 @@ import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getArticle, getArticles } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
-import { onEntryChange } from '@/config'
+import { isEditButtonsEnabled, onEntryChange } from '@/config'
 import {  Page } from '@/types'
-import { ArticleCover, RelatedRegionTopics, RelatedArticles } from '@/components'
+import { ArticleCover, RelatedRegionTopics, RelatedArticles, NotFoundComponent } from '@/components'
 import { ImageCardItem } from '@/types/components'
+import { isDataInLiveEdit } from '@/utils'
 
 export default function Article ({entry, locale, articles}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
-    const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data
+    const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data || {}
     
     articles = articles?.filter((article)=> article.title !== entry.title) // exclude current article from the list of related articles
 
@@ -37,29 +38,30 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
         onEntryChange(fetchData)
     }, [entry?.url, locale])
 
-    return (<>
-        <ArticleCover
-            title={title}
-            summary={summary}
-            cover_image={cover_image}
-            $={$}
-        />
-        {entry && <RenderComponents components={[{
-            text: { 
-                content,
-                $: entry?.$
-            }
-        }]}
-        />}
-        {show_related_regions_and_topics && <RelatedRegionTopics
-            region={region} 
-            topics={topics} 
-            $={$}/>}
-        {show_related_articles && <RelatedArticles
-            related_articles={related_articles}
-            cards={relatedArticles}
-        />}
-    </>
+    return (
+        data ? <>
+            <ArticleCover
+                title={title}
+                summary={summary}
+                cover_image={cover_image}
+                $={$}
+            />
+            {entry && <RenderComponents components={[{
+                text: { 
+                    content,
+                    $: entry?.$
+                }
+            }]}
+            />}
+            {show_related_regions_and_topics && <RelatedRegionTopics
+                region={region} 
+                topics={topics} 
+                $={$}/>}
+            {show_related_articles && <RelatedArticles
+                related_articles={related_articles}
+                cards={relatedArticles}
+            />}
+        </> : <>{isDataInLiveEdit(data) && <NotFoundComponent />}</>
     )
 
 }
@@ -74,7 +76,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
             : params.slug
         const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
         const articles = await getArticles(locale)
-        if (!res) return { notFound: true }
+        if (!isEditButtonsEnabled && !res) return { notFound: true }
         return {
             props: {
                 entry: {

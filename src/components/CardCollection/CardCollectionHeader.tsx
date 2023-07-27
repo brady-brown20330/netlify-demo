@@ -5,9 +5,8 @@ const CardCollectionHeader: React.FC<CardCollectionHeader> = (props: CardCollect
     const { $, heading, sub_heading } = props
 
     return (
-        <div className='relative mx-auto flex max-w-4xl flex-col items-center text-center py-16'>
+        <div className='relative mx-auto flex max-w-4xl flex-col items-center text-center my-16'>
             {heading && <h2
-                className={'text-3xl font-bold tracking-tight sm:text-4xl dark:text-white'}
                 {...$?.heading}
             >
                 {heading}

@@ -15,7 +15,7 @@ function Header (props: App.Header) {
     const [data, setData] = useState(props)
     const [open, setOpen] = useState(false)
     const [currPanel, setCurrPanel] = useState('')
-    const { logo, main_navigation: navigation } = data
+    const { logo, logo_desktop, main_navigation: navigation } = data
 
     const handleMouseOver = (e: React.MouseEvent) => {
         const title=(e.target as HTMLElement).getAttribute('data-title')
@@ -51,8 +51,6 @@ function Header (props: App.Header) {
         }
         onEntryChange(fetchData)
     }, [])
-
-
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
@@ -99,11 +97,11 @@ function Header (props: App.Header) {
                                             item?.text 
                                                 && <Fragment key={`mobile-navItem-${i}`}>
                                                     <div
-                                                        className={'flex items-center pt-6 pb-2 hover:!text-purple'}>
+                                                        className={'w-full flex items-center py-2 hover:!text-purple'}>
                                                         <div onClick={resetMobileNav}>
                                                             <Link
                                                                 url={item?.link}
-                                                                className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : ''} hover:border-b-2 hover:border-purple`}
+                                                                className={`${currPanel=== item?.text ? 'text-purple border-b-2 border-purple' : 'text-[#253143]'} hover:border-b-2 hover:border-purple text-[16.071px] text-justify font-semibold leading-normal`}
                                                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                 // @ts-ignore
                                                                 $={...item?.$?.text}
@@ -130,7 +128,7 @@ function Header (props: App.Header) {
                                                         {item && item?.mega_menu?.[0]?.sections?.map((sect, ind) => (
                                                             <div
                                                                 key={`section-${ind}`}
-                                                                className={`mt-6 !items-start w-full ${currPanel === item?.text ? '': 'hidden'}`}
+                                                                className={`!items-start w-full ${currPanel === item?.text ? '': 'hidden'}`}
                                                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                 // @ts-ignore
                                                                 {...sect?.$?.title}
@@ -145,12 +143,12 @@ function Header (props: App.Header) {
                                                                 <ul
                                                                     role='list'
                                                                     aria-labelledby={`section-${ind}-heading-mobile`}
-                                                                    className='mt-6 flex flex-col items-start space-y-4'
+                                                                    className='flex flex-col items-start space-y-2'
                                                                 >
                                                                     {sect?.links?.map((subitem) => (
                                                                         subitem?.text && <li key={subitem.text} className=''>
                                                                             <div onClick={resetMobileNav}>
-                                                                                <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
+                                                                                <Link url={subitem.link} className='-m-2 block p-2 text-[#253143] text-[16.071px] text-justify font-normal leading-normal hover:text-purple hover:underline'>
                                                                                     {subitem.text}
                                                                                 </Link>
                                                                             </div>
@@ -177,7 +175,8 @@ function Header (props: App.Header) {
                     <div className='bg-white dark:bg-black'>
                         <div className='mx-auto max-w-7xl px-4 sm:px-0 lg:px-0'>
                             <div className='border-b border-gray-300 dark:border-gray-400'>
-                                <div className='flex min-h-20 items-center justify-between'>
+                                {/* desktop */}
+                                <div className='hidden sm:flex min-h-20 items-center justify-between'>
                                     {/* Logo (sm+) */}
                                     <div className='hidden sm:flex sm:flex-1 sm:items-center'
                                         onMouseEnter={() => {setCurrPanel('')}}
@@ -188,9 +187,9 @@ function Header (props: App.Header) {
                                             <span className='sr-only'>Site Logo</span>
                                             <img
                                                 className='h-8 w-auto m-4'
-                                                src={logo?.url}
-                                                alt={logo?.title}
-                                                {...logo?.$?.url}
+                                                src={logo_desktop?.url}
+                                                alt={logo_desktop?.title}
+                                                {...logo_desktop?.$?.url}
                                             />
                                         </Link>
                                     </div>
@@ -206,7 +205,7 @@ function Header (props: App.Header) {
                                                                 <div
                                                                     // className='relative flex'
                                                                     className={classNames(
-                                                                        currPanel == item?.text ? 'border-b-2 border-purple text-purple' : '',
+                                                                        currPanel == item?.text ? 'border-b-[3px] border-purple text-purple' : '',
                                                                         'relative flex'
                                                                     )}
                                                                     data-title={item?.text}
@@ -216,12 +215,12 @@ function Header (props: App.Header) {
                                                                         url={item?.link}
                                                                         className={classNames(
                                                                             currPanel == item?.text ? 'text-purple' : '',
-                                                                            'top-link relative z-10 text-black py-7 transition-colors duration-200 ease-out'
+                                                                            'top-link relative z-10 py-7 transition-colors duration-200 ease-out text-[#253143] text-[16.071px] text-justify font-semibold leading-normal'
                                                                         )}
                                                                         data-title={item?.text}
                                                                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                         // @ts-ignore
-                                                                        $={item?.$?.text}
+                                                                        // $={item?.$?.text}
                                                                     >
                                                                         {item?.text}
                                                                     </Link>
@@ -248,7 +247,7 @@ function Header (props: App.Header) {
                                                                             ? <div className='relative bg-white dark:bg-black'>
                                                                                 {/* in above css h-1 has tobe deleted for secondary navigation to appear */}
                                                                                 <div className='mx-auto max-w-7xl px-8'>
-                                                                                    <div className='grid grid-cols-4 gap-x-8 gap-y-10 py-16'>
+                                                                                    <div className='grid grid-cols-1 gap-x-8 gap-y-10 py-[40px]'>
                                                                                         {item && item?.mega_menu?.[0]?.sections?.map((sect, ind) => (
                                                                                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                                             // @ts-ignore
@@ -265,12 +264,12 @@ function Header (props: App.Header) {
                                                                                                 <ul
                                                                                                     role='list'
                                                                                                     aria-labelledby={`section-${ind}-heading-mobile`}
-                                                                                                    className='mt-6 flex flex-col space-y-6'
+                                                                                                    className='flex flex-col space-y-2 text-center'
                                                                                                 >
                                                                                                     {sect?.links?.map((subitem) => (
                                                                                                         subitem?.text && <li key={subitem.text} className='flow-root'>
                                                                                                             <div onClick={resetNav}>
-                                                                                                                <Link url={subitem.link} className='-m-2 block p-2 text-gray-500 hover:text-purple hover:underline'>
+                                                                                                                <Link url={subitem.link} className='block text-[#253143] text-[16.071px] font-normal leading-normal hover:text-purple hover:underline'>
                                                                                                                     {subitem.text}
                                                                                                                 </Link>
                                                                                                             </div>
@@ -294,19 +293,9 @@ function Header (props: App.Header) {
                                             </div>
                                         </Popover.Group>
                                     </div>
-
-                                    {/* Mobile menu and search (sm-) */}
-                                    <div className='flex flex-1 items-center sm:hidden'>
-                                        <button
-                                            type='button'
-                                            className='rounded-md bg-white dark:bg-black px-4 sm:px-8  text-gray-400 dark:text-white'
-                                            onClick={() => setOpen(true)}
-                                        >
-                                            <span className='sr-only'>Open menu</span>
-                                            <Bars3Icon className='h-6 w-6' aria-hidden='true' />
-                                        </button>
-                                    </div>
-
+                                </div>
+                                {/* mobile */}
+                                <div className='flex min-h-20 items-center justify-between sm:hidden'>
                                     {/* Logo (sm-) */}
                                     <div className='sm:hidden h-20 flex flex-col justify-center'>
                                         <Link url='/'
@@ -322,16 +311,17 @@ function Header (props: App.Header) {
                                             />
                                         </Link>
                                     </div>
-                                    
 
-                                    <div
-                                        className='flex flex-1 h-full items-center justify-end'
-                                        onMouseEnter={() => {setCurrPanel('')}}
-                                    >
-                                        <div className='flex items-center lg:ml-8'>
-                                            <div className='ml-4 flow-root lg:ml-8'>                                                
-                                            </div>
-                                        </div>
+                                    {/* Hamburger Icon (sm-) */}
+                                    <div className='flex flex-1 items-center sm:hidden justify-end'>
+                                        <button
+                                            type='button'
+                                            className='rounded-md bg-white dark:bg-black px-4 sm:px-8 text-gray-400 dark:text-white'
+                                            onClick={() => setOpen(!open)} 
+                                        > 
+                                            <span className='sr-only'>Open menu</span>
+                                            <Bars3Icon className='h-6 w-6' aria-hidden='true' />
+                                        </button>
                                     </div>
                                 </div>
                             </div>

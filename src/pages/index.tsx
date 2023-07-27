@@ -2,8 +2,10 @@ import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getHomePage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
-import { onEntryChange } from '@/config'
+import { isEditButtonsEnabled, onEntryChange } from '@/config'
 import {  Page } from '@/types'
+import { NotFoundComponent } from '@/components'
+import { isDataInLiveEdit } from '@/utils'
 
 
 export default function Home ({entry, locale}:Page.LandingPage) { 
@@ -22,13 +24,16 @@ export default function Home ({entry, locale}:Page.LandingPage) {
         onEntryChange(fetchData)
     }, [entry?.url, locale])
 
-    return (<>
-        {data?.components && Object.keys(data.components)?.length ? (
-            <RenderComponents
-                components={data?.components}
-            />
-        ) : <></>}
-    </>
+    return (
+        data
+            ? data?.components && Object.keys(data.components)?.length ? (
+                <RenderComponents
+                    components={data?.components}
+                /> 
+            ) : '' 
+            :<>
+                {isDataInLiveEdit(data) && <NotFoundComponent />}
+            </>
     )
 
 }
@@ -38,7 +43,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
         const {locale} = context
         const res: Page.Homepage = await getHomePage('', locale)
 
-        if (!res) return { notFound: true }
+        if (!res && !isEditButtonsEnabled) return { notFound: true }
         return {
             props: {
                 entry: {

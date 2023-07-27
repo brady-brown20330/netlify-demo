@@ -35,6 +35,7 @@ function MyApp (props: App.Props) {
                     {...pageProps?.entry}
                     locale={locale}
                 />}
+                <link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
             </Head>
             <ErrorBoundary
                 FallbackComponent={ErrorHandler}

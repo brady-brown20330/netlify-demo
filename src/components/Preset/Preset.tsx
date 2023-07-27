@@ -1,5 +1,5 @@
 import { Image } from '@/types/components'
-import { ImagePreset } from '../Image/ImagePreset'
+import { ImagePreset } from '../common/Image/ImagePreset'
 import { useEffect, useRef, useState } from 'react'
 
 /**

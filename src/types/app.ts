@@ -1,9 +1,11 @@
 import type { AppProps } from 'next/app'
 import { Asset, Entry, MappedPreview } from './common'
 import { InternalLink } from './components'
+import { AssetPreset } from './extensions'
 
 export interface Header extends Entry {
   logo?: Asset;
+  logo_desktop?: Asset;
   // site_url?: string;
   main_navigation?: Navigation[];
   $?: MappedPreview<Header>;
@@ -36,6 +38,7 @@ export interface Footer extends Entry {
   }[];
   copyright_info: string;
   $?: MappedPreview<Footer>;
+  logo?: Asset;
 }
 
 export interface FooterSection {

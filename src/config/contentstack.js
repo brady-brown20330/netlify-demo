@@ -15,7 +15,7 @@ export const Stack = (process.env.CONTENTSTACK_API_KEY && process.env.CONTENTSTA
 
 ContentstackLivePreview.init({
     enable: process.env.isLivePreviewEnabled,
-    debug: true,
+    debug: false,
     stackDetails: {
         apiKey: process.env.CONTENTSTACK_API_KEY
     },

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { classNames } from '@/utils'
 import { Card } from '../Card'
-import { Link } from '@/components/Link'
+import { Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
 
 const CardCollectionBody = ({cards, totalCount}:{cards?: ImageCardItem[]|[], totalCount: number }) => {
@@ -43,6 +43,7 @@ const CardCollectionBody = ({cards, totalCount}:{cards?: ImageCardItem[]|[], tot
                     key={idx}
                     {...cardData}
                     count={cards.length}
+                    totalCount={totalCount}
                 />
                 )
             })

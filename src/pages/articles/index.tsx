@@ -1,12 +1,12 @@
 import { GetServerSideProps } from 'next'
-import { getArticleListingPage, getArticles } from '@/loaders'
-import { onEntryChange } from '@/config'
-import {  Page } from '@/types'
-import { CardCollection } from '@/components'
 import { useEffect, useState } from 'react'
-import { ImageCardItem } from '@/types/components'
+import { getArticleListingPage, getArticles } from '@/loaders'
+import { isEditButtonsEnabled, onEntryChange } from '@/config'
+import { CardCollection, NotFoundComponent, Pagination } from '@/components'
 import RenderComponents from '@/RenderComponents'
-import { Pagination } from '@/components/Pagination'
+import { ImageCardItem } from '@/types/components'
+import {  Page } from '@/types'
+import { isDataInLiveEdit } from '@/utils'
 
 
 export default function ArticleListing ({entry, articles, locale}:Page.ArticleListingPage) { 
@@ -22,7 +22,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
         const lastIndex = currentPage * articlesPerPage
         const firstIndex = lastIndex - articlesPerPage
         
-        const articlesList: ImageCardItem[] | [] = cards.slice(firstIndex, lastIndex)
+        const articlesList: ImageCardItem[] | [] = cards?.slice(firstIndex, lastIndex)
 
         return(
             <CardCollection
@@ -60,41 +60,47 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
 
     }, [entry?.url, locale])
 
-    return (<>
-        {Entry?.title && <div className='pt-16 px-8 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
-            <h1 className='mx-auto text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl dark:text-white' {...Entry?.$?.title}>{Entry?.title}</h1>
-        </div>}
-        {Entry?.components && Object.keys(Entry.components)?.length ? (
-            <RenderComponents
-                components={Entry?.components}
-            />
-        ) : <></>}
-        <div className='card-collection mt-8'>
-            <RenderCardCollection />
-            {
-                cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
-                    <Pagination
-                        length={cards?.length}
-                        dataPerPage={articlesPerPage}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                    />
-                </div>
-            }
-        </div>
-    </>)
+    return (
+        Entry || articles?.length
+            ? <>{Entry?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
+                <h1 className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
+            </div>}
+            {Entry?.components && Object.keys(Entry.components)?.length ? (
+                <RenderComponents
+                    components={Entry?.components}
+                />
+            ) : <></>}
+            <div className='card-collection mt-8'>
+                <RenderCardCollection />
+                {
+                    cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
+                        <Pagination
+                            length={cards?.length}
+                            dataPerPage={articlesPerPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
+                    </div>
+                }
+            </div>
+            </> : <> 
+                {isDataInLiveEdit(Entry) && !articles?.length && <NotFoundComponent />}
+            </>
+        
+    )
 }
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
         const {locale} = context
-
         const articles = await getArticles(locale)
-        const entry = await getArticleListingPage('/articles',locale)
-        if (!articles) return { notFound: true }
+        const res = await getArticleListingPage('/articles',locale)
+        if (!articles && !res && !isEditButtonsEnabled) return { notFound: true }
         return {
             props: {
-                entry,
+                entry: {
+                    ...res
+                },
                 articles,
                 locale
             }

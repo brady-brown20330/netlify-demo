@@ -1,5 +1,7 @@
 import { pagination } from '@/types/components'
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid'
+import { NextRouter, useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 /**
  * @name Pagination Component
@@ -9,11 +11,35 @@ import { ArrowLongLeftIcon, ArrowLongRightIcon } from '@heroicons/react/20/solid
  * @param { currentPage } number
  * @param { setCurrentPage() } Dispatch<SetStateAction<number>>
  * 
- * @returns { JSX.Element }
 */
+
 const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, setCurrentPage }: pagination) => {
 
     const numberOfPages: number = Math.ceil(length / dataPerPage)
+
+    const router: NextRouter = useRouter()
+
+    const addPageNumberinURL= (page: string) => {
+        router.query.page =  page
+        router.push(router)
+    }
+
+    useEffect(() => {
+        const { query } = router
+        // eslint-disable-next-line no-prototype-builtins
+        if (Object.keys(query).length !== 0 && query.hasOwnProperty('page')){
+        // eslint-disable-next-line radix
+            const queryPage: number = parseInt(query?.page as string)
+            if( queryPage >= 1 && queryPage <= numberOfPages && queryPage !== undefined){
+                handlePageClick(queryPage) // for tabs to change if page query typed in url
+            }
+            else{
+                addPageNumberinURL('1')
+            }
+            return
+        }
+        addPageNumberinURL('1')
+    }, [router.isReady])
 
     const handlePageClick = (page: number) => {
 
@@ -21,18 +47,8 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         if (page > numberOfPages) return
 
         setCurrentPage(page)
-        
-        const collectionWrapper = document.querySelector('.card-collection')
-        let collectionOffset
-        if (collectionWrapper instanceof HTMLElement) {
-            collectionOffset = collectionWrapper?.getBoundingClientRect()?.top
-        }
 
-        collectionOffset && window.scrollBy({
-            top: collectionOffset - 100,
-            behavior: 'smooth'
-        })
-
+        addPageNumberinURL(page.toString())
     }
 
     const renderPageNumbers = () => {
@@ -40,7 +56,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         return Array.apply(null, Array(numberOfPages)).map((data: any, index: number) => {
             return (
                 <a
-                    href='javascript:void(0)'
+                    href={'javascript:void(0)'}
                     key={index + 1}
                     className={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${currentPage === index + 1 ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                     onClick={() => handlePageClick(index + 1)}
@@ -57,7 +73,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                 <a
                     href={'javascript:void(0)'}
                     className={`inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 
-                    hover:border-gray-300 hover:text-gray-700 ${((currentPage - 1) < 1)? 'pointer-events-none cursor-default' : ''}`}
+                    hover:border-gray-300 hover:text-gray-700 ${((currentPage - 1) < 1)? 'pointer-events-none cursor-default opacity-50 select-none' : ''}`}
                     onClick={() => handlePageClick(currentPage - 1)}
                 >
                     <ArrowLongLeftIcon className='mr-3 h-5 w-5 text-gray-400' aria-hidden='true' />
@@ -73,7 +89,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                 <a
                     href={'javascript:void(0)'}
                     className={`inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 
-                    hover:border-gray-300 hover:text-gray-700 ${((currentPage + 1) > numberOfPages)? 'pointer-events-none cursor-default' : ''}`}
+                    hover:border-gray-300 hover:text-gray-700 ${((currentPage + 1) > numberOfPages)? 'pointer-events-none cursor-default opacity-50 select-none' : ''}`}
                     onClick={() => handlePageClick(currentPage + 1)}
                 >
                     Next

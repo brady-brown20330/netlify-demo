@@ -11,15 +11,15 @@ export function TextAndImage (props:Component.TextAndImage) {
         <div 
             className={classNames(
                 image_position === 'right' ? 'lg:ml:0 pr-4 lg:pr-8' : 'xs:ml-4 md:ml-8',
-                'mx-auto my-auto max-w-2xl'
+                'mx-auto my-auto w-2xl'
             )}
         >
-            {heading && <h1
-                className='xl:mt-0 mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:mt-0 lg:text-6xl dark:text-white'>
+            {heading && <h2
+                className='xs:text-3xl sm:text-[44px] xl:mt-0 mt-4 text-gray-900 sm:mt-0'>
                 {heading}
-            </h1>}
+            </h2>}
             {content && <p
-                className='mt-4 text-lg leading-8 text-gray-600 dark:text-white'>
+                className='mt-4 text-lg leading-5 text-gray-600 dark:text-white'>
                 {content}
             </p>}
             <div
@@ -52,8 +52,8 @@ export function TextAndImage (props:Component.TextAndImage) {
                     {...$?.heading}
                 >
                     <div className='max-w-7xl lg:mx-0'>
-                        {heading && <h2 className='text-3xl font-bold tracking-tight sm:text-4xl'>{heading}</h2>}
-                        {content && <p className='mt-6 text-lg leading-8 text-gray-600 dark:text-white'>
+                        {heading && <h2>{heading}</h2>}
+                        {content && <p className='mt-6 text-lg leading-5 text-gray-600'>
                             {content}
                         </p>}
                         {cta?.[0]?.text && ctaLink && <div className='mt-6 flex items-center gap-x-6'>
@@ -85,7 +85,7 @@ export function TextAndImage (props:Component.TextAndImage) {
                         )}
                         {...$?.heading}
                     >
-                        <div className='max-w-7xl my-auto'>
+                        <div className='w-full xs:w-[50%] max-w-7xl'>
                             <TextBlock />
                         </div>
                         <div className={'relative flex-[0_0_50%]'}>
