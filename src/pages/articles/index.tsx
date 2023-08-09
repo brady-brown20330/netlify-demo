@@ -1,15 +1,13 @@
 import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getArticleListingPage, getArticles } from '@/loaders'
-import { isEditButtonsEnabled, onEntryChange } from '@/config'
-import { CardCollection, NotFoundComponent, Pagination } from '@/components'
+import { livePreviewQuery } from '@/config'
+import { CardCollection, Pagination } from '@/components'
 import RenderComponents from '@/RenderComponents'
 import { ImageCardItem } from '@/types/components'
 import {  Page } from '@/types'
-import { isDataInLiveEdit } from '@/utils'
 
-
-export default function ArticleListing ({entry, articles, locale}:Page.ArticleListingPage) { 
+export default function ArticleListing ({entry, articles}:Page.ArticleListingPage) { 
 
     const [Entry, setEntry] = useState(entry)
     const [cards, setCards] = useState<ImageCardItem[] | []>([])
@@ -35,17 +33,6 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
 
     useEffect(() => {
 
-        async function fetchData () {
-            try {
-                const entryRes = await getArticleListingPage(entry?.url, locale)
-                setEntry(entryRes)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        onEntryChange(fetchData)
-
         const cardsData: ImageCardItem[] | []  =  articles?.map((article) => {
             return ({
                 title: article?.title,
@@ -58,11 +45,11 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
 
         setCards(cardsData)
 
-    }, [entry?.url, locale])
+    }, [])
 
     return (
-        Entry || articles?.length
-            ? <>{Entry?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
+        <>
+            {Entry?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
                 <h1 className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
             </div>}
             {Entry?.components && Object.keys(Entry.components)?.length ? (
@@ -70,7 +57,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
                     components={Entry?.components}
                 />
             ) : <></>}
-            <div className='card-collection mt-8'>
+            <div className='card-collection mt-16' id='pagination-scroll-anchor'>
                 <RenderCardCollection />
                 {
                     cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
@@ -83,19 +70,21 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
                     </div>
                 }
             </div>
-            </> : <> 
-                {isDataInLiveEdit(Entry) && !articles?.length && <NotFoundComponent />}
-            </>
+            
+        </>
         
     )
 }
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
+        if(context?.query) {
+            livePreviewQuery(context.query)
+        }
         const {locale} = context
         const articles = await getArticles(locale)
         const res = await getArticleListingPage('/articles',locale)
-        if (!articles && !res && !isEditButtonsEnabled) return { notFound: true }
+        if (!articles && !res) return { notFound: true }
         return {
             props: {
                 entry: {

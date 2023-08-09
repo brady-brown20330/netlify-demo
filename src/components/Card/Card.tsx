@@ -30,7 +30,7 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
     // ? TSOND-174 | Revamp code for demo purpose
     return (
         <div
-            className={`group h-full relative flex flex-col justify-between ${totalCount && totalCount  > 4 && router?.pathname === '/articles/revamp' ? 'card-styled' : ''}`}
+            className={`group h-full relative flex flex-col justify-between ${totalCount && totalCount  > 1 && router?.pathname === '/articles/revamp' ? 'card-styled' : ''}`}
             {...$?.title}
         >
             <div className='flex flex-col'>

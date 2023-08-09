@@ -15,6 +15,10 @@ body {
   }
 }
 
+#pagination-scroll-anchor:target {
+  scroll-margin-top: 85px;
+}
+
 @layer base {
   h1, h2, h3, h4, h5, h6 {
       @apply text-black dark:text-white !font-inter font-bold text-[#253143]
@@ -29,7 +33,7 @@ body {
     @apply text-[24px] leading-[26px]
   }
   p {
-    @apply font-normal text-black dark:text-white !leading-5
+    @apply font-normal text-gray-900 dark:text-white !leading-5
   }
 
 
@@ -71,7 +75,7 @@ body {
     @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-1
   }
 
-  .text p { @apply py-1 leading-5 text-justify}
+  .text p { @apply py-1 leading-5 text-gray-600 text-justify}
 
   .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 
@@ -93,4 +97,3 @@ body {
     overflow: hidden;
   }
 }
-

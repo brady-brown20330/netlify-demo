@@ -1,14 +1,13 @@
 import { GetServerSideProps } from 'next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { getArticle, getArticles } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
-import { isEditButtonsEnabled, onEntryChange } from '@/config'
 import {  Page } from '@/types'
-import { ArticleCover, RelatedRegionTopics, RelatedArticles, NotFoundComponent } from '@/components'
+import { ArticleCover, RelatedRegionTopics, RelatedArticles } from '@/components'
 import { ImageCardItem } from '@/types/components'
-import { isDataInLiveEdit } from '@/utils'
+import { livePreviewQuery } from '@/config'
 
-export default function Article ({entry, locale, articles}:Page.ArticlePage) { 
+export default function Article ({entry, articles}:Page.ArticlePage) { 
     const [data, setData] = useState(entry)
     const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data || {}
     
@@ -26,20 +25,8 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
     
     const relatedArticles = cards.splice(0, (related_articles?.number_of_articles && related_articles?.number_of_articles <= 4) ? related_articles?.number_of_articles : 4)
 
-    useEffect(() => {
-        async function fetchData () {
-            try {
-                const entryRes = await getArticle(entry.url,locale)
-                setData(entryRes)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        onEntryChange(fetchData)
-    }, [entry?.url, locale])
-
     return (
-        data ? <>
+        <>
             <ArticleCover
                 title={title}
                 summary={summary}
@@ -61,7 +48,7 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
                 related_articles={related_articles}
                 cards={relatedArticles}
             />}
-        </> : <>{isDataInLiveEdit(data) && <NotFoundComponent />}</>
+        </>
     )
 
 }
@@ -69,6 +56,9 @@ export default function Article ({entry, locale, articles}:Page.ArticlePage) {
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
+        if(context?.query) {
+            livePreviewQuery(context.query)
+        }
         const {params, locale} = context
         if (!params || !params.slug || params?.slug?.length <= 0 ) return { notFound: true }
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' 
@@ -76,7 +66,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
             : params.slug
         const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
         const articles = await getArticles(locale)
-        if (!isEditButtonsEnabled && !res) return { notFound: true }
+        if (!res) return { notFound: true }
         return {
             props: {
                 entry: {

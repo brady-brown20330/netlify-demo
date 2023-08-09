@@ -16,7 +16,7 @@ const ArticleCover:React.FC<ArticleCover> = (props:ArticleCover) => {
                     className={'w-full max-auto object-cover aspect-[2] md:aspect-[5/2] object-center bg-white/5 shadow-2xl ring-1 ring-white/10 dark:text-white'}
                 />}
             </div>
-            {summary && <p className='mt-6 text-lg leading-8 font-semibold text-gray-700 dark:text-white' {...$?.summary}>
+            {summary && <p className='mt-1 text-lg leading-8 text-gray-600 text-justify dark:text-white' {...$?.summary}>
                 {summary}
             </p>}
         </div>

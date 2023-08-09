@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-shadow */
 /* eslint-disable max-len */
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
 import { Link } from '@/components'
-import { onEntryChange } from '@/config'
-import { getAppConfigData } from '@/loaders'
 import React from 'react'
 import { classNames } from '@/utils'
 
@@ -38,19 +36,6 @@ function Header (props: App.Header) {
     const resetMobileNav = () => {
         setOpen(false)
     }
-
-    useEffect(() => {
-        async function fetchData () {
-            try {
-                const entryRes = await getAppConfigData('en-us')
-                entryRes && entryRes?.[0] && setData({...entryRes?.[0]})
-                
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        onEntryChange(fetchData)
-    }, [])
 
     return (
         <div className='sticky z-50 top-0 bg-white dark:bg-black'>
@@ -209,20 +194,25 @@ function Header (props: App.Header) {
                                                                         'relative flex'
                                                                     )}
                                                                     data-title={item?.text}
-                                                                    onMouseOver = {(e:React.MouseEvent) => handleMouseOver(e)}
                                                                 >
                                                                     <Link
                                                                         url={item?.link}
                                                                         className={classNames(
                                                                             currPanel == item?.text ? 'text-purple' : '',
-                                                                            'top-link relative z-10 py-7 transition-colors duration-200 ease-out text-[#253143] text-[16.071px] text-justify font-semibold leading-normal'
+                                                                            'top-link relative z-10 py-7 transition-colors duration-200 ease-out text-[#253143] text-[16.071px] text-justify font-semibold leading-[19.45px]'
                                                                         )}
                                                                         data-title={item?.text}
                                                                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                                         // @ts-ignore
                                                                         // $={item?.$?.text}
                                                                     >
-                                                                        {item?.text}
+                                                                        <span
+                                                                            onMouseOver = {(e:React.MouseEvent) => handleMouseOver(e)}
+                                                                            data-title={item?.text}
+                                                                            className='cursor-pointer'
+                                                                        >
+                                                                            {item?.text}
+                                                                        </span>
                                                                     </Link>
                                                                 </div>
 

@@ -1,13 +1,13 @@
 import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getArticleListingPage, getArticles } from '@/loaders'
-import { isEditButtonsEnabled, onEntryChange } from '@/config'
 import {  Page } from '@/types'
-import { CardCollection, NotFoundComponent, Pagination } from '@/components'
+import { CardCollection, Pagination } from '@/components'
 import RenderComponents from '@/RenderComponents'
 import { ImageCardItem } from '@/types/components'
 import { Article } from '@/types/pages'
-import { filterArticles, isDataInLiveEdit } from '@/utils'
+import { filterArticles } from '@/utils'
+import { livePreviewQuery } from '@/config'
 
 
 export default function Article ({entry, articles, locale}:Page.ArticleListingPage) { 
@@ -35,16 +35,6 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
     }
     
     useEffect(() => {
-        
-        async function fetchData () {
-            try {
-                const entryRes = await getArticleListingPage(entry?.url, locale)
-                setEntry(entryRes)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        onEntryChange(fetchData)
 
         const cardsData: ImageCardItem[] | [] =  articles?.map((article) => {
             return ({
@@ -58,40 +48,40 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
 
         setCards(cardsData)
 
-    }, [locale])
+    }, [])
 
     return (
-        Entry || articles?.length
-            ? <>{Entry?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
-                <h1 className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
-            </div>}
-            {Entry?.components && Object.keys(Entry.components)?.length ? (
-                <RenderComponents
-                    components={Entry?.components}
-                />
-            ) : <></>}
-            <div className='card-collection mt-8'>
-                <RenderCardCollection />
-                {
-                    cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
-                        <Pagination
-                            length={cards?.length}
-                            dataPerPage={articlesPerPage}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </div>
-                }
-            </div>
-            </> : <> 
-                {isDataInLiveEdit(Entry) && !articles?.length && <NotFoundComponent />}
-            </>
+        <>{Entry?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
+            <h1 className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
+        </div>}
+        {Entry?.components && Object.keys(Entry.components)?.length ? (
+            <RenderComponents
+                components={Entry?.components}
+            />
+        ) : <></>}
+        <div className='card-collection mt-8'>
+            <RenderCardCollection />
+            {
+                cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>
+                    <Pagination
+                        length={cards?.length}
+                        dataPerPage={articlesPerPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
+                </div>
+            }
+        </div>
+        </>
         
     )
 }
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
+        if(context?.query) {
+            livePreviewQuery(context.query)
+        }
         const {params, locale} = context
         if (!params || !params.slug || params?.slug?.length <= 0 ) return { notFound: true }
         const paramsPath = params?.slug?.length > 0 && typeof params.slug!== 'string' 
@@ -104,7 +94,7 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
         const articles = await getArticles(locale)
         const filteredArticles:Article[] | [] = filterArticles(articles, params) as Article[]
 
-        if (!filteredArticles?.length && !res && !isEditButtonsEnabled) return {notFound: true}
+        if (!filteredArticles?.length && !res) return {notFound: true}
         return {
             props: {
                 entry: {

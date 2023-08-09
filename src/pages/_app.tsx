@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import { AppContext } from 'next/app'
 import { ErrorBoundary } from 'react-error-boundary'
+import Router from 'next/router'
+import NProgress from 'nprogress'
 
 import { getAppConfigData } from '@/loaders'
 import { SingleCol } from '@/layout'
@@ -9,6 +11,10 @@ import { App, Generic } from '@/types'
 
 import '@contentstack/live-preview-utils/dist/main.css'
 import '@/styles/globals.css'
+
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 const ErrorHandler = ({ error, resetErrorBoundary, componentStack }: Generic.ErrorHandlerType) => (
     <div>

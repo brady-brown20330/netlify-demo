@@ -1,6 +1,4 @@
 import { buildLinkUrl } from '@/utils'
-import Link from 'next/link'
-
 import { LinkComponent} from '@/types/components'
 
 const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
@@ -18,9 +16,9 @@ const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
     const href = buildLinkUrl(internal_link, external_link)
 
 
-    const LinkWrapper = () => <Link href={`${href}`} {...elemattr}>
+    const LinkWrapper = () => <a href={`${href}`} {...elemattr}>
         {children}
-    </Link>
+    </a>
 
     const LinkPlaceholder = () => <span {...elemattr}>
         {children}

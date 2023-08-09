@@ -1,49 +1,34 @@
 import { GetServerSideProps } from 'next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { getHomePage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
-import { isEditButtonsEnabled, onEntryChange } from '@/config'
+import { livePreviewQuery } from '@/config'
 import {  Page } from '@/types'
-import { NotFoundComponent } from '@/components'
-import { isDataInLiveEdit } from '@/utils'
 
-
-export default function Home ({entry, locale}:Page.LandingPage) { 
+export default function Home ({entry}:Page.LandingPage) { 
     
     const [data, setData] = useState(entry)
-    
-    useEffect(() => {
-        async function fetchData () {
-            try {
-                const entryRes = await getHomePage('', locale)
-                setData(entryRes)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        onEntryChange(fetchData)
-    }, [entry?.url, locale])
 
     return (
-        data
-            ? data?.components && Object.keys(data.components)?.length ? (
-                <RenderComponents
-                    components={data?.components}
-                /> 
-            ) : '' 
-            :<>
-                {isDataInLiveEdit(data) && <NotFoundComponent />}
-            </>
+        data?.components && Object.keys(data.components)?.length ? (
+            <RenderComponents
+                components={data?.components}
+            /> 
+        ) : '' 
+            
     )
 
 }
 
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
+        if(context?.query) {
+            livePreviewQuery(context.query)
+        }
         const {locale} = context
         const res: Page.Homepage = await getHomePage('', locale)
 
-        if (!res && !isEditButtonsEnabled) return { notFound: true }
+        if (!res ) return { notFound: true }
         return {
             props: {
                 entry: {

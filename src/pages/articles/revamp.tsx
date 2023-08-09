@@ -6,7 +6,6 @@
  * **/ 
 import { GetServerSideProps } from 'next'
 import { getArticleListingPage, getArticles } from '@/loaders'
-import { onEntryChange } from '@/config'
 import {  Page } from '@/types'
 import { CardCollection } from '@/components'
 import { useEffect, useState } from 'react'
@@ -15,6 +14,7 @@ import RenderComponents from '@/RenderComponents'
 import { Pagination } from '@/components'
 import _, { Dictionary } from 'lodash'
 import { Article } from '@/types/pages'
+import { livePreviewQuery } from '@/config'
 
 
 export default function ArticleListing ({entry, articles, locale}:Page.ArticleListingPage) { 
@@ -32,10 +32,21 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
 
     const RenderCardCollection = () => {
 
-        const lastIndex = currentPage * articlesPerPage
-        const firstIndex = lastIndex - articlesPerPage
-        
-        const articlesList: ImageCardItem[] | [] = cards.slice(firstIndex, lastIndex)
+        let articlesList: ImageCardItem[] | [] 
+
+        if(cards?.length > 12) {
+
+            const lastIndex = currentPage * articlesPerPage
+            const firstIndex = lastIndex - articlesPerPage
+            
+            articlesList = cards.slice(firstIndex, lastIndex)
+
+        } else {
+            
+            articlesList = cards
+
+        }
+
 
         return(
             <CardCollection
@@ -43,6 +54,61 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
                 totalCount={cards?.length}
             />
         )
+
+    }
+
+    // * Method to group the articles based on topics
+    const groupArticles = () => {
+
+        const groupedObj: any = {}
+
+        const checkKeyExistance = (keyName: string) => {
+
+            if(!groupedObj[keyName]) return false
+
+            return true
+
+        }
+
+        const addToObject = (topic: string, article: Article) => {
+
+            if(!checkKeyExistance(topic)) {
+
+                groupedObj[topic] = [article]
+
+            } else if(checkKeyExistance(topic)) {
+
+                groupedObj[topic]?.push(article)
+
+            }
+
+        }
+
+        articles && articles?.map((article: any) => {
+
+            if(article?.topics?.length === 1) {
+
+                addToObject(article?.topics, article)
+                
+                return
+
+            } else if(article?.topics?.length > 1) {
+
+                article?.topics && article?.topics?.map((topic: string) => {
+
+                    addToObject(topic, article)
+
+                    return
+
+                })
+
+            }
+
+            return
+
+        })
+
+        return groupedObj
 
     }
 
@@ -65,19 +131,6 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
     }
 
     useEffect(() => {
-
-        async function fetchData () {
-            try {
-                const entryRes = await getArticleListingPage(entry?.url, locale)
-                setEntry(entryRes)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-
-        onEntryChange(fetchData)
-
-
         const cardsData: ImageCardItem[] | []  =  articles?.map((article) => {
 
             return ({
@@ -91,9 +144,9 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
 
         setCards(cardsData)
 
-        const groupedArticlesList = _.groupBy(articles, (article) => article?.topics)
+        const groupedArticlesList =  groupArticles()
         const topics = Object?.keys(groupedArticlesList)
-
+        
         setGroupedArticles(groupedArticlesList)
         setTopicsList(topics)
 
@@ -121,39 +174,6 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
             
         } else {
 
-            // cardsData =  articles?.filter((article) => {
-
-            //     if(article?.topics && article?.topics?.length > 0 && article?.topics?.includes(filteredTopic)) {
-            //         return true
-            //     }
-
-            //     return false
-            // }).map((article) => {
-                
-
-            //     return ({
-            //         title: article?.title,
-            //         content: article?.summary,
-            //         image: article?.cover_image,
-            //         $: article?.$,
-            //         cta: article?.url
-            //     })
-
-            // }) as ImageCardItem[] | [] 
-
-            // cardsData = groupedArticles?.[filteredTopic as string]?.map((article) => {
-                
-
-            //     return ({
-            //         title: article?.title,
-            //         content: article?.summary,
-            //         image: article?.cover_image,
-            //         $: article?.$,
-            //         cta: article?.url
-            //     })
-
-            // }) as ImageCardItem[] | [] 
-
             const filteredAtricles = groupedArticles?.[filteredTopic as groupedArticlesKey] as Article[]
 
             cardsData = filteredAtricles && filteredAtricles.map((article: any) => {
@@ -175,7 +195,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
     }, [topicFilter])
 
     return (<>
-        {Entry?.title && <div className='pt-16 px-8 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
+        {Entry?.title && <div className='pt-16 mb-16 px-8 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
             <h1 className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
         </div>}
         {Entry?.components && Object.keys(Entry.components)?.length ? (
@@ -184,8 +204,8 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
             />
         ) : <></>}
         
-        <div className='card-collection mt-8'>
-            <div className='flex flex-row justify-center mb-12'>
+        <div className='card-collection mt-8' id='pagination-scroll-anchor'>
+            <div className='flex flex-row justify-center mt-16 mb-12'>
                 <select 
                     id='topics-filter-select' 
                     className='capitalize min-w-[270px] !border-none focus:!border-none bg-[#F0F3F7] !ring-transparent focus:!ring-transparent !text-[#253143] 
@@ -204,7 +224,7 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
                 </select>
             </div>
 
-            <div className={`${ (cards?.length > 4) ? 'mb-0 sm:mb-20' : '' }`}>
+            <div className={`${ (cards?.length > 1) ? 'mb-0 sm:mb-20' : '' }`}>
                 <RenderCardCollection />
             </div>
             {
@@ -223,6 +243,9 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
   
 export const getServerSideProps:GetServerSideProps = async (context) => {
     try {
+        if(context?.query) {
+            livePreviewQuery(context.query)
+        }
         const {locale} = context
 
         const articles = await getArticles(locale)

@@ -16,13 +16,15 @@ export const Stack = (process.env.CONTENTSTACK_API_KEY && process.env.CONTENTSTA
 ContentstackLivePreview.init({
     enable: process.env.isLivePreviewEnabled,
     debug: false,
+    ssr: true,
     stackDetails: {
         apiKey: process.env.CONTENTSTACK_API_KEY
-    },
-    stackSdk: Stack
+    }
 })
 
-export const { onEntryChange } = ContentstackLivePreview
+export const livePreviewQuery = (query) => {
+    Stack.livePreviewQuery(query)
+}
 
 export const isLivePreviewEnabled= process.env.isLivePreviewEnabled
 export const isEditButtonsEnabled= process.env.isEditButtonsEnabled

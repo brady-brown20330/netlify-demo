@@ -5,7 +5,7 @@ import React from 'react'
 const RelatedRegionTopics:React.FC<RelatedRegionTopics> = (props:RelatedRegionTopics) => {
     const { region, topics, $} = props
 
-    return( <div className={'px-8 mb-16'}>
+    return( <div className={'px-8 py-16'}>
         <div className='container mx-auto'>
             {region && region.length > 0 && <div {...$?.region}><span className='font-semibold text-sm inline-block mt-2'>Region:</span> {region.map((item:string, i:number) => 
                 <span key={`region-link-${i}`}>

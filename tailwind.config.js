@@ -79,7 +79,7 @@ module.exports = {
         },
         fontFamily: {
             inter: ['Inter'],
-            sans: ['Inter, sans-serif'],
+            sans: ['Inter', 'sans-serif'],
             thin: ['Inter-thin,Inter, sans-serif'],
             semiBold: ['Inter-SemiBold,Inter, sans-serif'],
             bold: ['Inter-Bold,Inter-SemiBold,Inter, sans-serif'],
