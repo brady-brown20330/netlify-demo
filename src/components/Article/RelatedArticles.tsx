@@ -7,11 +7,10 @@ const RelatedArticles:React.FC<RelatedArticles> = (props:RelatedArticles) => {
     const { related_articles, cards } = props
     const { heading, sub_heading, $ } = {...related_articles} //related_article_tags
     
-    return( <>
-        <div className='-mt-24'>
-            <CardCollection header={{heading, sub_heading, $}} cards={cards} />
-        </div>       
-    </>)
+    return(<div>
+        <CardCollection header={{heading, sub_heading, $}} cards={cards} />
+    </div>
+    )
 }
 
 export { RelatedArticles }

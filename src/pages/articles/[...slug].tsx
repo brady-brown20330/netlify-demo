@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getArticleListingPage, getArticles } from '@/loaders'
 import {  Page } from '@/types'
-import { CardCollection, Pagination } from '@/components'
+import { CardCollection, NoArticles, Pagination } from '@/components'
 import RenderComponents from '@/RenderComponents'
 import { ImageCardItem } from '@/types/components'
 import { Article } from '@/types/pages'
@@ -26,10 +26,10 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
         const articlesList: ImageCardItem[] | [] = cards.slice(firstIndex, lastIndex)
 
         return(
-            <CardCollection
+            cards?.length > 0 ? <CardCollection
                 cards={articlesList}
                 totalCount={cards?.length}
-            />
+            /> : <NoArticles />
         )
 
     }
@@ -59,7 +59,7 @@ export default function Article ({entry, articles, locale}:Page.ArticleListingPa
                 components={Entry?.components}
             />
         ) : <></>}
-        <div className='card-collection mt-8'>
+        <div className='card-collection mt-8' id='pagination-scroll-anchor'>
             <RenderCardCollection />
             {
                 cards?.length > 12 && <div className='py-8 px-8 xl:px-0 bg-background-primary dark:bg-transparent text-center max-w-7xl mx-auto'>

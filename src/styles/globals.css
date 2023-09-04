@@ -36,7 +36,6 @@ body {
     @apply font-normal text-gray-900 dark:text-white !leading-5
   }
 
-
 }
 
 @layer components {
@@ -72,10 +71,16 @@ body {
   .text ol { @apply list-decimal py-1 px-6 }
 
   .text li {
-    @apply text-lg text-[16px] text-[#253143] dark:text-white leading-7 py-1
+    @apply text-lg text-[16px] text-gray-600 dark:text-white leading-7 py-1 font-light
   }
 
-  .text p { @apply py-1 leading-5 text-gray-600 text-justify}
+  .text li strong {
+    @apply font-bold
+  }
+
+  .text p { @apply py-1 font-normal leading-5 text-gray-600 text-base}
+
+  p { @apply py-1 font-normal leading-5 text-gray-600 }
 
   .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 

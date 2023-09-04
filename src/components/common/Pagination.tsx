@@ -49,6 +49,33 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         setCurrentPage(page)
 
         addPageNumberinURL(page.toString())
+
+        handleScroll()
+
+    }
+
+    const handleScroll = () => {
+        
+        const myDiv = document.getElementById('pagination-scroll-anchor')
+        
+        let box: any
+        
+        try {
+            
+            box = myDiv && myDiv.getBoundingClientRect()
+
+            window?.scrollBy(0, box?.y - 85)
+            // window?.scrollBy({
+            //     top: box?.top - 85,
+            //     left: 0,
+            //     behavior: 'smooth'
+            // })
+
+        } catch(e) {
+
+            return
+
+        }
     }
 
     const renderPageNumbers = () => {
@@ -56,7 +83,8 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         return Array.apply(null, Array(numberOfPages)).map((data: any, index: number) => {
             return (
                 <a
-                    href={'#pagination-scroll-anchor'}
+                    // href={'#pagination-scroll-anchor'}
+                    href='javascript:void(0)'
                     key={index + 1}
                     className={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${currentPage === index + 1 ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                     onClick={() => handlePageClick(index + 1)}
@@ -71,7 +99,8 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         <nav className='flex items-center justify-between border-t border-gray-200 px-4 sm:px-0'>
             <div className='-mt-px flex w-0 flex-1'>
                 <a
-                    href={'#pagination-scroll-anchor'}
+                    // href={'#pagination-scroll-anchor'}
+                    href='javascript:void(0)'
                     className={`inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 
                     hover:border-gray-300 hover:text-gray-700 ${((currentPage - 1) < 1)? 'pointer-events-none cursor-default opacity-50 select-none' : ''}`}
                     onClick={() => handlePageClick(currentPage - 1)}
@@ -87,7 +116,8 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
             </div>
             <div className='-mt-px flex w-0 flex-1 justify-end'>
                 <a
-                    href={'#pagination-scroll-anchor'}
+                    // href={'#pagination-scroll-anchor'}
+                    href='javascript:void(0)'
                     className={`inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 
                     hover:border-gray-300 hover:text-gray-700 ${((currentPage + 1) > numberOfPages)? 'pointer-events-none cursor-default opacity-50 select-none' : ''}`}
                     onClick={() => handlePageClick(currentPage + 1)}

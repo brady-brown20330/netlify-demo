@@ -15,9 +15,12 @@ import { Pagination } from '@/components'
 import _, { Dictionary } from 'lodash'
 import { Article } from '@/types/pages'
 import { livePreviewQuery } from '@/config'
+import { NextRouter, useRouter } from 'next/router'
 
 
 export default function ArticleListing ({entry, articles, locale}:Page.ArticleListingPage) { 
+
+    const router: NextRouter = useRouter()
 
     const [Entry, setEntry] = useState(entry)
     const [cards, setCards] = useState<ImageCardItem[] | []>([])
@@ -55,6 +58,12 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
             />
         )
 
+    }
+
+
+    const addPageNumberinURL= (page: string) => {
+        router.query.page =  page
+        router.push(router, undefined, {scroll: false})
     }
 
     // * Method to group the articles based on topics
@@ -191,6 +200,12 @@ export default function ArticleListing ({entry, articles, locale}:Page.ArticleLi
         }
 
         setCards(cardsData)
+
+        if(cardsData?.length < 12) {
+
+            addPageNumberinURL('1')
+
+        }
 
     }, [topicFilter])
 

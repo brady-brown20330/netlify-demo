@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
 import { getArticleListingPage, getArticles } from '@/loaders'
 import { livePreviewQuery } from '@/config'
-import { CardCollection, Pagination } from '@/components'
+import { CardCollection, NoArticles, Pagination } from '@/components'
 import RenderComponents from '@/RenderComponents'
 import { ImageCardItem } from '@/types/components'
 import {  Page } from '@/types'
@@ -23,10 +23,10 @@ export default function ArticleListing ({entry, articles}:Page.ArticleListingPag
         const articlesList: ImageCardItem[] | [] = cards?.slice(firstIndex, lastIndex)
 
         return(
-            <CardCollection
+            cards?.length > 0 ? <CardCollection
                 cards={articlesList}
                 totalCount={cards?.length}
-            />
+            /> : <NoArticles />
         )
 
     }

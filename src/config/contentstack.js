@@ -6,17 +6,20 @@ export const Stack = (process.env.CONTENTSTACK_API_KEY && process.env.CONTENTSTA
     delivery_token: process.env.CONTENTSTACK_DELIVERY_TOKEN,
     environment: process.env.CONTENTSTACK_ENVIRONMENT,
     branch: process.env.CONTENTSTACK_BRANCH,
-    region: Contentstack.Region[process.env.CONTENTSTACK_REGION],
     live_preview: {
         enable: true,
+        host: process.env.CONTENTSTACK_API_HOST,
         management_token: process.env.CONTENTSTACK_MANAGEMENT_TOKEN
     }
 })
+
+process.env.CONTENTSTACK_HOST && Stack.setHost(process.env.CONTENTSTACK_HOST)
 
 ContentstackLivePreview.init({
     enable: process.env.isLivePreviewEnabled,
     debug: false,
     ssr: true,
+    clientUrlParams: { host: process.env.CONTENTSTACK_APP_HOST },
     stackDetails: {
         apiKey: process.env.CONTENTSTACK_API_KEY
     }

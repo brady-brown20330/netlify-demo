@@ -1,11 +1,12 @@
 import React from 'react'
 import { Image, Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
-import { resolveCardCta, resolveCtaText } from './Card.helper'
+import { resolveCardCta } from './Card.helper'
 import { classNames } from '@/utils'
 
 // ? TSOND-153 | Revamp code for demo purpose
 import { useRouter } from 'next/router'
+import { isString } from 'lodash'
 
 const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
     const { $, image, image_alt_text, title, cta, content, count, totalCount } = props
@@ -43,25 +44,25 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 </>}
 
                 <div className='mt-6 text-xl text-gray-500 dark:text-white'>
-                    {title && <h4 className='font-bold card-title'
-                    >
-                        {title}
-                    </h4>
+                    {title 
+                        && <h4 className='font-bold card-title'>
+                            {title}
+                        </h4>
                     }
                 </div>
-                {content && <p className='mt-2 text-base leading-5 text-gray-600 dark:text-white card-content'
+                {content && <p className='mt-4 p-0 text-base leading-5 text-gray-600 dark:text-white card-content'
                 >
                     {content}
                 </p>
                 }
             </div>
             <div>
-                {cta && <p className='mt-3 text-base font-semibold !text-purple'>
+                {cta && !isString(cta) && cta?.text && <p className='mt-3 text-base font-semibold !text-purple'>
                     <Link
                         url={resolveCardCta(cta)}
                         className='!text-purple hover:border-b-2  hover:border-purple cursor-pointer'
                     >
-                        {resolveCtaText(cta)}
+                        {cta.text}
                     </Link> &rarr;
                 </p>
                 }

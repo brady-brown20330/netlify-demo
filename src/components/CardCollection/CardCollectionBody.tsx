@@ -1,12 +1,8 @@
-import { useRouter } from 'next/router'
 import { classNames } from '@/utils'
 import { Card } from '../Card'
-import { Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
 
 const CardCollectionBody = ({cards, totalCount}:{cards?: ImageCardItem[]|[], totalCount: number }) => {
-    const router = useRouter()
-    const isArticleListingPage = router.pathname.includes('/articles/')
 
     const gridConfigurator  = () => {
 
@@ -48,15 +44,7 @@ const CardCollectionBody = ({cards, totalCount}:{cards?: ImageCardItem[]|[], tot
                 )
             })
             }
-        </div>
-            : cards && cards?.length <= 0 && isArticleListingPage ? <div className='text-sm w-full h-52 text-center px-8'>
-                <p className='mx-auto my-auto pt-24 border-t-2 border-gray-200'>
-            0 Article(s) Found &nbsp;
-                    <Link url='/articles' className='font-semibold'>
-                Browse All <span aria-hidden='true'>&rarr;</span>
-                    </Link>
-                </p>
-            </div> : <></>
+        </div> : <></>
     )
 }
 

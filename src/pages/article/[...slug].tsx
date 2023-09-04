@@ -65,8 +65,10 @@ export const getServerSideProps:GetServerSideProps = async (context) => {
             ? '/article/' + params?.slug?.join('/') 
             : params.slug
         const res: Page.ArticlePage = await getArticle(`${paramsPath}`,locale)
-        const articles = await getArticles(locale)
         if (!res) return { notFound: true }
+
+        livePreviewQuery({}) // need to reset livepreview query here because it is passing entry_uid from live preview query to getAllEntries call which
+        const articles = await getArticles(locale) // returns only 1 article expected were 20 or more
         return {
             props: {
                 entry: {

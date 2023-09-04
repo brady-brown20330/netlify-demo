@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-shadow */
 /* eslint-disable max-len */
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Dialog, Popover, Transition } from '@headlessui/react'
 import { Bars3Icon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline'
 import { App } from '@/types'
@@ -14,6 +14,8 @@ function Header (props: App.Header) {
     const [open, setOpen] = useState(false)
     const [currPanel, setCurrPanel] = useState('')
     const { logo, logo_desktop, main_navigation: navigation } = data
+
+    const nav: any = useRef(null)
 
     const handleMouseOver = (e: React.MouseEvent) => {
         const title=(e.target as HTMLElement).getAttribute('data-title')
@@ -37,8 +39,25 @@ function Header (props: App.Header) {
         setOpen(false)
     }
 
+    useEffect(() => {
+
+        if(currPanel === '') return
+
+        const handleClick = (event: any) => {
+
+            if(nav.current && !nav?.current?.contains(event.target)) setCurrPanel('')
+
+        }
+
+        window.addEventListener('click', handleClick)
+
+        // Clean up - Removing Event Listener
+        return () => window.removeEventListener('click', handleClick)
+
+    }, [currPanel])
+
     return (
-        <div className='sticky z-50 top-0 bg-white dark:bg-black'>
+        <div className='sticky z-50 top-0 bg-white dark:bg-black' ref={nav}>
             {/* Mobile menu */}
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as='div' className='relative z-40 sm:hidden' onClose={setOpen}>

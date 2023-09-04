@@ -21,9 +21,11 @@ You can start editing the page by modifying `app/index.tsx`. The page auto-updat
 CONTENTSTACK_API_KEY=<<CONTENTSTACK_API_KEY>>
 CONTENTSTACK_DELIVERY_TOKEN=<<CONTENTSTACK_DELIVERY_TOKEN>>
 CONTENTSTACK_MANAGEMENT_TOKEN=<<CONTENTSTACK_MANAGEMENT_TOKEN>>
-CONTENTSTACK_REGION=<<CONTENTSTACK_REGION>>
 CONTENTSTACK_ENVIRONMENT=<<CONTENTSTACK_ENVIRONMENT>>
 CONTENTSTACK_BRANCH=<<CONTENTSTACK_BRANCH_NAME>>
+CONTENTSTACK_API_HOST=<<CONTENTSTACK_API_HOST>>
+CONTENTSTACK_HOST=<<CONTENTSTACK_CDN_HOST>>
+CONTENTSTACK_APP_HOST=<<CONTENTSTACK_APP_URL>>
 
 CONTENTSTACK_LIVE_PREVIEW=<< true | false >>
 CONTENTSTACK_LIVE_EDIT_TAGS=<< true | false >>
@@ -36,6 +38,7 @@ DEFAULT_LOCALE=en-us
 # LOCALSTORAGE_WEBCONFIG_TTL=84600
 
 ```
-
+## Compass Starter Stack Content Stored for OCT
+[Compass Starter Stack Content Repo](https://github.com/Contentstack-Solutions/universal-demo-stack)
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
