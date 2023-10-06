@@ -31,7 +31,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         // eslint-disable-next-line radix
             const queryPage: number = parseInt(query?.page as string)
             if( queryPage >= 1 && queryPage <= numberOfPages && queryPage !== undefined){
-                handlePageClick(queryPage) // for tabs to change if page query typed in url
+                handlePageNumberQueryParam(queryPage) // for tabs to change if page query typed in url
             }
             else{
                 addPageNumberinURL('1')
@@ -41,6 +41,54 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         addPageNumberinURL('1')
     }, [router.isReady])
 
+    /**
+     * @description Handle the update in URL query param and page number on page load - NO SCROLL
+     * @type function
+     * @param { number } page
+     * @returns null
+     */
+    const handlePageNumberQueryParam = (page: number) => {
+        if (page < 1) return
+        if (page > numberOfPages) return
+
+        setCurrentPage(page)
+
+        addPageNumberinURL(page.toString())
+
+        handleScroll()
+
+    }
+
+    const handleScroll = () => {
+        
+        const myDiv = document.getElementById('pagination-scroll-anchor')
+        
+        let box: any
+        
+        try {
+            
+            box = myDiv && myDiv.getBoundingClientRect()
+
+            window?.scrollBy(0, box?.y - 85)
+            // window?.scrollBy({
+            //     top: box?.top - 85,
+            //     left: 0,
+            //     behavior: 'smooth'
+            // })
+
+        } catch(e) {
+
+            return
+
+        }
+    }
+
+    /**
+     * @description Handle the update in URL query param and page number on pagination click - WILL SCROLL
+     * @type function
+     * @param { number } page
+     * @returns null
+     */
     const handlePageClick = (page: number) => {
 
         if (page < 1) return
@@ -54,6 +102,11 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
 
     }
 
+    /**
+     * @description Scrolls to the pre-defined anchor after pagination page number updates. Scroll anchor is preset to the starting of the article cards section.
+     * @type function
+     * @returns null
+     */
     const handleScroll = () => {
         
         const myDiv = document.getElementById('pagination-scroll-anchor')

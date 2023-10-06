@@ -11,6 +11,7 @@ export default function ArticleListing ({entry, articles}:Page.ArticleListingPag
 
     const [Entry, setEntry] = useState(entry)
     const [cards, setCards] = useState<ImageCardItem[] | []>([])
+    const noArticles = articles && articles?.length > 0 ? false : true
     const [currentPage, setCurrentPage] = useState<number>(1)
     // eslint-disable-next-line
     const [articlesPerPage, setArticlesPerPage] = useState<number>(12)
@@ -23,10 +24,14 @@ export default function ArticleListing ({entry, articles}:Page.ArticleListingPag
         const articlesList: ImageCardItem[] | [] = cards?.slice(firstIndex, lastIndex)
 
         return(
-            cards?.length > 0 ? <CardCollection
-                cards={articlesList}
-                totalCount={cards?.length}
-            /> : <NoArticles />
+            noArticles ? <NoArticles />
+                : <>
+                    {cards?.length > 0
+                    && <CardCollection
+                        cards={articlesList}
+                        totalCount={cards?.length}
+                    /> }
+                </> 
         )
 
     }
