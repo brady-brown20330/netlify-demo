@@ -42,17 +42,18 @@ function MyApp (props: App.Props) {
                     {...pageProps?.entry}
                     locale={locale}
                 />}
+                <link rel='preload' href='/fonts/Inter-Black.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-Bold.woff2' as='font' type='font/woff2'  crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-ExtraBold.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-ExtraLight.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-Light.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-Medium.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-Regular.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-SemiBold.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='preload' href='/fonts/Inter-Thin.woff2' as='font' type='font/woff2' crossOrigin='' />
+                <link rel='stylesheet' href='/fonts/inter.css'/>
             </Head>
-            <link rel='preload' href='/fonts/Inter-Black.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-Bold.woff2' as='font' type='font/woff2'  crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-ExtraBold.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-ExtraLight.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-Light.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-Medium.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-Regular.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-SemiBold.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='preload' href='/fonts/Inter-Thin.woff2' as='font' type='font/woff2' crossOrigin='' />
-            <link rel='stylesheet' href='/fonts/inter.css'/>
+            
             <ErrorBoundary
                 FallbackComponent={ErrorHandler}
             >
