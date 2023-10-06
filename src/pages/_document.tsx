@@ -3,9 +3,7 @@ export default function MyDocument (props: { locale: string }) {
     const {locale} = props
     return (
         <Html lang={locale}>
-            <Head>
-
-            </Head>
+            <Head />
             <body>
                 <Main />
                 <NextScript />
