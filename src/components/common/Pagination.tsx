@@ -54,33 +54,6 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
         setCurrentPage(page)
 
         addPageNumberinURL(page.toString())
-
-        handleScroll()
-
-    }
-
-    const handleScroll = () => {
-        
-        const myDiv = document.getElementById('pagination-scroll-anchor')
-        
-        let box: any
-        
-        try {
-            
-            box = myDiv && myDiv.getBoundingClientRect()
-
-            window?.scrollBy(0, box?.y - 85)
-            // window?.scrollBy({
-            //     top: box?.top - 85,
-            //     left: 0,
-            //     behavior: 'smooth'
-            // })
-
-        } catch(e) {
-
-            return
-
-        }
     }
 
     /**
