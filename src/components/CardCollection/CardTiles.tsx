@@ -1,9 +1,26 @@
 import { classNames } from '@/utils'
 import { ImageCardItem } from '@/types/components'
 import { CardTile } from '../CardTile'
+import { useEffect, useState } from 'react'
 
 
 const CardTiles = ({cards, totalCount, id}:{ id?: string | number, cards?: ImageCardItem[]|[], totalCount: number }) => {
+
+    const [subTitle, setSubTitle] = useState(false)
+
+    useEffect(() => {
+
+        let exists = false
+
+        cards?.map((cardData) => {
+
+            if(cardData?.subtitle) exists = true 
+
+        })
+
+        setSubTitle(exists)
+
+    }, [cards])
 
     const gridConfigurator  = () => {
 
@@ -42,6 +59,7 @@ const CardTiles = ({cards, totalCount, id}:{ id?: string | number, cards?: Image
                     {...cardData}
                     count={cards.length}
                     totalCount={totalCount}
+                    subtitleExists={subTitle}
                 />
                 )
             })

@@ -146,6 +146,7 @@ export interface ImageCardText {
   cta?: Cta;
   url?: Cta | string;
   summary?: string;
+  subtitleExists?: boolean
 }
 
 export type CardImage = Asset & {

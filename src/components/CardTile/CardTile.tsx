@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { isString } from 'lodash'
 
 const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, subtitle, cta, content, count, totalCount, id, key } = props
+    const { $, image, image_alt_text, title, subtitle, cta, content, count, totalCount, id, key, subtitleExists } = props
 
     // ? TSOND-153 | Revamp code for demo purpose
     const router = useRouter()
@@ -33,6 +33,7 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
     return (
         <div
             id={`card-tile-${id}-${key}`}
+            key={`card-tile-${id}-${key}`}
             className={`group h-full relative flex flex-col justify-between ${styles.card} ${totalCount && totalCount > 1 && router?.pathname === '/articles/revamp' ? 'card-styled' : ''}`}
             {...$?.title}
         >
@@ -41,19 +42,21 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                     {title
                         && <h4
                             data-id='h4-text'
-                            className='text-4xl font-montserrat font-semibold text-black'>
+                            className='text-4xl font-montserrat font-semibold text-black card-tile-title'>
                             {title}
                         </h4>
                     }
                 </div>
 
-                <div className=' mt-4 text-center'>
-                    <span
-                        data-id='span-text'
-                        className='text-2xl font-montserrat text-black font-normal'>
-                        {subtitle ? subtitle : '\xa0'}
-                    </span>
-                </div>
+                {
+                    subtitleExists && <div className=' mt-4 text-center'>
+                        <span
+                            data-id='span-text'
+                            className='text-2xl font-montserrat text-black font-normal'>
+                            {subtitle ? subtitle : '\xa0'}
+                        </span>
+                    </div>
+                }
 
                 {cta ? <Link
                     url={resolveCardCta(cta)}
