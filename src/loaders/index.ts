@@ -8,6 +8,9 @@ export const getHomePage = ( cmsUrlPath: string | undefined, locale: string | un
         ...prefixReferenceIncludes('teaser', ...teaserReferenceIncludes),
         ...prefixReferenceIncludes('card_collection', ...imageCardsReferenceIncludes)
     )
+
+    newRefUids.push(...prefixReferenceIncludes('featured_articles', 'articles'))
+
     return getEntryByUrl('home_page',locale, '/', newRefUids, [])
 }
 

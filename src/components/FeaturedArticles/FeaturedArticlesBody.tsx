@@ -1,8 +1,10 @@
 import { classNames } from '@/utils'
 import { Card } from '../Card'
-import { ImageCardItem } from '@/types/components'
+import { ArticleCardItem, FeaturedArticles } from '@/types/components'
+import { ArticleCard } from './ArticleCard'
+import { MappedPreview } from '@/types/common'
 
-const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: ImageCardItem[]|[], totalCount: number }) => {
+const FeaturedArticlesBody = ({cards, totalCount, id, $}:{ id?: string, cards?: ArticleCardItem[]|[], totalCount: number, $?: MappedPreview<FeaturedArticles> }) => {
 
     const gridConfigurator  = () => {
 
@@ -32,10 +34,11 @@ const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: Image
                     'grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                 )
             }
+            {...$?.heading}
         >
             {cards?.map((cardData: any, idx: number) => {
                 //eslint-disable-next-line
-                return (<Card
+                return (<ArticleCard
                     id={id}
                     key={idx}
                     {...cardData}
@@ -49,4 +52,4 @@ const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: Image
     )
 }
 
-export {CardCollectionBody}
+export {FeaturedArticlesBody}

@@ -28,6 +28,7 @@ export default function ArticleListing ({entry, articles}:Page.ArticleListingPag
                 : <>
                     {cards?.length > 0
                     && <CardCollection
+                        id='articles-card-collection'
                         cards={articlesList}
                         totalCount={cards?.length}
                     /> }
@@ -55,7 +56,7 @@ export default function ArticleListing ({entry, articles}:Page.ArticleListingPag
     return (
         <>
             {Entry?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
-                <h1 className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
+                <h1 data-id='h1' className='mx-auto text-gray-900' {...Entry?.$?.title}>{Entry?.title}</h1>
             </div>}
             {Entry?.components && Object.keys(Entry.components)?.length ? (
                 <RenderComponents

@@ -1,12 +1,12 @@
 import type { AppProps } from 'next/app'
 import { Asset, Entry, MappedPreview } from './common'
-import { InternalLink } from './components'
-import { AssetPreset } from './extensions'
+import { CallToAction, InternalLink } from './components'
 
 export interface Header extends Entry {
   logo?: Asset;
-  logo_desktop?: Asset;
+  // logo_desktop?: Asset;
   // site_url?: string;
+  scrolled?: boolean;
   main_navigation?: Navigation[];
   $?: MappedPreview<Header>;
 }
@@ -19,40 +19,37 @@ export interface Navigation extends Entry {
         title?:string
         link:InternalLink[]
         links: {
+          thumbnail?: Asset;
+          $?: { text?: {'data-cslp': string} };
           text?:string
           link:InternalLink[]
         }[]
-      }[]
+      }[];
+      cta_group?: {
+        call_to_action?:CallToAction[]
+      }[];
     }[]
   }[]
   // $?: MappedPreview<Header>;
 }
 export interface Footer extends Entry {
-  sections?:{
-    title?: string
-    link: InternalLink[]
-    links: {
-      text?: string
-      link: InternalLink[]
-    }[]
-  }[];
+  sections?:FooterSection[];
   copyright_info: string;
   $?: MappedPreview<Footer>;
   logo?: Asset;
 }
 
-export interface FooterSection {
-  title?: string
-  link: InternalLink[]
-  links: {
-    text?: string
-    link: InternalLink[]
-  }[]
+export interface FooterSection extends FooterLink {
+  links: FooterLink[]
 }
 
 export interface FooterLink {
   text?: string
   link: InternalLink[]
+  external_link?: {
+    title?: string
+    url?: string
+  }
 }
  
 export type SingleColLayout = {
@@ -60,6 +57,7 @@ export type SingleColLayout = {
   main_navigation?: Navigation[];
   footer_navigation?: Footer[];
   children: React.ReactNode;
+  scrolled?: boolean;
 };
 
 export type csWebConfig =   Entry & Header & {

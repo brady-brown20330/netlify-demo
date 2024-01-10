@@ -114,6 +114,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                     key={index + 1}
                     className={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${currentPage === index + 1 ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}
                     onClick={() => handlePageClick(index + 1)}
+                    id={`pagination-btn-${index}`}
                 >
                     {index + 1}
                 </a>
@@ -122,7 +123,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
     }
 
     return (
-        <nav className='flex items-center justify-between border-t border-gray-200 px-4 sm:px-0'>
+        <nav id='pagination-component' className='flex items-center justify-between border-t border-gray-200 px-4 sm:px-0'>
             <div className='-mt-px flex w-0 flex-1'>
                 <a
                     // href={'#pagination-scroll-anchor'}
@@ -130,6 +131,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                     className={`inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 
                     hover:border-gray-300 hover:text-gray-700 ${((currentPage - 1) < 1)? 'pointer-events-none cursor-default opacity-50 select-none' : ''}`}
                     onClick={() => handlePageClick(currentPage - 1)}
+                    id='pagination-prev-btn'
                 >
                     <ArrowLongLeftIcon className='mr-3 h-5 w-5 text-gray-400' aria-hidden='true' />
                     Previous
@@ -147,6 +149,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                     className={`inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 
                     hover:border-gray-300 hover:text-gray-700 ${((currentPage + 1) > numberOfPages)? 'pointer-events-none cursor-default opacity-50 select-none' : ''}`}
                     onClick={() => handlePageClick(currentPage + 1)}
+                    id='pagination-next-btn'
                 >
                     Next
                     <ArrowLongRightIcon className='ml-3 h-5 w-5 text-gray-400' aria-hidden='true' />

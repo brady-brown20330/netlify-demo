@@ -20,11 +20,19 @@ export interface pageLink {
   url?: string | InternalLink[];
 }
 
+export type CallToAction = {
+  text: string
+  icon?: Asset
+  internal_link?: InternalLink[]
+  external_link?: string
+}
+
 // ######################### COMPONENTS #########################
 export interface LinkComponent extends pageLink {
   children?: ReactNode;
   className?: string;
-  'data-title'?:string
+  target?: string | undefined;
+  'data-title'?:string;
 }
 
 export interface CtaCollection {
@@ -37,7 +45,9 @@ export type Cta = {
 };
 
 export interface Image {
+  id?: string | number;
   image?: AssetPreset & Asset;
+  cover_image?: AssetPreset & Asset
   image_alt_text?: string;
   image_position?: string;
   $? : MappedPreview<Image>;
@@ -47,6 +57,7 @@ export interface ImageComponent extends Image {
 }
 
 export interface Text {
+  id?: string | number;
   content?: string;
   styles?: {
     background_color?: string;
@@ -55,6 +66,7 @@ export interface Text {
 }
 
 export interface TextAndImage extends Image {
+  id?: string;
   heading?: string;
   styles:{
     image_position?: string;
@@ -62,28 +74,55 @@ export interface TextAndImage extends Image {
   }
   cta: Cta[];
   content?: string;
+  icon?:Image['image'];
   $?: MappedPreview<TextAndImage>;
 }
 
 export interface Teaser {
+  id?: string
   $?: MappedPreview<Teaser>;
   heading?: string;
   content?: string;
   cta?: Cta[];
   image?: Image[];
   styles?: {
-    full_screen?: boolean;
+    text_align?: string;
   }
 }
 
+export interface FeaturedArticles {
+  $?: MappedPreview<FeaturedArticles>;
+  id?: string;
+  articles?: ImageCardItem[] | [];
+  heading?: string;
+  sub_heading?: string;
+}
+
+export interface FeaturedArticlesHeader {
+  $?: MappedPreview<FeaturedArticlesHeader>;
+  id?: string;
+  heading?:string
+  sub_heading?:string
+}
+
+export type ArticleCardItem = ImageCardGraphics &
+  ImageCardText & {
+    id?: string | number;
+    key?: string | number;
+    totalCount?: number;
+    $: MappedPreview<ImageCardGraphics & ImageCardText>;
+};
+
 export interface CardCollectionHeader {
   $?: MappedPreview<CardCollectionHeader>;
+  id?: string;
   heading?:string
   sub_heading?:string
   
 }
 export interface CardCollection {
   $?: MappedPreview<CardCollection>;
+  id?: string;
   cards?: ImageCardItem[] | [];
   header?: CardCollectionHeader;
   totalCount?: number;
@@ -91,17 +130,22 @@ export interface CardCollection {
 
 export type ImageCardItem = ImageCardGraphics &
   ImageCardText & {
+    id?: string | number;
+    key?: string | number;
     totalCount?: number;
     $: MappedPreview<ImageCardGraphics & ImageCardText>;
-  };
+};
 
 export interface ImageCardGraphics extends Image {
   count?: number;
 }
 export interface ImageCardText {
   title?: string;
+  subtitle?: string;
   content?: string;
-  cta?: Cta | string;
+  cta?: Cta;
+  url?: Cta | string;
+  summary?: string;
 }
 
 export type CardImage = Asset & {
@@ -139,6 +183,11 @@ export interface pagination {
   dataPerPage: number
   currentPage: number
   setCurrentPage: Dispatch<SetStateAction<number>>
+}
+
+export interface Carousel {
+  className?: string,
+  children? :string|ReactNode
 }
 
 // ######################### COMPONENTS END #########################

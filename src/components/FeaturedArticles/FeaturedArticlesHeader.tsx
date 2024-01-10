@@ -1,11 +1,10 @@
-import { CardCollectionHeader } from '@/types/components'
-// import { Header as HeaderProps } from '@/types/components'
+import { FeaturedArticlesHeader } from '@/types/components'
 
-const CardCollectionHeader: React.FC<CardCollectionHeader> = (props: CardCollectionHeader) => {
+const FeaturedArticlesHeader: React.FC<FeaturedArticlesHeader> = (props: FeaturedArticlesHeader) => {
     const { $, heading, sub_heading, id } = props
 
     return (
-        <div className='relative mx-auto flex max-w-4xl flex-col items-center text-center my-24'>
+        <div className='relative mx-auto flex max-w-4xl flex-col items-center text-center mt-24 mb-8'>
             {heading && <h2
                 data-id='h2-text'
                 {...$?.heading}
@@ -25,4 +24,4 @@ const CardCollectionHeader: React.FC<CardCollectionHeader> = (props: CardCollect
 }
 
 
-export { CardCollectionHeader }
+export { FeaturedArticlesHeader }

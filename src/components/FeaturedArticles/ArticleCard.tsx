@@ -1,22 +1,23 @@
 import React from 'react'
 import { Image, Link } from '@/components'
-import { ImageCardItem } from '@/types/components'
-import { resolveCardCta } from './Card.helper'
+import { ArticleCardItem } from '@/types/components'
+import { resolveCardCta } from '../Card/Card.helper'
 import { classNames } from '@/utils'
 
 // ? TSOND-153 | Revamp code for demo purpose
 import { useRouter } from 'next/router'
-import { isString } from 'lodash'
 
-const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, cta, content, count, totalCount, key, id } = props
+const ArticleCard: React.FC<ArticleCardItem> = (props: ArticleCardItem) => {
+    const { cover_image, image_alt_text, title, url, summary, count, totalCount, key, id } = props
     
+    cover_image && delete cover_image.$
+
     // ? TSOND-153 | Revamp code for demo purpose
     const router = useRouter()
 
     {/* eslint-disable-next-line jsx-a11y/alt-text */}
-    const cardImage = image ? <Image
-        image={image}
+    const cardImage = cover_image ? <Image
+        image={cover_image}
         image_alt_text={image_alt_text}
         className={classNames(
             count === 1 ? 'h-auto w-auto'
@@ -33,11 +34,11 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
         <div
             id={`card-${id}-${key}`}
             className={`group h-full relative flex flex-col justify-between ${totalCount && totalCount  > 1 && router?.pathname === '/articles/revamp' ? 'card-styled' : ''}`}
-            {...$?.title}
+            // {...$?.title}
         >
             <div className='flex flex-col'>
-                {cta ? <Link
-                    url={resolveCardCta(cta)}
+                {url ? <Link
+                    url={resolveCardCta(url)}
                 >
                     {cardImage}
                 </Link> : <>
@@ -53,27 +54,27 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                         </h4>
                     }
                 </div>
-                {content && <p 
+                {summary && <p 
                     data-id='paragraph-text' 
                     className='mt-4 p-0 text-base leading-5 text-gray-600 dark:text-white card-content'
                 >
-                    {content}
+                    {summary}
                 </p>
                 }
             </div>
-            <div>
-                {cta && !isString(cta) && cta?.text && <p className='mt-3 text-base font-semibold !text-purple'>
+            {/* <div>
+                {url && !isString(url) && url?.text && <p className='mt-3 text-base font-semibold !text-purple'>
                     <Link
-                        url={resolveCardCta(cta)}
+                        url={resolveCardCta(url)}
                         className='!text-purple hover:border-b-2  hover:border-purple cursor-pointer'
                     >
-                        {cta.text}
+                        {url.text}
                     </Link> &rarr;
                 </p>
                 }
-            </div>
+            </div> */}
         </div>
     )
 }
 
-export { Card }
+export { ArticleCard }
