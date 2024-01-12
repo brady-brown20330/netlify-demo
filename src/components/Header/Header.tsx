@@ -92,8 +92,8 @@ function Header (props: App.Header) {
 
                 {/* DESKTOP MENU */}
                 <Popover.Group className='hidden lg:flex lg:gap-x-12'>
-                    {navigation?.[0]?.items?.map((item) => (
-                        item?.mega_menu?.length ? <Popover key={item.text}>
+                    {navigation?.[0]?.items?.map((item, itemInd) => (
+                        item?.mega_menu?.length ? <Popover key={item.text} data-id={`navItem-${itemInd}`}>
                             <Popover.Button className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900 outline-none'>
                                 {item.text}
                                 <ChevronDownIcon className='h-5 w-5 flex-none text-gray-900' aria-hidden='true' />
@@ -115,10 +115,11 @@ function Header (props: App.Header) {
                                         <Carousel
                                             className='mx-auto px-6 xl:pr-0 xl:pl-8 py-10'
                                         >
-                                            {item?.mega_menu?.[0]?.sections?.[0]?.links?.map((linkData) => (
+                                            {item?.mega_menu?.[0]?.sections?.[0]?.links?.map((linkData, ind) => (
                                                 <div 
                                                     key={linkData?.text}
                                                     className={'mb-8 mt-4 w-72 xl:w-40 xl:pr-8 pr-14'}
+                                                    data-id={`navItem-${itemInd}-card-${ind}`}
                                                 >
                                                     <div {...linkData?.$?.text}>
                                                         {linkData?.text && <p
@@ -128,7 +129,7 @@ function Header (props: App.Header) {
                                                         </p>}
                                                         <Link
                                                             url={linkData?.link?.[0]?.url}
-                                                            className='flex flex-col'
+                                                            className='flex flex-col outline-none'
                                                         >
                                                             {linkData?.thumbnail?.url && <img
                                                                 src={linkData.thumbnail.url} className='object-cover h-40'
@@ -188,20 +189,16 @@ function Header (props: App.Header) {
                                         item?.text
                                         && <Fragment key={`mobile-navItem-${i}`}>
                                             <div
-                                                className={' flex justify-between items-center py-2 pr-3'}>
-                                                <div 
-                                                    // onClick={resetMobileNav}
+                                                className={' flex justify-between items-center py-2 pr-3'}
+                                                data-id={`menuItem-${i}`}
+                                            >
+                                                <Link
+                                                    url={item?.link}
+                                                    className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50`}
+                                                    $={item.$.text}
                                                 >
-                                                    <Link
-                                                        url={item?.link}
-                                                        className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50`}
-                                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                                        // @ts-ignore
-                                                        $={...item?.$?.text}
-                                                    >
-                                                        {item.text}
-                                                    </Link>
-                                                </div>
+                                                    {item.text}
+                                                </Link>
                                                 {item && item?.mega_menu?.[0]?.sections && item?.mega_menu?.[0]?.sections?.length > 0 && <>
                                                     {currPanel === item?.text
                                                         ? <ChevronUpIcon
@@ -221,6 +218,7 @@ function Header (props: App.Header) {
                                                 {item && item?.mega_menu?.[0]?.sections?.map((sect, ind) => (
                                                     <div
                                                         key={`section-${ind}`}
+                                                        data-id={`section-${ind}`}
                                                         className={`!items-start w-full ${currPanel === item?.text ? '' : 'hidden'}`}
                                                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                         // @ts-ignore
