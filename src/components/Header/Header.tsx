@@ -195,7 +195,9 @@ function Header (props: App.Header) {
                                                 <Link
                                                     url={item?.link}
                                                     className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50`}
-                                                    $={item.$.text}
+                                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                    // @ts-ignore
+                                                    $={{...item?.$?.text}}
                                                 >
                                                     {item.text}
                                                 </Link>
