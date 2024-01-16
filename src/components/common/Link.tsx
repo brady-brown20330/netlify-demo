@@ -2,8 +2,8 @@ import { buildLinkUrl } from '@/utils'
 import { LinkComponent} from '@/types/components'
 
 const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
-    const { url, children, className, $ } = props
-    const elemattr = {className, ['data-title']: props?.['data-title'], ...$ }
+    const { url, children, className, target,  $ } = props
+    const elemattr = {className, target: target || '_self', ['data-title']: props?.['data-title'], ...$ }
 
     let internal_link, external_link
     if ( typeof url !== 'string') {
@@ -16,11 +16,11 @@ const LinkComponent: React.FC<LinkComponent> = (props: LinkComponent) => {
     const href = buildLinkUrl(internal_link, external_link)
 
 
-    const LinkWrapper = () => <a href={`${href}`} {...elemattr}>
+    const LinkWrapper = () => <a data-id='link-href' href={`${href}`} {...elemattr}>
         {children}
     </a>
 
-    const LinkPlaceholder = () => <span {...elemattr}>
+    const LinkPlaceholder = () => <span data-id='link-placeholder' {...elemattr}>
         {children}
     </span>
 

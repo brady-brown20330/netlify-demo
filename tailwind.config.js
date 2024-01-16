@@ -81,9 +81,10 @@ module.exports = {
             inter: ['Inter'],
             sans: ['Inter', 'sans-serif'],
             thin: ['Inter-Thin, Inter-thin, Inter, sans-serif'],
-            semiBold: ['Inter-SemiBold,Inter, sans-serif'],
-            bold: ['Inter-Bold,Inter-SemiBold,Inter, sans-serif'],
-            extraBold: ['Inter-ExtraBold, Inter-Bold,Inter-SemiBold,Inter, sans-serif']
+            montserrat: ['Montserrat', 'sans-serif']
+            // semiBold: ['Inter-SemiBold,Inter, sans-serif'],
+            // bold: ['Inter-Bold,Inter-SemiBold,Inter, sans-serif'],
+            // extraBold: ['Inter-ExtraBold, Inter-Bold,Inter-SemiBold,Inter, sans-serif']
         }
     },
     plugins: [

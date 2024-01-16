@@ -76,6 +76,7 @@ export type Entry = CommonSystemInfo & {
     updated_at: string
     username: string
   }
+  featured_articles?: any;
   _version?: number
 }
 

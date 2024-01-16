@@ -8,7 +8,7 @@ const RelatedArticles:React.FC<RelatedArticles> = (props:RelatedArticles) => {
     const { heading, sub_heading, $ } = {...related_articles} //related_article_tags
     
     return(<div>
-        <CardCollection header={{heading, sub_heading, $}} cards={cards} />
+        <CardCollection header={{heading, sub_heading, $}} cards={cards} id='related-articles-card-collection' />
     </div>
     )
 }

@@ -1,8 +1,26 @@
 import { classNames } from '@/utils'
-import { Card } from '../Card'
 import { ImageCardItem } from '@/types/components'
+import { CardTile } from '../CardTile'
+import { useEffect, useState } from 'react'
 
-const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: ImageCardItem[]|[], totalCount: number }) => {
+
+const CardTiles = ({cards, totalCount, id}:{ id?: string | number, cards?: ImageCardItem[]|[], totalCount: number }) => {
+
+    const [subTitle, setSubTitle] = useState(false)
+
+    useEffect(() => {
+
+        let exists = false
+
+        cards?.map((cardData) => {
+
+            if(cardData?.subtitle) exists = true 
+
+        })
+
+        setSubTitle(exists)
+
+    }, [cards])
 
     const gridConfigurator  = () => {
 
@@ -29,18 +47,19 @@ const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: Image
             className={
                 classNames(
                     gridConfigurator(),
-                    'grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
+                    'sm:grid-cols-2 lg:grid-cols-2 grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                 )
             }
         >
             {cards?.map((cardData: any, idx: number) => {
                 //eslint-disable-next-line
-                return (<Card
+                return (<CardTile
                     id={id}
                     key={idx}
                     {...cardData}
                     count={cards.length}
                     totalCount={totalCount}
+                    subtitleExists={subTitle}
                 />
                 )
             })
@@ -49,4 +68,4 @@ const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: Image
     )
 }
 
-export {CardCollectionBody}
+export {CardTiles}

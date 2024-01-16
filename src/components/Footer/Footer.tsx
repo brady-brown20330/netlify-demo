@@ -2,100 +2,140 @@
 import { App } from '@/types'
 import React from 'react'
 import { Link, isFooterValid } from '@/components'
-import parse from 'html-react-parser'
+// import parse from 'html-react-parser'
 
 export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
-    const { sections, copyright_info, $ } = props || {}
+    const { sections }: any = props
+
+    // ? Method to render the Region Links column
+    const renderFooterLinks = () => {
+
+        const chunkedArray = []
+
+        for (let i = 0; i < sections.length; i += 2) {
+            const chunk = sections.slice(i, i + 2)
+            chunkedArray.push(chunk)
+        }
+
+        const renderLinks = (links: any) => {
+
+            return links?.map((link: any) => {
+
+                return (
+
+                    <li>
+                        {
+                            link?.link?.[0]?.url
+                                ? (
+                                    <Link
+                                        url={link?.link?.[0]?.url || link?.external_link?.url}
+                                        className='text-sm leading-6 text-gray-700 hover:font-bold'
+                                        target={link?.external_link?.url && link?.external_link?.url?.charAt(0) !== '/' ? '_blank' : '_self'}
+                                    >
+                                        {link?.text}
+                                    </Link>
+                                )
+                                : (
+                                    <Link
+                                        url={link?.external_link?.href}
+                                        className='text-sm leading-6 text-gray-700 hover:font-bold'
+                                        target={link?.external_link?.href?.charAt(0) !== '/' ? '_blank' : '_self'}
+                                    >
+                                        {link?.text || link?.external_link?.title}
+                                    </Link>
+                                )
+                        }
+                    </li>
+
+                )
+
+            })
+
+        }
+
+        const renderLinkColumns = (chunk: any) => {
+
+            return chunk?.map((link: any, index: number) => {
+
+                return (
+
+                    <div className='mb-10 md:mb-0'>
+                        <h3 className='text-sm font-semibold leading-6 text-black font-systemUI'>{link.title}</h3>
+                        <ul role='list' className='mt-6 space-y-4'>
+                            {
+                                renderLinks(link?.links)
+                            }
+                        </ul>
+                    </div>
+
+                )
+
+            })
+
+        }
+
+        return chunkedArray?.map((chuck: any) => {
+
+            // return section?.map((item: any, index: number) => {
+
+            return (
+                <div className='gap-8 md:grid md:grid-cols-2 md:gap-8'>
+
+                    {
+                        renderLinkColumns(chuck)
+                    }
+
+                </div>
+            )
+
+            // })
+
+        })
+
+    }
 
     return (
-        <footer aria-labelledby='footer-heading'>
-            <h2 id='footer-heading' className='sr-only'>
+        <footer
+            aria-labelledby='footer-heading'
+            className='bg-[#F3f3f3]'
+            id='footer-component'
+        >
+            <h2 id='footer-heading' data-id='h2-text' className='sr-only'>
                 Footer
             </h2>
-            {isFooterValid(props) && <div className='mx-auto max-w-7xl pt-0 pb-[30px] border-t border-gray-300 '>
-                <div className='w-full'>
-                    <div className='md:mx-auto max-w-2xl px-6 sm:py-[51px] lg:px-8'>
-                        <div className='flex flex-col items-start justify-start mt-5 mb-10 gap-[14px] sm:gap-10 sm:flex-row sm:items-start sm:justify-center sm:my-0' {...$?.title}>
-                            {
-                                props?.logo?.title
-                                && <div className='flex flex-row items-center justify-start mt-[20px] mb-[26px] sm:mt-0 sm-mb-0 sm:items-start sm:justify-center'>
-                                    <Link url='/'>
-                                        <span className='sr-only'>Site Logo</span>
-                                        <img
-                                            className='h-[38.4px] w-[43.2px]'
-                                            src={props?.logo?.url}
-                                            alt={props?.logo?.title}
-                                            {...props?.logo?.$?.url}
-                                        />
-                                    </Link>
-                                </div>
-                            }
-                            {
-                                sections?.map((navItem, index: number) => {
-                                    return (
-                                        <div
-                                            className=''
-                                            key={`footer-section-${index}`}
-                                        >
-                                            {navItem?.title ? <p
-                                                className='text-sm font-bold leading-6 mb-[23px]'
-                                            >
-                                                <Link
-                                                    url={navItem?.link}
-                                                    className='text-base text-sm leading-[18px] text-[#254143]'
-                                                >
-                                                    {navItem?.title}
-                                                </Link>
-                                            </p> : <p
-                                                className='text-base text-sm leading-[18px] text-[#254143] mb-5 min-h-[1.5rem]'
-                                            >
-                                                <Link
-                                                    url={navItem?.link}
-                                                >
-
-                                                </Link>
-                                            </p>}
-                                            <ul
-                                                role='list'
-                                                className=''
-                                            >
-                                                {navItem?.links?.map((item, i: number) => (
-                                                    item?.text && <li
-                                                        key={`footer-links-${index}-${i}`}
-                                                        className='text-sm'>
-                                                        <Link
-                                                            url={item?.link?.[0]?.url}
-                                                            className='text-sm font-normal leading-[18px] text-[#254143] dark:text-white'
-                                                        >
-                                                            {item?.text}
-                                                        </Link>
-                                                    </li>
-                                                ))}
-                                            </ul>
-
-                                        </div>
-                                    )
-                                })
-                            }
+            {isFooterValid(props) && <div className='mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8 lg:py-24'>
+                <div className='xl:grid xl:grid-cols-3 xl:gap-8'>
+                    {
+                        props?.logo?.title
+                        && <div className='flex flex-row mt-0 mb-0 items-start justify-start sm:items-start sm:justify-start'>
+                            <Link url='/'>
+                                <span className='sr-only'>Site Logo</span>
+                                <img
+                                    className='h-12 w-auto'
+                                    // src={props?.logo?.url}
+                                    src='https://images.contentstack.io/v3/assets/blt16efa74d600de969/blt4769e838a9f5e9f2/6515d89d549cbd83e7b9eea7/compass-logo-v3c.png?branch=uat'
+                                    alt={props?.logo?.title}
+                                    {...props?.logo?.$?.url}
+                                />
+                            </Link>
                         </div>
-
-                    </div>
-                    <div className='mt-0 sm:mt-0 border-t border-gray-900/10 pt-2 flex flex-col items-start justify-start gap-2 sm:flex sm:flex-row sm:items-center sm:justify-between sm:gap-0 px-6 sm:px-4 xl:px-0'>
+                    }
+                    <div className='mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0 font-systemUI'>
                         {
-                            copyright_info && copyright_info !== ''
-                            && <div  {...$?.copyright_info} className='text-[#254143] text-xs xl:text-sm leading-[18px]'> {parse(copyright_info)}</div>
+                            renderFooterLinks()
                         }
-                        <div className='flex space-x-3 text-[#254143] text-xs xl:text-sm leading-[18px]'>
-                            <a href='https://www.contentstack.com/legal/' target='_blank' rel='noreferrer'>Legal</a>
-                            <p className='text-gray-500'>|</p>
-                            <a href='https://www.contentstack.com/legal/terms-of-service/' target='_blank' rel='noreferrer'>Terms</a>
-                            <p className='text-gray-500'>|</p>
-                            <a href='https://www.contentstack.com/legal/privacy/' target='_blank' rel='noreferrer'>Privacy</a>
-                        </div>
                     </div>
+
+
                 </div>
+
             </div>
             }
+            <div className='mx-auto max-w-7xl border-t border-gray-900/10 w-full px-6 pt-4 pb-8 md:pt-4 md:pb-4'>
+                <span className='text-gray-700'>
+                    ©  {new Date().getFullYear()}. Contentstack All Rights Reserved.
+                </span>
+            </div>
         </footer>
     )
 }  

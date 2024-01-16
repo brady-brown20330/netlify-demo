@@ -18,6 +18,7 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
                 src={image.url}
                 alt={image_alt_text !== '' ? image_alt_text : image?.title}
                 className={className}
+                data-id='image-component'
             />
         </picture>}
     </>

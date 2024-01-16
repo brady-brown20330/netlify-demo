@@ -22,6 +22,7 @@ export interface pageBlocks {
     card_collection?:CardCollection
     image_preset?: Image
     seo?:SeoProps
+    featured_articles?: any;
   }
   
 export type pageRenderProps = {

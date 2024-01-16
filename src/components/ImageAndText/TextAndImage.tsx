@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/prop-types */
 import { Component } from '@/types'
 import { Image, Link } from '@/components'
 import { classNames, resolveCta } from '@/utils'
 
 export function TextAndImage (props:Component.TextAndImage) {
-    const {$, heading, content, image, image_alt_text, cta, styles: {image_position, theme}} = props
+    const {$, heading, content, image, image_alt_text, cta, styles: {image_position, theme}, icon, id} = props
 
     const ctaLink = resolveCta(cta)
     const TextBlock = () => (
@@ -14,12 +15,19 @@ export function TextAndImage (props:Component.TextAndImage) {
                 'mx-auto my-auto w-2xl'
             )}
         >
+            {icon?.url && <Image
+                image={icon}
+                image_alt_text={icon?.title}
+                className={'h-16 mb-8'}
+            />}
             {heading && <h2
-                className='xs:text-3xl sm:text-[44px] xl:mt-0 mt-4 text-gray-900 sm:mt-0'>
+                data-id='h2-text'
+                className='xs:text-3xl sm:text-[44px] mt-8 text-black break-words'>
                 {heading}
             </h2>}
             {content && <p
-                className='mt-4 text-lg leading-5 text-gray-600 dark:text-white'>
+                data-id='paragraph-text'
+                className='mt-8 text-lg leading-5 text-black'>
                 {content}
             </p>}
             <div
@@ -30,7 +38,7 @@ export function TextAndImage (props:Component.TextAndImage) {
             >
                 {cta?.[0]?.text && ctaLink && <Link
                     url={ctaLink}
-                    className='btnPrimary px-6 py-2.5'
+                    className='dark:btnPrimary btnSecondary'
                 >
                     {cta[0].text}
                 </Link>}
@@ -40,8 +48,11 @@ export function TextAndImage (props:Component.TextAndImage) {
     )
 
     return (
-        <div className={`${theme === 'dark' ? 'dark': ''}`}>
-            <div className='relative py-16 px-8 mx-auto bg-white dark:bg-black'>
+        <div 
+            id={id}
+            className={`${theme === 'dark' ? 'dark': ''}`}
+        >
+            <div className={`relative my-32 px-8 mx-auto bg-white dark:bg-[#424656] ${theme === 'dark' ? 'py-16': ''}`}>
                 {image_position && ['top', 'bottom'].includes(image_position) ? <div 
                     className={classNames(
                         `${image_position === 'top' ? 'flex-col-reverse' 
@@ -52,14 +63,20 @@ export function TextAndImage (props:Component.TextAndImage) {
                     {...$?.heading}
                 >
                     <div className='max-w-7xl lg:mx-0'>
-                        {heading && <h2>{heading}</h2>}
-                        {content && <p className='mt-6 text-lg leading-5 text-gray-600'>
+                        {icon?.url && <Image
+                            image={icon}
+                            image_alt_text={icon?.title}
+                            className={'h-16 mb-8'}
+                        />}
+                        {heading && <h2 data-id>{heading}</h2>}
+                        {content && <p data-id='paragraph-text' className='mt-6 text-lg leading-5 text-gray-600'>
                             {content}
                         </p>}
                         {cta?.[0]?.text && ctaLink && <div className='mt-6 flex items-center gap-x-6'>
                             <Link
                                 url={ctaLink}
-                                className='btnPrimary px-6 py-2.5'
+                                className='dark:btnPrimary btnSecondary px-6 py-2.5'
+
                             >
                                 {cta[0].text}
                             </Link>

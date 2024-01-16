@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react'
  */ 
 const Preset: React.FC<Image> = (props: Image) => {
 
-    const { $, image, image_alt_text } = props
+    const { $, image, image_alt_text, id } = props
     const [height,  setHeight] = useState<string|number|undefined>('auto')
     const imgRef = useRef<null| HTMLDivElement>(null)
     const isRotate = image?.metadata?.preset?.options?.transform?.rotate !== 0 && image?.metadata?.preset?.options?.transform?.rotate !== undefined
@@ -34,7 +34,8 @@ const Preset: React.FC<Image> = (props: Image) => {
             ref={imgRef}
             style={{ height: height || 'auto' }}
         >   
-            <ImagePreset 
+            <ImagePreset
+                id={id}
                 image={image}
                 image_alt_text={image_alt_text}  
             />

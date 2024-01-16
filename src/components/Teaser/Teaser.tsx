@@ -1,38 +1,84 @@
+import { useEffect, useState } from 'react'
 import { Teaser as TeaserProps } from '@/types/components'
 import { Link } from '@/components'
 import { Image } from '../common/Image'
 import { resolveCta } from '@/utils'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
-    const { $, heading, content, cta, image} = props
+    const { $, heading, content, cta, image, styles, id } = props
 
     const ctaLink = resolveCta(cta)
+    let position_css
+
+    if (styles && styles?.text_align === 'Top Left'){
+        position_css = 'pt-24 ml-8 items-start justify-start'
+    }
+    else if (styles && styles?.text_align === 'Top Center') {
+        position_css = 'pt-24 mx-auto text-center items-start justify-center'
+    }
+    else if (styles && styles?.text_align === 'Top Right') {
+        position_css = 'pt-24 ml-auto mr-8 text-right items-start justify-end'
+    }
+    else if (styles && styles?.text_align === 'Middle Left') {
+        position_css = 'ml-8  items-center justify-start'
+    }
+    else if (styles && styles?.text_align === 'Middle Center') {
+        position_css = 'mx-auto text-center items-center justify-center'
+    }
+    else if (styles && styles?.text_align === 'Middle Right') {
+        position_css = 'ml-auto mr-8 text-right items-center justify-end'
+    }
+    else if (styles && styles?.text_align === 'Bottom Left') {
+        position_css = 'ml-8 pb-8 items-end justify-start'
+    }
+    else if (styles && styles?.text_align === 'Bottom Center') {
+        position_css = 'mx-auto pb-8 text-center items-end justify-center'
+    }
+    else if (styles && styles?.text_align === 'Bottom Right') {
+        position_css = 'ml-auto pb-8 mr-8 text-right items-end justify-end'
+    }
+
+
+    useEffect(() => {
+        document.querySelectorAll('.teaser-container').forEach((element)=>{
+            if(element.getAttribute('id')=='teaser-0'){
+                element?.classList.add('h-[calc(100vh-0px)]', 'mt-0')
+            } else {
+                element?.classList.add('my-32','py-44')
+            }
+        })
+    })
+
 
     return (
         <div
-            className={'relative bg-gray-600 px-6 py-32 sm:px-12 sm:py-40 lg:px-16 flex flex-col items-center text-center justify-center'}
+            id={id}
+            className={'teaser-container relative bg-cover bg-no-repeat'}
             {...$?.heading}
         >
             <div className='absolute inset-0 overflow-hidden'>
                 {image?.[0]?.image?.url
                     // eslint-disable-next-line jsx-a11y/alt-text
-                    && <Image 
+                    && <Image
                         {...image[0]}
-                        className='h-full w-full object-cover object-center opacity-60'
+                        className='h-full w-full object-cover object-center opacity-100'
                     />
                 }
             </div>
-            <div className='relative mx-auto flex max-w-5xl flex-col items-center text-center'>
-                {heading && <h2 className={'mb-3 text-center text-white'}>{heading}</h2>}
-                {content && <p className={'text-lg text-center text-white'}>
-                    {content}
-                </p>}
-                {cta?.[0]?.text && ctaLink && <Link
-                    url={ctaLink}
-                    className={'btnSecondary px-8 py-3 mt-8 sm:w-auto'}
-                >
-                    {cta[0].text}
-                </Link>}
+            <div className={`h-full max-w-3xl flex flex-row ${position_css}`}>
+                <div>
+                    {heading && <h2 data-id='h2-text' className={'text-4xl font-bold tracking-tight text-white sm:text-6xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'}>{heading}</h2>}
+                    {content && <p data-id='paragraph-text' className={'mt-6 font-medium text-lg !leading-8 text-white mb-8 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.9)]'}>
+                        {content}
+                    </p>}
+                    {cta?.[0]?.text && ctaLink && <Link
+                        url={ctaLink}
+                        // eslint-disable-next-line max-len
+                        className={'relative max-w-full w-max btnPrimary py-3'}
+                    >
+                        {cta[0].text}
+                    </Link>}
+                </div>
             </div>
         </div>
     )

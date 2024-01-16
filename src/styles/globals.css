@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
 body {
-  @apply bg-white dark:bg-black font-inter
+  @apply bg-white dark:bg-black font-montserrat
 }
 
 @media (min-width:640px)  {
@@ -21,7 +22,7 @@ body {
 
 @layer base {
   h1, h2, h3, h4, h5, h6 {
-      @apply text-black dark:text-white !font-inter font-bold text-[#253143]
+      @apply text-black dark:text-white font-montserrat font-bold text-[#253143]
   }
   h1 {
     @apply text-[52px] leading-[54px]
@@ -33,7 +34,7 @@ body {
     @apply text-[24px] leading-[26px]
   }
   p {
-    @apply font-normal text-gray-900 dark:text-white !leading-5
+    @apply font-normal text-black dark:text-white !leading-6
   }
 
 }
@@ -43,13 +44,10 @@ body {
     @apply relative max-w-7xl mx-auto;
   }
   .btnPrimary {
-    @apply !font-inter rounded-md bg-purple text-sm font-semibold text-white shadow-sm hover:bg-[#3C2970] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple
+    @apply bg-[#424656] hover:bg-[#A1AACE] font-bold text-white py-2 px-4 border hover:border-[#A1AACE] rounded;
   }
   .btnSecondary {
-    @apply !font-inter block w-full rounded-md border border-transparent bg-white !text-black text-base font-semibold text-gray-900 duration-300
-  }
-  .btnSecondary:hover{
-    @apply bg-black !text-white
+    @apply bg-[#A1AACE] hover:bg-transparent font-bold text-white hover:text-[#424656] py-2 px-4 border-2 hover:border-[#424656] rounded;
   }
   .btnTertiary {
     @apply block w-full rounded-md border border-transparent bg-black !text-white text-base font-semibold text-gray-100 hover:opacity-80
@@ -78,9 +76,9 @@ body {
     @apply font-bold
   }
 
-  .text p { @apply py-1 font-normal leading-5 text-gray-600 text-base}
+  .text p { @apply py-1 font-normal leading-6 text-black text-base}
 
-  p { @apply py-1 font-normal leading-5 text-gray-600 }
+  p { @apply py-1 font-normal leading-6 text-gray-600 }
 
   .text a { @apply text-[16px] text-purple hover:underline font-semibold}
 
@@ -98,6 +96,14 @@ body {
     display: -webkit-box;
     max-width: 100%;
     -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-tile-title {
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
