@@ -17,12 +17,12 @@
     "ecmaVersion": 13,
     "sourceType": "module"
   },
-  
   "plugins": [
     "react",
     "@typescript-eslint"
   ],
   "rules": {
+    "react-hooks/exhaustive-deps": "off",
     "indent": [
       "error",
       4
@@ -83,10 +83,11 @@
       "error",
       "before"
     ],
-    "func-names": [
-      "error",
-      "as-needed"
-    ],
+    "@typescript-eslint/no-empty-function": "off",
+    // "func-names": [
+    //   "error",
+    //   "as-needed"
+    // ],
     "space-before-function-paren": [
       "error",
       "always"
@@ -95,12 +96,27 @@
     "consistent-return": "off",
     "class-methods-use-this": "off",
     "no-restricted-syntax": "off",
-    // "object-curly-newline": [
-    //   "error",
-    //   {
-    //     "multiline": true
-    //   }
-    // ],
+    "import/order": [
+      1,
+      {
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "sibling",
+          "parent",
+          "index"
+        ]
+      }
+    ],
+    "sort-imports": 
+    [
+      "error", 
+      { 
+        "ignoreCase": true, 
+        "ignoreDeclarationSort": true 
+      }
+    ],
     //"import/no-extraneous-dependencies": ["error", { "devDependencies": false, "optionalDependencies": false, "peerDependencies": false ,"packageDir": "./"}],
     "jsx-quotes": [
       "error",
@@ -131,7 +147,16 @@
     "react/no-danger": "off",
     "react/destructuring-assignment": 0,
     "no-useless-escape": "off",
-    "no-console": ["error", { "allow": ["warn", "error", "debug"] }],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error",
+          "debug"
+        ]
+      }
+    ],
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     // allow jsx syntax in js files (for next.js project)
