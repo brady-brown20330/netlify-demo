@@ -3,6 +3,8 @@
 // const colors = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss').Config} */
+import { Config } from 'tailwindcss/types/config'
+
 module.exports = {
   content: [],
   presets: [],
@@ -131,6 +133,7 @@ module.exports = {
       square: '1 / 1',
       video: '16 / 9'
     },
+    
     backdropBlur: ({ theme }) => theme('blur'),
     backdropBrightness: ({ theme }) => theme('brightness'),
     backdropContrast: ({ theme }) => theme('contrast'),
