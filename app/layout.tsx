@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 }
 
 const fetchAppConfig = async () => {
-    const web_config:App.csWebConfig = await getAppConfigData('en-us') || null
+    const web_config:App.csWebConfig = await getAppConfigData('en') || null
     return {
         web_config: web_config?.length > 0 ? web_config[0] : null
     }

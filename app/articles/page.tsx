@@ -40,7 +40,7 @@ export default function ArticleListing () {
 
     const fetchData = async () => {
         try{
-            const res = await getArticleListingPage(path, 'en-us')
+            const res = await getArticleListingPage(path, 'en')
             setData(res)
         } catch(error) {
             console.error('Error while fetching ArticleListingPage:', error)
@@ -48,7 +48,7 @@ export default function ArticleListing () {
     }
     const fetchArticles = async () => {
         try{
-            const articleCollection = await getArticles('en-us')
+            const articleCollection = await getArticles('en')
             setArticles(articleCollection)
         } catch(error) {
             console.error('Error while fetching Articles:', error)

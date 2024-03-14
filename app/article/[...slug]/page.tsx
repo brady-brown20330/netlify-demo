@@ -19,7 +19,7 @@ export default function Article () {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const entryData: Page.ArticlePage['entry'] = await getArticle(path, 'en-us')
+                const entryData: Page.ArticlePage['entry'] = await getArticle(path, 'en')
                 setData(entryData)
                 if (!entryData && !isNull(entryData)) {
                     throw '404'
@@ -31,7 +31,7 @@ export default function Article () {
         }
         const fetchArticles = async () => {
             try {
-                let articlesData: Page.ArticlePage['articles'] = await getArticles('en-us')
+                let articlesData: Page.ArticlePage['articles'] = await getArticles('en')
                 articlesData = articlesData?.filter((article) => article.title !== data?.title)
                 articlesData && setArticles(articlesData)
             } catch (err) {

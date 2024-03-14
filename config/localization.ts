@@ -1,4 +1,4 @@
-const fallbackLocaleName = 'en-us'
+const fallbackLocaleName = 'en'
 const fallbackLocaleCookieName = 'locale'
 
 

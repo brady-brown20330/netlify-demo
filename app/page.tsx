@@ -13,7 +13,7 @@ export default function Home () {
     const [loading, setLoading] = useState<boolean>(true)
     const fetchData = async () => {
         try {
-            const res = await getHomePage('/', 'en-us')
+            const res = await getHomePage('/', 'en')
             setData(res) 
             if (!res) {
                 throw '404'
