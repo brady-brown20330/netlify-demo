@@ -44,6 +44,7 @@ export interface FooterSection extends FooterLink {
 }
 
 export interface FooterLink {
+  $?: MappedPreview<FooterLink>
   text?: string
   link: InternalLink[]
   external_link?: {
@@ -62,7 +63,7 @@ export type SingleColLayout = {
 
 export type csWebConfig =   Entry & Header & {
   footer_navigation: Footer[]; 
-}[]
+}
 
 export interface Props {
   appProps:  AppProps

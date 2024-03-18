@@ -18,7 +18,10 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
         const renderLinks = (links: any) => {
             return links?.map((link: any, index:number) => {
                 return (
-                    <li key={`link-${index}`}>
+                    <li 
+                        key={`link-${index}`} 
+                        {...link?.$?.text}
+                    >
                         {
                             link?.link?.[0]?.url
                                 ? (
@@ -26,6 +29,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                         url={link?.link?.[0]?.url || link?.external_link?.url}
                                         className='text-sm leading-6 text-gray-700 hover:font-bold'
                                         target={link?.external_link?.url && link?.external_link?.url?.charAt(0) !== '/' ? '_blank' : '_self'}
+                                        {...link?.$?.link || link?.$?.external_link}
                                     >
                                         {link?.text}
                                     </Link>
@@ -35,6 +39,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                         url={link?.external_link?.href}
                                         className='text-sm leading-6 text-gray-700 hover:font-bold'
                                         target={link?.external_link?.href?.charAt(0) !== '/' ? '_blank' : '_self'}
+                                        {...link?.$?.external_link}
                                     >
                                         {link?.text || link?.external_link?.title}
                                     </Link>
