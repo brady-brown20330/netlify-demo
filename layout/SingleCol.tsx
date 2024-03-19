@@ -30,11 +30,12 @@ const SingleCol: React.FC<App.SingleColLayout> = (
 
     return (
         appConfig
-        && <>
+        ? <>
             <Header
-                {...appConfig}
+                {...appConfig?.main_navigation?.[0]}
+                logo={appConfig?.logo}
             />
-            <div className='mx-auto h-full min-h-[50vh]'>
+            <div className='single-col mx-auto h-10 !min-h-[100vh]'>
                 {props.children}
             </div>
 
@@ -42,7 +43,7 @@ const SingleCol: React.FC<App.SingleColLayout> = (
                 {...appConfig?.footer_navigation?.[0]}
                 logo={appConfig?.logo}
             />
-        </>
+        </> : <></>
     )
 }
 

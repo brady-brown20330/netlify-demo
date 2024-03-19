@@ -96,8 +96,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                 <span className='sr-only'>Site Logo</span>
                                 <img
                                     className='h-12 w-auto'
-                                    // src={props?.logo?.url}
-                                    src='https://images.contentstack.io/v3/assets/blt16efa74d600de969/blt4769e838a9f5e9f2/6515d89d549cbd83e7b9eea7/compass-logo-v3c.png?branch=uat'
+                                    src={props?.logo?.url}
                                     alt={props?.logo?.title}
                                     {...props?.logo?.$?.url}
                                 />
