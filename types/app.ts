@@ -8,7 +8,28 @@ export interface Header extends Entry {
   // site_url?: string;
   scrolled?: boolean;
   main_navigation?: Navigation[];
+  items?: items[];
   $?: MappedPreview<Header>;
+}
+
+export interface items {
+  text?:string
+  link?:InternalLink[]
+  mega_menu?:{
+    sections?:{
+      title?:string
+      link:InternalLink[]
+      links: {
+        thumbnail?: Asset;
+        $?: { text?: {'data-cslp': string} };
+        text?:string
+        link:InternalLink[]
+      }[]
+    }[];
+    cta_group?: {
+      call_to_action?:CallToAction[]
+    }[];
+  }[]
 }
 export interface Navigation extends Entry {
   items: {
@@ -44,6 +65,7 @@ export interface FooterSection extends FooterLink {
 }
 
 export interface FooterLink {
+  $?: MappedPreview<FooterLink>
   text?: string
   link: InternalLink[]
   external_link?: {
@@ -62,7 +84,7 @@ export type SingleColLayout = {
 
 export type csWebConfig =   Entry & Header & {
   footer_navigation: Footer[]; 
-}[]
+}
 
 export interface Props {
   appProps:  AppProps

@@ -18,7 +18,7 @@ export default function LandingPage () {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await getLandingPage(path, 'en-us')
+                const res = await getLandingPage(path, 'en')
                 setData(res)
                 if (!res && !isNull(res)) {
                     throw '404'

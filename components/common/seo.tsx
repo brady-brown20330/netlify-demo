@@ -38,7 +38,7 @@ export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
             />
             <meta
                 property='og:locale'
-                content={locale || 'en-us'}
+                content={locale || 'en'}
             />
             <link
                 rel='canonical'

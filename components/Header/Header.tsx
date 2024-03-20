@@ -13,14 +13,22 @@ import { Carousel, CTAGroup, Link } from '@/components'
 import { App } from '@/types'
 
 function Header (props: App.Header) {
-    const [data] = useState(props)
-    const { logo, main_navigation: navigation } = data
+
+    const [data, setData] = useState(props)
+    const { logo, items } = props
+    
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [Opac, setOpac] = useState(true)
     const [currPanel, setCurrPanel] = useState('')
     const [open, setOpen] = useState(false)
     const pathname = usePathname()
     const isHome:boolean = (pathname === '/') ? true : false 
+
+    useEffect(() => {
+
+        setData(props)
+
+    }, [props])
 
     const listenScrollEvent = () => {
         if(window?.scrollY > 0)
@@ -93,7 +101,7 @@ function Header (props: App.Header) {
 
                 {/* DESKTOP MENU */}
                 <Popover.Group className='hidden lg:flex lg:gap-x-12'>
-                    {navigation?.[0]?.items?.map((item, itemInd) => (
+                    {items?.map((item, itemInd) => (
                         item?.mega_menu?.length ? <Popover key={item.text} data-id={`navItem-${itemInd}`}>
                             <Popover.Button className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900 outline-none'>
                                 {currPanel === item?.text 
@@ -209,7 +217,7 @@ function Header (props: App.Header) {
                                 <Disclosure as='div' className=''>
 
                                     
-                                    {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item, i: number) => (
+                                    {items  && items?.map((item, i: number) => (
                                         item?.text
                                         && <Fragment key={`mobile-navItem-${i}`}>
                                             <div
@@ -279,7 +287,7 @@ function Header (props: App.Header) {
                                     ))}
 
                                     {/* STATIC DATA - NEEDS TO BE ADDED IN CMS */}
-                                    {navigation && navigation?.length > 0 && navigation?.[0]?.items?.map((item, i: number) => (
+                                    {items  && items?.map((item, i: number) => (
                                         <Fragment key={`ctaGroup-${i}`}>
                                             {(item?.text === currPanel) && item?.mega_menu?.[0]?.cta_group?.[0] && CTAGroup(item.mega_menu[0].cta_group[0])}
                                         </Fragment>
