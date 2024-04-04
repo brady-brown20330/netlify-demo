@@ -1,6 +1,5 @@
 const fallbackLocaleName = 'en'
-const fallbackLocaleCookieName = 'locale'
-
+const fallbackLocaleCookieName = 'languages'
 
 const configuredLocale = () => {
     if (process.env.DEFAULT_LOCALE) {
@@ -14,8 +13,8 @@ const configuredLocale = () => {
     return new Intl.Locale(fallbackLocaleName)
 }
 
-export const defaultLocale = configuredLocale()
+export const defaultLocale = configuredLocale().toString()
 
-export const defaultLocaleName = configuredLocale().baseName.toLocaleLowerCase()
+export const defaultLocaleName = configuredLocale().baseName.toString().toLocaleLowerCase()
 
 export const localeCookieName = process.env.LOCALE_COOKIE_NAME ? process.env.LOCALE_COOKIE_NAME : fallbackLocaleCookieName

@@ -1,11 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    i18n: {
-        locales: ['en'],
-        defaultLocale: 'en',
-        localeDetection: false
-    },
     env: { // available at build time
         CONTENTSTACK_API_KEY: process.env.CONTENTSTACK_API_KEY ,
         isLivePreviewEnabled: process.env.CONTENTSTACK_LIVE_PREVIEW || 'false',
@@ -17,6 +12,7 @@ const nextConfig = {
         CONTENTSTACK_HOST: process.env.CONTENTSTACK_HOST, // cdn host
         CONTENTSTACK_API_HOST: process.env.CONTENTSTACK_API_HOST, //management api host
         CONTENTSTACK_APP_HOST: process.env.CONTENTSTACK_APP_HOST, //app host
+        LOCALE_COOKIE_NAME: process.env.LOCALE_COOKIE_NAME || '', // set locale cookie name
         LOCALSTORAGE_WEBCONFIG_KEY: process.env.LOCALSTORAGE_WEBCONFIG_KEY || 'webconfig',
         LOCALSTORAGE_WEBCONFIG_TTL: process.env.LOCALSTORAGE_WEBCONFIG_TTL || '86400' // 1 day in seconds
     }

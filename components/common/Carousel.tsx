@@ -2,9 +2,9 @@
 
 import Slider from 'react-slick'
 import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/24/outline'
-import { Carousel } from '@/types/components'
+import { Carousel as CarouselType } from '@/types/components'
 
-const Carousel = ({className, children}: Carousel) => {
+const Carousel = ({className, children}: CarouselType) => {
     const settings = {
         dots: false,
         infinite: false,

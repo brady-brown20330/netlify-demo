@@ -1,9 +1,7 @@
-// import _ from 'lodash'
-
 import { localStorageConfig } from '../config'
 import { addToDateNow } from '../utils'
 
-import { WebConfiguration, CompactWebConfiguration } from '../types/generic'
+import { CompactWebConfiguration, WebConfiguration } from '../types/generic'
 
 export const setWebConfig = (webConfig: WebConfiguration) => {
     if(!localStorageConfig?.webConfiguration?.key) {
@@ -72,3 +70,7 @@ export const getCookie = (cname: string) => {
     return null
 }
 
+export const isCookieExist = (cname: string) => {
+    if (!document) return false
+    return document?.cookie.match(cname) ? true : false
+}

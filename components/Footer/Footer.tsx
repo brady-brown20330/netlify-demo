@@ -1,11 +1,13 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
+import parse from 'html-react-parser'
+
 import { App } from '@/types'
 import { isFooterValid, Link } from '@/components'
 
 export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
-    const { sections }: any = props
+    const { sections, copyright_info, $ }: any = props
 
     // ? Method to render the Region Links column
     const renderFooterLinks = () => {
@@ -27,7 +29,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                 ? (
                                     <Link
                                         url={link?.link?.[0]?.url || link?.external_link?.url}
-                                        className='text-sm leading-6 text-gray-700 hover:font-bold'
+                                        className='text-sm leading-6 text-gray-700 hover:font-bold font-montserrat'
                                         target={link?.external_link?.url && link?.external_link?.url?.charAt(0) !== '/' ? '_blank' : '_self'}
                                         {...link?.$?.link || link?.$?.external_link}
                                     >
@@ -37,7 +39,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                 : (
                                     <Link
                                         url={link?.external_link?.href}
-                                        className='text-sm leading-6 text-gray-700 hover:font-bold'
+                                        className='text-sm leading-6 text-gray-700 hover:font-bold font-montserrat'
                                         target={link?.external_link?.href?.charAt(0) !== '/' ? '_blank' : '_self'}
                                         {...link?.$?.external_link}
                                     >
@@ -57,7 +59,13 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
             return chunk?.map((link: any, index: number) => {
                 return (
                     <div className='mb-10 md:mb-0' key={`footer-col-${index}`}>
-                        <h3 className='text-sm font-semibold leading-6 text-black font-systemUI'>{link.title}</h3>
+                        <h3 
+                            className='text-sm font-semibold leading-6 text-black font-montserrat'
+                            data-id='h3-text'
+                            {...link?.$?.title}
+                        >
+                            {link.title}
+                        </h3>
                         <ul role='list' className='mt-6 space-y-4'>
                             {
                                 renderLinks(link?.links)
@@ -68,10 +76,10 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
             })
         }
 
-        return chunkedArray?.map((chuck: any, index:number) => {
+        return chunkedArray?.map((chunk: any, index:number) => {
             return (
                 <div className='gap-8 md:grid md:grid-cols-2 md:gap-8' key={`chunk-${index}`}>
-                    {renderLinkColumns(chuck)}
+                    {renderLinkColumns(chunk)}
                 </div>
             )
         })
@@ -110,9 +118,9 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
             </div>
             }
             <div className='mx-auto max-w-7xl border-t border-gray-900/10 w-full px-6 pt-4 pb-8 md:pt-4 md:pb-4'>
-                <span className='text-gray-700'>
-                    ©  {new Date().getFullYear()}. Contentstack All Rights Reserved.
-                </span>
+                {copyright_info && <span className='text-gray-700 font-montserrat' {...$?.copyright_info} >
+                    {parse(copyright_info)}
+                </span>}
             </div>
         </footer>
     )

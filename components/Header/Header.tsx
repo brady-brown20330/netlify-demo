@@ -8,26 +8,30 @@ import {
     XMarkIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
-import { usePathname } from 'next/navigation'
 import { Carousel, CTAGroup, Link } from '@/components'
 import { App } from '@/types'
+import useRouterHook from '@/hooks/useRouterHook'
+import { getJsonCookie, isCookieExist } from '@/utils'
+import { localeCookieName } from '@/config'
+import { LanguageSelector } from '../LanguageSelector'
 
 function Header (props: App.Header) {
 
-    const [data, setData] = useState(props)
+    // eslint-disable-next-line
+    const [, setData] = useState(props)
     const { logo, items } = props
     
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [Opac, setOpac] = useState(true)
+    const [Opac, setOpac] = useState<boolean>(true)
     const [currPanel, setCurrPanel] = useState('')
-    const [open, setOpen] = useState(false)
-    const pathname = usePathname()
-    const isHome:boolean = (pathname === '/') ? true : false 
+    const [, setOpen] = useState(false)
+    const [locales, setLocales] = useState<any>([])
+    const {path} = useRouterHook()
+    const isHome:boolean = (path === '/') ? true : false 
 
     useEffect(() => {
-
         setData(props)
-
+        if (isCookieExist(localeCookieName)) setLocales(getJsonCookie(localeCookieName))
     }, [props])
 
     const listenScrollEvent = () => {
@@ -87,6 +91,21 @@ function Header (props: App.Header) {
                     </Link>}
                 </div>
                 <div className='flex lg:hidden'>
+                    <div
+                        className='relative flex items-center justify-center mr-14 bottom-[7px]'
+                    >
+                        {/* * [MOBILE] LANGUAGE SELECTOR */}
+                        {/* ? Language selecter will be hidden when the mobile menu is open */}
+                        {
+                            (!mobileMenuOpen)
+                            && <div className='h-6 w-6'>
+                                <LanguageSelector 
+                                    locales={locales}
+                                    Opac={Opac}
+                                />
+                            </div>
+                        }
+                    </div>
                     <button
                         type='button'
                         className='-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-black'
@@ -102,7 +121,7 @@ function Header (props: App.Header) {
                 {/* DESKTOP MENU */}
                 <Popover.Group className='hidden lg:flex lg:gap-x-12'>
                     {items?.map((item, itemInd) => (
-                        item?.mega_menu?.length ? <Popover key={item.text} data-id={`navItem-${itemInd}`}>
+                        item?.mega_menu?.length ? <Popover key={item.text} data-id={`navItem-${itemInd}`} className='flex'>
                             <Popover.Button className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900 outline-none'>
                                 {currPanel === item?.text 
                                     ? <span
@@ -157,9 +176,9 @@ function Header (props: App.Header) {
                                                                 alt={linkData?.thumbnail?.title}></img>
                                                             }
                                                             {linkData?.link?.[0]?.url && <span
-                                                                className='mt-4 font-light inline'
+                                                                className='mt-4 font-light inline font-montserrat'
                                                             >
-                                                                Visit <ChevronRightIcon className='h-4 my-auto inline-block mb-1' />
+                                                                {linkData?.link_text && linkData?.link_text} <ChevronRightIcon className='h-4 my-auto inline-block mb-1' />
                                                             </span>}
                                                         </Link>
                                                     </div>
@@ -179,6 +198,10 @@ function Header (props: App.Header) {
                             </Link>}
                         </>
                     ))}
+                    {/* * [DESKTOP] LANGUAGE SELECTOR */}
+                    <LanguageSelector 
+                        locales={locales}
+                    />
                 </Popover.Group>
             </nav>
 
@@ -226,7 +249,7 @@ function Header (props: App.Header) {
                                             >
                                                 <Link
                                                     url={item?.link}
-                                                    className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50`}
+                                                    className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold font-montserrat leading-7 text-gray-900 hover:bg-gray-50`}
                                                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                                     // @ts-ignore
                                                     $={{...item?.$?.text}}
@@ -261,7 +284,7 @@ function Header (props: App.Header) {
                                                         <div onClick={resetMobileNav}>
                                                             {sect?.title && <Link
                                                                 url={sect?.link}
-                                                                className='font-medium text-base flex items-start text-gray-900 pt-2'>
+                                                                className='font-medium font-montserrat text-base flex items-start text-gray-900 pt-2'>
                                                                 {sect.title}
                                                             </Link>}
                                                         </div>
@@ -273,7 +296,7 @@ function Header (props: App.Header) {
                                                             {sect?.links?.map((subitem) => (
                                                                 subitem?.text && <li key={subitem.text} className=''>
                                                                     <div onClick={resetMobileNav}>
-                                                                        <Link url={subitem.link} className='-m-2 block p-2 pl-10 text-[#253143] text-[16.071px] text-justify font-normal leading-normal hover:underline'>
+                                                                        <Link url={subitem.link} className='-m-2 block p-2 pl-10 text-[#253143] text-[16.071px] text-justify font-normal font-montserrat leading-normal hover:underline'>
                                                                             {subitem.text}
                                                                         </Link>
                                                                     </div>

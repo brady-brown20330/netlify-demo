@@ -1,8 +1,15 @@
 import { Page } from '@/types'
+import { useLocaleContext } from '@/context/localeContext'
 
 export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
 
-    const { seo: {no_follow, no_index, description, canonical_url} = {}, locale, summary, url} = props
+    const { seo: {no_follow, no_index, description, canonical_url} = {}, locale, summary, url, entryLocales} = props
+    const {currentLocale} = useLocaleContext()
+
+    const alternateMetaLinks = entryLocales?.map((lang: { code: string }) => ({
+        hrefLang: lang?.code,
+        href: `/${lang?.code}${url}`
+    }))
 
     let robots
     if (no_follow && no_index) {
@@ -40,6 +47,16 @@ export const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
                 property='og:locale'
                 content={locale || 'en'}
             />
+            <meta
+                httpEquiv='content-language'
+                content={locale}
+            />
+
+            {alternateMetaLinks && (alternateMetaLinks?.length > 0) && alternateMetaLinks?.map((li: { hrefLang: string, href: string }) => li?.href && li?.hrefLang && li?.hrefLang !== currentLocale && <link
+                rel='alternate'
+                hrefLang={li.hrefLang}
+                href={li.href}
+            />)}
             <link
                 rel='canonical'
                 href={canonical_url ? canonical_url : url}

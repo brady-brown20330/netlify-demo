@@ -1,3 +1,5 @@
+'use client'
+
 import _ from 'lodash'
 import { Cta, InternalLink } from '../types/components'
 
@@ -37,7 +39,19 @@ export const buildLinkUrl = (internalLink?: InternalLink[], url?: string, locale
             console.debug('Static URL is not valid', url)
         }
     }
+
+    if(url && !(url.startsWith('https://') || url.startsWith('http://')) && !url.startsWith('www.')) {
+
+        if (locale) {
+
+            result = `/${locale}${result}`
+
+        }
+
+    } 
+
     return result
+
 }
 export const getUnlocalizedRelativePath = (path: string, locale?: string): string => {
     if (locale) {

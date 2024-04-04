@@ -1,7 +1,7 @@
 import { ImageComponent } from '@/types/components'
 
 const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
-    const { image, image_alt_text, className} = props
+    const { image, image_alt_text, className } = props
 
     return <>
         {image?.url && <picture
@@ -16,7 +16,7 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
             <source media='(min-width: 1536px)' srcSet={image?.url.indexOf('?') > -1 ? `${image.url}&auto=webp&format=pjpg` : `${image.url}?auto=webp&format=pjpg`} />{/* 2xl */}
             <img
                 src={image?.url.indexOf('?') > -1 ? `${image.url}&auto=webp&format=pjpg` : `${image.url}?auto=webp&format=pjpg`}
-                alt={image_alt_text !== '' ? image_alt_text : image?.title}
+                alt={(image_alt_text !== undefined && image_alt_text !== '') ? image_alt_text : image?.title}
                 className={className}
                 data-id='image-component'
             />

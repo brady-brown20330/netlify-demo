@@ -5,7 +5,7 @@
 
 
 body {
-  @apply bg-white dark:bg-black font-montserrat
+  @apply bg-white dark:bg-black !font-montserrat
 }
 
 @media (min-width:640px)  {
@@ -36,7 +36,12 @@ body {
   p {
     @apply font-normal text-black dark:text-white !leading-6 font-montserrat
   }
-
+  span {
+    @apply !font-montserrat
+  }
+  button {
+    font-family: Montserrat
+  }
 }
 
 @layer components {
