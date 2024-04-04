@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image } from '@/components'
-import { ArticleCover } from '@/types/components'
+import { ArticleCover as ArticleCoverType } from '@/types/components'
 
-const ArticleCover:React.FC<ArticleCover> = (props:ArticleCover) => {
+const ArticleCover:React.FC<ArticleCoverType> = (props:ArticleCoverType) => {
     const {title, summary, cover_image, $} = props
     return( <div className={'px-8 pt-16 mb-8'}>
         <div

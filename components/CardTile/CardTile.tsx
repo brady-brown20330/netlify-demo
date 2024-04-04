@@ -25,7 +25,7 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                     : count === 3 ? 'h-48 lg:h-52'
                         : count && count >= 4 ? 'h-48 lg:h-52'
                             : '',
-            'w-full object-center object-fit object-cover hover:opacity-90 hover:cursor-pointer rounded'
+            'w-full object-center object-fit object-cover hover:opacity-90 hover:cursor-pointer rounded mt-6'
         )}
     /> : <></>
 
@@ -60,7 +60,7 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
 
                 {cta ? <Link
                     url={resolveCardCta(cta)}
-                    className='mt-6 rounded'
+                    className='rounded'
                 >
                     {cardImage}
                 </Link> : <>
@@ -77,7 +77,7 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 {cta?.text && cta?.link && !isString(cta) && cta?.text && <p className='mt-6 text-base font-semibold !text-black/50 flex flex-row items-center gap-[8px] '>
                     <Link
                         url={resolveCardCta(cta)}
-                        className='!text-black/50 font-montserrat border-b-2 border-transparent  hover:border-black/50 cursor-pointer'
+                        className='!text-black/50 font-montserrat text-sm border-b-2 border-transparent hover:border-black/50 !leading-[20px]'
                     >
                         {(cta.text).toUpperCase()}
                     </Link>
@@ -88,7 +88,7 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                         strokeWidth={1.5}
                         stroke='currentColor'
                         aria-hidden='true'
-                        className='h-5 text-black/50'
+                        className='h-5 text-sm text-black/50 !leading-[20px]'
                     >
                         <path
                             strokeLinecap='round'

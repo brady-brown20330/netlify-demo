@@ -1,6 +1,6 @@
-import { teaserReferenceIncludes, textAndImageReferenceIncludes, imageCardsReferenceIncludes, includeheaderRefUids, includefooterRefUids } from '@/components'
+import { imageCardsReferenceIncludes, includefooterRefUids, includeheaderRefUids, teaserReferenceIncludes, textAndImageReferenceIncludes } from '@/components'
 import {  prefixReferenceIncludes } from '@/utils'
-import { getEntries, getEntryByUID, getEntryByUrl } from '@/services'
+import { getEntries, getEntryByUrl } from '@/services'
 
 export const getHomePage = ( cmsUrlPath: string | undefined, locale: string | undefined) => {
     const newRefUids = prefixReferenceIncludes('components',
@@ -52,32 +52,13 @@ export const getArticles = (locale: string | undefined) => {
 }
 
 export const getAppConfigData = async (locale:string|undefined) => {
-    const webConf=await getEntries('web_configuration', locale, ['footer_navigation', ...prefixReferenceIncludes('footer_navigation', ...includefooterRefUids)], [])
+    const webConf=await getEntries('web_configuration', locale, ['footer_navigation',...prefixReferenceIncludes('footer_navigation', ...includefooterRefUids),
+        'main_navigation', ...prefixReferenceIncludes('main_navigation', ...includeheaderRefUids)], [])
 
     if (!webConf || webConf === null) {
         return null
     }
     
-    if(webConf?.[0]?.main_navigation?.[0]?.uid && webConf?.[0]?.main_navigation?.[0]?._content_type_uid) {
-        const navData = await getEntryByUID(
-            webConf?.[0]?.main_navigation?.[0]?._content_type_uid,
-            locale,
-            webConf?.[0]?.main_navigation?.[0]?.uid,
-            includeheaderRefUids,
-            []
-        )
-        webConf[0].main_navigation[0] = navData
-    }
-    
-    if (webConf) return webConf
+    return webConf
 
 }
-// export const getHeader = (locale: string | undefined) => {
-//     return getEntries('header', locale, [], []) 
-// }
-// export const getNavigation = (locale: string | undefined) => {
-//     return getEntries('navigation', locale, [], []) 
-// }
-// export const getFooter = (locale: string | undefined) => {
-//     return getEntries('footer', locale, [], []) 
-// }

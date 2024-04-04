@@ -1,5 +1,5 @@
-import { Teaser, TextAndImage, CardCollection, Text, ArticleCover, Image } from '../components'
-import { MappedPreview, PageEntry } from '../common'
+import { ArticleCover, CardCollection, Image, Teaser, Text, TextAndImage } from '../components'
+import { entryLocales, MappedPreview, PageEntry } from '../common'
 
 export type SeoProps = {
   title?: string
@@ -13,6 +13,9 @@ export type SeoProps = {
   }
   summary?: string
   locale?: string
+  uid?: string
+  contentType?: string
+  entryLocales?: entryLocales[]
 }
 
 export interface pageBlocks {

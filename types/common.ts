@@ -98,3 +98,16 @@ export type Asset = CommonSystemInfo & {
   }
   _version?: number
 }
+
+export type Locale = {
+  code: string;
+  fallback_locale: string | null;
+  name: string;
+}
+
+export type localeItems = Locale[]
+
+export type entryLocales = {
+  code: string
+  localized?: boolean
+}

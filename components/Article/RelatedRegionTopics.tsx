@@ -1,8 +1,8 @@
 import React from 'react'
-import { RelatedRegionTopics } from '@/types/components'
+import { RelatedRegionTopics as RelatedRegionTopicsType  } from '@/types/components'
 import { Link } from '@/components'
 
-const RelatedRegionTopics:React.FC<RelatedRegionTopics> = (props:RelatedRegionTopics) => {
+const RelatedRegionTopics:React.FC<RelatedRegionTopicsType> = (props:RelatedRegionTopicsType) => {
     const { region, topics, $} = props
 
     return( <div className={'px-8 my-16'} id='related-region-topics'>

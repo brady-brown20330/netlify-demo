@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import {isNull}  from 'lodash'
 import { getLandingPage } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
@@ -8,17 +7,18 @@ import { Page } from '@/types'
 import { isDataInLiveEdit } from '@/utils'
 import { NotFoundComponent, PageWrapper } from '@/components'
 import { onEntryChange } from '@/config'
+import useRouterHook from '@/hooks/useRouterHook'
 
 export default function LandingPage () {
 
     const [data, setData] = useState<Page.LandingPage['entry'] | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
-    const path = usePathname()
+    const {path, locale} = useRouterHook()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await getLandingPage(path, 'en')
+                const res = await getLandingPage(path, locale)
                 setData(res)
                 if (!res && !isNull(res)) {
                     throw '404'
@@ -35,7 +35,7 @@ export default function LandingPage () {
 
     return (<>
         {data
-            ? <PageWrapper {...data}>
+            ? <PageWrapper {...data} contentType='landing_page'>
                 {data?.components && Object.keys(data.components)?.length
                     ? <RenderComponents
                         components={data?.components}

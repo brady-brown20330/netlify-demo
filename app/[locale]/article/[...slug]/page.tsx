@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { isNull } from 'lodash'
 import { getArticle, getArticles } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
@@ -9,17 +8,18 @@ import { ArticleCover, NotFoundComponent, PageWrapper, RelatedArticles, RelatedR
 import { ImageCardItem } from '@/types/components'
 import { onEntryChange } from '@/config'
 import { isDataInLiveEdit } from '@/utils'
+import useRouterHook from '@/hooks/useRouterHook'
 
 export default function Article () {
     const [data, setData] = useState<Page.ArticlePage['entry'] | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [articles, setArticles] = useState<Page.ArticlePage['articles'] | null>(null)
-    const path = usePathname()
+    const {path, locale} = useRouterHook()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const entryData: Page.ArticlePage['entry'] = await getArticle(path, 'en')
+                const entryData: Page.ArticlePage['entry'] = await getArticle(path, locale)
                 setData(entryData)
                 if (!entryData && !isNull(entryData)) {
                     throw '404'
@@ -29,19 +29,24 @@ export default function Article () {
                 setLoading(false)
             }
         }
+
+        onEntryChange(fetchData)
+
+    }, [path])
+
+    useEffect(() => {
         const fetchArticles = async () => {
             try {
-                let articlesData: Page.ArticlePage['articles'] = await getArticles('en')
-                articlesData = articlesData?.filter((article) => article.title !== data?.title)
+                let articlesData: Page.ArticlePage['articles'] = await getArticles(locale)
+                articlesData = articlesData?.filter((article) => article.uid !== data?.uid)
                 articlesData && setArticles(articlesData)
             } catch (err) {
                 console.error('🚀 ~ article.tsx ~ fetchArticles ~ err:', err)
             }
         }
-        fetchArticles()
-        onEntryChange(fetchData)
-    }, [path])
 
+        data && !articles && fetchArticles() // articles will be fetched only when data is available and if articles are not already fetched. !articles is used as otherwise related articles was not visible in live preview panel
+    }, [data])
 
     const { content, title, summary, cover_image, show_related_regions_and_topics, region, topics, show_related_articles, related_articles, $ } = data || {}
 
@@ -59,7 +64,7 @@ export default function Article () {
 
     return (
         data ? <>
-            <PageWrapper {...data}>
+            <PageWrapper {...data} contentType='article'>
                 <ArticleCover
                     title={title}
                     summary={summary}

@@ -2,9 +2,9 @@
 import { FunctionComponent } from 'react'
 import parse from 'html-react-parser'
 
-import { Text } from '@/types/components'
+import { Text as TextType } from '@/types/components'
 
-const Text: FunctionComponent<Text> = (props: Text) => {
+const Text: FunctionComponent<TextType> = (props: TextType) => {
     const { $, content, styles, id } = props
 
     return (

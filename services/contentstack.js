@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import { Stack, isEditButtonsEnabled } from '@/config'
 import { addEditableTags, jsonToHTML } from '@contentstack/utils'
+import { isEditButtonsEnabled, Stack } from '@/config'
 
 const renderOption = {
     span: (node, next) => next(node?.children),

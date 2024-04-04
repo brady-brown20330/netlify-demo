@@ -1,15 +1,21 @@
 import type { AppProps } from 'next/app'
-import { Asset, Entry, MappedPreview } from './common'
+import { Asset, Entry, localeItems, MappedPreview } from './common'
 import { CallToAction, InternalLink } from './components'
 
 export interface Header extends Entry {
+  $?: MappedPreview<Header>;
   logo?: Asset;
   // logo_desktop?: Asset;
   // site_url?: string;
   scrolled?: boolean;
   main_navigation?: Navigation[];
   items?: items[];
-  $?: MappedPreview<Header>;
+  locales?: localeItems
+}
+
+export interface LangaugeSelector {
+  locales?: localeItems
+  Opac?: boolean
 }
 
 export interface items {
@@ -23,7 +29,8 @@ export interface items {
         thumbnail?: Asset;
         $?: { text?: {'data-cslp': string} };
         text?:string
-        link:InternalLink[]
+        link:InternalLink[],
+        link_text?:string
       }[]
     }[];
     cta_group?: {

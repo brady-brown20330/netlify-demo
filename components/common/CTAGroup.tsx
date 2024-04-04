@@ -14,7 +14,7 @@ const CTAGroup = (cta_group: { call_to_action?: CallToAction[] }) => (<>
                     <Link
                         key={ctaItem.text}
                         url={ctaItem?.internal_link?.[0] ? ctaItem?.internal_link?.[0]?.url : ctaItem?.external_link || ''}
-                        className='flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100'
+                        className='flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold font-montserrat leading-6 text-gray-900 hover:bg-gray-100'
                         $={ctaItem?.$?.text}
                     >
                         {/*  eslint-disable-next-line @next/next/no-img-element */}

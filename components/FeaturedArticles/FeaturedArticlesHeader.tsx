@@ -1,6 +1,6 @@
-import { FeaturedArticlesHeader } from '@/types/components'
+import { FeaturedArticlesHeader as FeaturedArticlesHeaderType } from '@/types/components'
 
-const FeaturedArticlesHeader: React.FC<FeaturedArticlesHeader> = (props: FeaturedArticlesHeader) => {
+const FeaturedArticlesHeader: React.FC<FeaturedArticlesHeaderType> = (props: FeaturedArticlesHeaderType) => {
     const { $, heading, sub_heading } = props
 
     return (

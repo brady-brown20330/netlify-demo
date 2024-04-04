@@ -5,7 +5,7 @@
  * !!!!!!!!!!
  * **/ 
 import { useEffect, useState } from 'react'
-import _, { Dictionary } from 'lodash'
+import { Dictionary } from 'lodash'
 import { NextRouter, useRouter } from 'next/router'
 import { getArticleListingPage, getArticles } from '@/loaders'
 import {  Page } from '@/types'
