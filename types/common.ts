@@ -1,5 +1,6 @@
 import { AssetMetadata } from './extensions'
 import { related_articles } from './components'
+import { Taxonomy } from './pages/common'
 
 export type MappedPreview<T> = {
   [K in keyof T]: { 'data-cslp': string }
@@ -45,6 +46,7 @@ export interface CommonSystemInfo {
 export type PageEntry = Entry & {
   // $?: MappedPreview<PageEntry>
   url: string
+  taxonomies: Taxonomy[]
 }
 
 export type Entry = CommonSystemInfo & {

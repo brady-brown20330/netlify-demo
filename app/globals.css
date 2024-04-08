@@ -8,6 +8,10 @@ body {
   @apply bg-white dark:bg-black !font-montserrat
 }
 
+.single-col {
+  min-height: 90vh;
+}
+
 @media (min-width:640px)  {
 
   .card-styled:nth-child(2n-2){

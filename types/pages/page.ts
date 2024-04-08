@@ -19,6 +19,6 @@ export type ArticlePage = {
 }
 export type ArticleListingPage = {
   articles?: Article[] | []
-  entry?:PageEntry & pageRenderProps 
+  entry?:PageEntry & pageRenderProps
   locale?:string
 }

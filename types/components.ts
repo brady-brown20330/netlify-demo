@@ -1,6 +1,7 @@
 /* eslint-disable no-shadow */
-import { ReactNode, Dispatch, SetStateAction } from 'react'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 import { Asset, MappedPreview } from './common'
+import { ArticleListingPage } from './pages'
 import { AssetPreset } from './extensions'
 
 export type Link = {
@@ -164,9 +165,10 @@ export type ArticleCover = {
 }
 
 export type RelatedRegionTopics = {
-  region?:string[]
-  topics?:string[]
-  $?:MappedPreview<RelatedRegionTopics>
+  relatedLinks?: ArticleListingPage['entry'][] |[]
+  $?: {
+    taxonomies?: {'data-cslp': string}
+  }
 }
 
 export type RelatedArticles = {

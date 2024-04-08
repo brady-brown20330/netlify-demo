@@ -32,7 +32,11 @@ export type pageRenderProps = {
     components:pageBlocks[];
   }
 export interface Article extends PageEntry,ArticleCover {
-  region?: string[] | [] 
   content?:string
   $?: MappedPreview<Article>
+}
+
+export type Taxonomy = {
+  taxonomy_uid:string,
+  term_uid:string
 }

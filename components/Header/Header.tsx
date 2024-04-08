@@ -122,21 +122,15 @@ function Header (props: App.Header) {
                 <Popover.Group className='hidden lg:flex lg:gap-x-12'>
                     {items?.map((item, itemInd) => (
                         item?.mega_menu?.length ? <Popover key={item.text} data-id={`navItem-${itemInd}`} className='flex'>
-                            <Popover.Button className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900 outline-none'>
-                                {currPanel === item?.text 
-                                    ? <span
-                                        onClick={()=> {setCurrPanel('')}}
-                                        className='flex items-center gap-x-1'
-                                    >
-                                        {item.text}
-                                        <ChevronUpIcon className='h-5 w-5 flex-none text-gray-900' aria-hidden='true' />
-                                    </span>
-                                    : <span
-                                        onClick={()=> {item?.text && setCurrPanel(item.text)}}
-                                        className='flex items-center gap-x-1'
-                                    >
-                                        {item.text}<ChevronDownIcon className='h-5 w-5 flex-none text-gray-900' aria-hidden='true' />
-                                    </span>}
+                            <Popover.Button
+                                className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900 outline-none'
+                            >
+                                <span
+                                    // onClick={()=> {item?.text && setCurrPanel(item.text)}}
+                                    className='flex items-center gap-x-1'
+                                >
+                                    {item.text}<ChevronDownIcon className='h-5 w-5 flex-none text-gray-900  ui-open:transform ui-open:rotate-180' aria-hidden='true' />
+                                </span>
                             </Popover.Button>
 
                             <Transition
