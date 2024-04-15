@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { imageCardsReferenceIncludes, includefooterRefUids, includeheaderRefUids, teaserReferenceIncludes, textAndImageReferenceIncludes } from '@/components'
-import {  getJsonCookie, isCookieExist, prefixReferenceIncludes, setJsonCookie } from '@/utils'
-import { getEntries, getEntryByUID, getEntryByUrl } from '@/services'
+import { prefixReferenceIncludes } from '@/utils'
+import { getEntries,getEntryByUrl } from '@/services'
 import { Taxonomy } from '@/types/pages'
 
 export const getHomePage = ( cmsUrlPath: string | undefined, locale: string | undefined) => {
@@ -51,8 +51,7 @@ export const getArticles = (locale?: string , taxonomies?:Taxonomy[], limit?: nu
 
     return getEntries('article', locale, [], [], {
         queryOperator: 'or',
-        filterQuery,
-        livePreviewQuery: {}
+        filterQuery
     },limit)  
 }
 
@@ -77,8 +76,7 @@ export const getArticleListingPageByTaxonomy = (locale?: string , taxonomies?:Ta
     
     return getEntries('article_listing_page', locale, [], [], {
         queryOperator: 'or',
-        filterQuery,
-        livePreviewQuery: {}
+        filterQuery
     })  
 }
 

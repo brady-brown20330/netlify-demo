@@ -20,7 +20,6 @@ export const getEntries = async (contentTypeUid, locale, referenceFieldPath, jso
             throw new Error('===== No stack initialization found====== \n check environment variables: \
             CONTENTSTACK_API_KEY, CONTENTSTACK_DELIVERY_TOKEN, CONTENTSTACK_PREVIEW_TOKEN, CONTENTSTACK_PREVIEW_HOST, CONTENTSTACK_ENVIRONMENT')
         }
-        // if (query?.livePreviewQuery) { Stack.livePreviewQuery(query.livePreviewQuery) }
         const entryQuery = Stack.ContentType(contentTypeUid)
             .Query()
             .language(locale)
