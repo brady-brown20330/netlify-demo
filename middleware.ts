@@ -30,7 +30,7 @@ export async function middleware (request: NextRequest) {
 
     if (pathnameHasLocale) {
         if (!languagesCookie)  {
-            // set reponse.cookie "languages" cookie if not exist
+            // set "languages" cookie in res.cookie - if cookie not exist 
             // cookie will expire in 5 days
             const response = NextResponse.next() 
             response.cookies.set(localeCookieName, JSON.stringify(locales), { expires: new Date(Date.now() + ( 5 * 24 * 60 * 60 * 1000)) })
@@ -41,7 +41,7 @@ export async function middleware (request: NextRequest) {
     }
 
     // Redirect to default locale if there is no locale in url
-    request.nextUrl.pathname = `/${preferredLang}/${pathname}`
+    request.nextUrl.pathname = `/${preferredLang}${pathname}`
     return NextResponse.redirect(request.nextUrl)
 }
  

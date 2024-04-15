@@ -15,7 +15,7 @@ const nextConfig = {
         CONTENTSTACK_PREVIEW_HOST: process.env.CONTENTSTACK_PREVIEW_HOST, // live-preview host
         CONTENTSTACK_PREVIEW_TOKEN: process.env.CONTENTSTACK_PREVIEW_TOKEN, // live-preview token
         LOCALE_COOKIE_NAME: process.env.LOCALE_COOKIE_NAME || '', // set locale cookie name
-        DEFAULT_LOCALE: process.env.DEFAULT_LOCALE,
+        DEFAULT_LOCALE: process.env.DEFAULT_LOCALE || 'en',
         LOCALSTORAGE_WEBCONFIG_KEY: process.env.LOCALSTORAGE_WEBCONFIG_KEY || 'webconfig',
         LOCALSTORAGE_WEBCONFIG_TTL: process.env.LOCALSTORAGE_WEBCONFIG_TTL || '86400' // 1 day in seconds
     }
