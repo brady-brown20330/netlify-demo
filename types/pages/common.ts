@@ -1,4 +1,4 @@
-import { ArticleCover, CardCollection, Image, Teaser, Text, TextAndImage } from '../components'
+import { ArticleCover, CardCollection, Image, related_links, Teaser, Text, TextAndImage } from '../components'
 import { entryLocales, MappedPreview, PageEntry } from '../common'
 
 export type SeoProps = {
@@ -33,6 +33,7 @@ export type pageRenderProps = {
   }
 export interface Article extends PageEntry,ArticleCover {
   content?:string
+  related_links?: related_links
   $?: MappedPreview<Article>
 }
 

@@ -1,5 +1,5 @@
 import { AssetMetadata } from './extensions'
-import { related_articles } from './components'
+import { related_articles, related_links } from './components'
 import { Taxonomy } from './pages/common'
 
 export type MappedPreview<T> = {
@@ -34,11 +34,12 @@ export interface CommonSystemInfo {
   tags?: string[]
   title?: string
   uid?: string
-  show_related_regions_and_topics?:boolean
+  show_related_links?: boolean
   region?:string[]
   topics?:string[]
   show_related_articles?: boolean
   related_articles?: related_articles
+  related_links?: related_links
   updated_at?: Date
   updated_by?: string
 }

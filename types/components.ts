@@ -164,10 +164,12 @@ export type ArticleCover = {
   $?: MappedPreview<ArticleCover>
 }
 
-export type RelatedRegionTopics = {
+export type RelatedLinks = {
   relatedLinks?: ArticleListingPage['entry'][] |[]
+  relatedLinksLabel?: related_links
   $?: {
     taxonomies?: {'data-cslp': string}
+    related_links?: { 'data-cslp': string }
   }
 }
 
@@ -182,6 +184,11 @@ export interface related_articles {
   number_of_articles?:number
   related_article_tags?:string[]
   $?: MappedPreview<related_articles>
+}
+
+export interface related_links {
+  text?: string
+  $?: MappedPreview<related_links>
 }
 
 export interface pagination {

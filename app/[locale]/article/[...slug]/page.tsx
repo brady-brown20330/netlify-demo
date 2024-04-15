@@ -4,7 +4,7 @@ import { isNull } from 'lodash'
 import { getArticle, getArticleListingPageByTaxonomy, getArticles } from '@/loaders'
 import RenderComponents from '@/RenderComponents'
 import { Page } from '@/types'
-import { ArticleCover, NotFoundComponent, PageWrapper, RelatedArticles, RelatedRegionTopics } from '@/components'
+import { ArticleCover, NotFoundComponent, PageWrapper, RelatedArticles, RelatedLinks } from '@/components'
 import { ImageCardItem } from '@/types/components'
 import { onEntryChange } from '@/config'
 import { isDataInLiveEdit } from '@/utils'
@@ -33,7 +33,7 @@ export default function Article () {
     const fetchArticles = async () => {
         try {
             if (data && data?.taxonomies?.length > 0) {
-                if (show_related_regions_and_topics) {
+                if (show_related_links) {
                     const listingData: Page.ArticleListingPage['entry'][] = await getArticleListingPageByTaxonomy(locale, data?.taxonomies)
                     listingData && setRelatedLinks(listingData)
                 }
@@ -62,7 +62,7 @@ export default function Article () {
     }, [data])
 
 
-    const { content, title, summary, cover_image, show_related_regions_and_topics, show_related_articles, related_articles, $ } = data || {}
+    const { content, title, summary, cover_image, show_related_links, related_links, show_related_articles, related_articles, $ } = data || {}
 
     const cards: ImageCardItem[] | [] = articles?.map((article) => {
         return ({
@@ -92,8 +92,9 @@ export default function Article () {
                     }
                 }]}
                 />
-                {show_related_regions_and_topics && <RelatedRegionTopics
+                {show_related_links && <RelatedLinks
                     relatedLinks={relatedLinks}
+                    relatedLinksLabel={related_links}
                     $={data?.$}
                 />}
                 {show_related_articles && <RelatedArticles

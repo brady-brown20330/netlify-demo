@@ -14,8 +14,7 @@ export type ArticlePage = {
   entry: PageEntry & Article
   locale?:string
   articles?: Article[] | []
-  $?:MappedPreview<ArticlePage>
-
+  $?: MappedPreview<ArticlePage>
 }
 export type ArticleListingPage = {
   articles?: Article[] | []
