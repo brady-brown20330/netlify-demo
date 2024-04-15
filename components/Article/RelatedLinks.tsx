@@ -7,7 +7,7 @@ const RelatedLinks: React.FC<RelatedLinksType> = (props: RelatedLinksType) => {
 
     return (<div className={'px-8 my-16'} id='related-region-topics'>
         <div className='container mx-auto'>
-            {relatedLinks && relatedLinks.length > 0 && <div><span {...$?.related_links} data-id='span-text' className='font-semibold text-sm inline-block mt-2'>{relatedLinksLabel?.text}: &nbsp;</span>
+            {relatedLinks && relatedLinks.length > 0 && <div><span {...$?.related_links} data-id='span-text' className='font-semibold text-sm inline-block mt-2'>{relatedLinksLabel?.text || 'Related Links'}: &nbsp;</span>
                 <span {...$?.taxonomies}>
                     {relatedLinks.map((elem: any, ind: number) => (
                         <span key={`related-link-${ind}`}>
