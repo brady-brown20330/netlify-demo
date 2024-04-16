@@ -17,12 +17,12 @@ export async function middleware (request: NextRequest) {
     
     const locales =  languagesCookie?.value ? JSON.parse(languagesCookie.value) : await fetchLocales()
 
-    const preferedBrowserLang = request.headers.get('accept-language')?.split(',')?.[0]?.substring(0,2)
-    let preferredLang = defaultLocale
+    // const preferedBrowserLang = request.headers.get('accept-language')?.split(',')?.[0]?.substring(0,2)
+    // let preferredLang = defaultLocale
 
-    if(preferedBrowserLang && locales.some(({code}: {code: string}) => code === preferedBrowserLang)) { // if preferred browser language is acceptable locale
-        preferredLang = preferedBrowserLang
-    }
+    // if(preferedBrowserLang && locales.some(({code}: {code: string}) => code === preferedBrowserLang)) { // if preferred browser language is acceptable locale
+    //     preferredLang = preferedBrowserLang
+    // }
 
     const pathnameHasLocale = pathname.split('/')?.some((p) => {
         return isLocale(p)
@@ -41,7 +41,7 @@ export async function middleware (request: NextRequest) {
     }
 
     // Redirect to default locale if there is no locale in url
-    request.nextUrl.pathname = `/${preferredLang}${pathname}`
+    request.nextUrl.pathname = `/${defaultLocale}${pathname}`
     return NextResponse.redirect(request.nextUrl)
 }
  
