@@ -38,7 +38,7 @@ export default function Article () {
                     listingData && setRelatedLinks(listingData)
                 }
                 if (show_related_articles) {
-                    let articlesData: Page.ArticlePage['articles'] = await getArticles('en', data?.taxonomies, 7)
+                    let articlesData: Page.ArticlePage['articles'] = await getArticles(locale, data?.taxonomies, 7)
                     articlesData = articlesData?.filter((article) => article.uid !== data?.uid)
                     articlesData && setArticles(articlesData)
                 } 
